@@ -137,3 +137,5 @@ io.sockets.on("connection", socket => {
 });
 
 server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://10.50.100.192:9000/broadcast\nUser interface -> https://10.50.100.192:9000/main`));
+
+// commit 예제
