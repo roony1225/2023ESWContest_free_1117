@@ -343,7 +343,7 @@ function imgCapture(self){
 */
 }
 
-const pose = [, "<img src='image/sticker-icon.png'>", "<img src='image/sticker-icon.png'>", "<img src='image/sticker-icon.png'>", "<img src='image/sticker-icon.png'>"]
+const pose = [, "<img src='image/sticker-icon.png'>", "<img src='image/capture.png'>", "<img src='image/filter-icon.png'>", "<img src='Lens-removebg-preview.png'>"]
 function person1(){
   document.getElementById("poselist").innerHTML = pose[1];
 }
