@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Viewer</title>
+    <meta charset="UTF-8" />
+    <link href="index.css" rel="stylesheet" />
+    <script defer src="watch.js"></script>
+  </head>
+  <body>
+    <h1>Viewer</h1>
+    <li><a href="list.html">listpage(dev)</a></li>
+    <video id="videostream" playsinline autoplay muted></video><br>
+    <a href=#>redirect to Broadcaster's page</a>
+    <p id="timer"></p>
+    <!-- <script src="../node_modules/socket.io/client-dist/socket.io.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--버튼---->
+    <br>
+<!--     <div style = "position:fixed; bottom:50%; left:50%; transform:translate(-50%,-50%);"> -->
+      <div class="photosettingbtn">
+
+        <button data-modal-target="#modal2" class="pose"><img class="pose-image" src="image/sticker-icon.png" alt="buttonpng" border="0"></button>
+
+        <button class="capture"><img class="capture-image" src="image/capture.png" alt="buttonpng" border="0" onclick="imgCapture(this)"></button>
+
+        <button data-modal-target="#modal" class="filter"><img class="filter-image" src="image/filter-icon.png" alt="buttonpng" border="0"></button>
+
+      </div>
+<!--     </div> -->
+    <br>
+    <canvas id="canvasElement"></canvas><br>
+<!--     <video id="videoElement" autoplay></video>  -->
+    <div id="image-grid"></div>
+
+      <!-- popup filter -->
+      <div class="modal" id="modal">
+        <div class="modal-header">
+          <button data-close-button class="close-button">&times;</button>
+          <button class="filter-normal" onclick="filterNormal()">Normal</button>
+          <button class="filter-invert" onclick="filterInvert()">Invert</button>
+          <button class="filter-grey" onclick="filterGrey()">Grey</button>
+          <button class="filter-sepia" onclick="filterSepia()">Sepia</button>
+        </div>
+      </div>
+      <!-- popup pose -->
+      <div class="modal2" id="modal2">
+        <div class="modal-header2">
+          <button data-close-button class="close-button2">&times;</button>
+          <button onclick="person1()">1</button>
+          <button onclick="person2()">2</button>
+          <button onclick="person3()">3</button>
+          <button onclick="person4()">4</button>
+        </div> 
+        <div class="modal-body2">
+          <p id="poselist"></p>
+        </div>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webdesign</title>
+    <link href="main.css" rel="stylesheet">
+    <script defer src="main.js"></script>
+  </head>
+  <body>
+    <style>
+        body {
+          background-image: url('https://i.pinimg.com/originals/92/31/92/923192a69918fd07747dbb84b94cd2d7.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+    </style>
+    <!-- button -->
+      <div style = "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+        <button data-modal-target="#modal" class="main-button"><img class="button-img" src="image/Lens-removebg-preview.png" alt="buttonpng" border="0"></button>
+      </div>
+      <!-- popup -->
+      <div class="modal" id="modal">
+        <div class="modal-header">
+          <div class="title">Example Modal</div>
+          <button data-close-button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- page -->
+          <p id="page"></p>
+        </div>
+        <!-- pagemove -->
+        <div class="page-move">
+          <button class="previous" onclick="pagedown()">&lt;</button>
+          <div id="current-page"></div>
+          <button class="next" onclick="pageup()">&gt;</button>
+        </div>
+      </div>
+      <div id="overlay"></div>
+
+
+  </body>
+</html>

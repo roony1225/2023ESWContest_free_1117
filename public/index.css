@@ -1,0 +1,168 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  background-color: white;
+}
+
+video {
+  width: 900px;
+  height: 700px;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+}
+
+body {
+  text-align: center;
+}
+
+
+/*buttons*/
+.photosettingbtn {
+/*   justify-content: space-between;
+  align-items: center; */
+  position: fixed;
+  bottom: 5%;
+  right: 0;
+  left: 0;
+}
+
+.capture {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform .7s ease-in-out;
+  margin-left:10px;
+}
+
+.capture-image {
+  width: 250px;
+  height: 250px;
+}
+
+.sticker {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform .7s ease-in-out;
+  margin-left:10px;
+}
+.sticker-image {
+  width: 200px;
+  height: 200px;
+}
+
+.filter {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform .7s ease-in-out;
+  margin-left:10px;
+}
+.filter-image {
+  width: 200px;
+  height: 200px;
+}
+
+.pose {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform .7s ease-in-out;
+  margin-left:10px;
+}
+.pose-image {
+  width: 200px;
+  height: 200px;
+}
+
+/*timer*/
+#timer {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+
+/*Popup-filter*/
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+
+/*popup-pose*/
+.modal2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 1000px;
+  max-width: 80%;
+}
+
+.modal2.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header2 {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.modal-header2 .close-button2 {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}

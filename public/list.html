@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List</title>
+    <meta charset="UTF-8">
+    <link href="index.css" rel="stylesheet" />
+    <link href="list.css" rel="stylesheet"/>
+    <script defer src="list.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // import imageUrlList from './watch.js';
+        const ipUrl = '10.50.100.192:9000';
+        window.onload = () => {
+            console.log("?????");
+            let imgUrlList1;
+            let imgUrlList2;
+            let imgUrlList3;
+            let imgUrlList4;
+            axios.get('https://'+ipUrl+'/ImageUrl1').then(response =>{
+                imgUrlList1 = response.data;
+                console.log(imgUrlList1);
+                imgUrlList1.forEach(url => {
+                const imageSection1 = document.getElementById("image-section1");
+                const childElement1 = document.createElement('img');
+                childElement1.src = url;
+                imageSection1.appendChild(childElement1);
+            });
+            });
+            axios.get('https://'+ipUrl+'/ImageUrl2').then(response =>{
+                imgUrlList2 = response.data;
+                console.log(imgUrlList2);
+                imgUrlList2.forEach(url => {
+                const imageSection2 = document.getElementById("image-section2");
+                const childElement2 = document.createElement('img');
+                childElement2.src = url;
+                imageSection2.appendChild(childElement2);
+            });
+            });
+            axios.get('https://'+ipUrl+'/ImageUrl3').then(response =>{
+                imgUrlList3 = response.data;
+                console.log(imgUrlList3);
+                imgUrlList3.forEach(url => {
+                const imageSection3 = document.getElementById("image-section3");
+                const childElement3 = document.createElement('img');
+                childElement3.src = url;
+                imageSection3.appendChild(childElement3);
+            });
+            });
+            axios.get('https://'+ipUrl+'/ImageUrl4').then(response =>{
+                imgUrlList4 = response.data;
+                console.log(imgUrlList4);
+                imgUrlList4.forEach(url => {
+                const imageSection4 = document.getElementById("image-section4");
+                const childElement4 = document.createElement('img');
+                childElement4.src = url;
+                imageSection4.appendChild(childElement4);
+            });
+            });
+        };
+    </script>
+</head>
+<body>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!--Choose photo by clicking it-->
+    <li><a href="printphoto.html">check(dev)</a></li>
+    <button id="image-section1" data-modal-target="#modal" onclick="photochoice1(this)"></button>
+    <button id="image-section2" data-modal-target="#modal" onclick="photochoice2(this)"></button>
+    <button id="image-section3" data-modal-target="#modal" onclick="photochoice3(this)"></button>
+    <button id="image-section4" data-modal-target="#modal" onclick="photochoice4(this)"></button>
+
+    <!--popup 1-->
+    <div class="modal" id="modal">
+        <div class="modal-header">
+          <div class="title">Example Modal</div>
+          <button data-close-button class="close-button">&times;</button>
+        </div>
+        <div class="checkbtn">
+            <button class="decorate" onclick="decorate()">Decorate</button>
+            <br>
+            <button class="printcheck" data-modal-target="#modal2" onclick="printcheck()">Print</button>
+        </div>
+    </div>
+
+    <!--popup 2-->
+    <div class="modal2" id="modal2">
+        <div class="modal-header2">
+          <div class="title2">Are you sure?</div>
+        </div>
+        <div class="yesorno">
+            <button data-close-button class="yes" onclick="yes()">YES</button>
+            <br>
+            <button data-close-button class="close-button2">NO</button>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="image-section0"></div>
+
+</body>
+</html>
