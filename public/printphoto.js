@@ -1,6 +1,6 @@
 /* 사진 프린트용 창 */
 
-const ipUrl = '10.50.100.192:9000';
+const ipUrl = '192.168.45.210:9000';
 window.onload = () => {
     let imgUrlList0;
     axios.get('https://'+ipUrl+'/ImageUrl0').then(response =>{

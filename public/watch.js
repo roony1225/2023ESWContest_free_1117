@@ -1,4 +1,4 @@
-const ipUrl = '10.50.100.192:9000';
+const ipUrl = '192.168.45.210:9000';
 
 //필터 함수
 var filterVariable = 0;
@@ -329,7 +329,7 @@ function imgCapture(self){
 
 
 //포즈 이미지 선택
-const pose = [, "<img src='image/sticker-icon.png'>", "<img src='image/capture.png'>", "<img src='image/filter-icon.png'>", "<img src='Lens-removebg-preview.png'>"]//예시 이미지, 추후 수정 필요
+const pose = [, "<img src='image/pose1.png'>", "<img src='image/pose2.png'>", "<img src='image/pose3.png'>", "<img src='image/pose4.png'>"]//예시 이미지, 추후 수정 필요
 function person1(){
   document.getElementById("poselist").innerHTML = pose[1];
 }

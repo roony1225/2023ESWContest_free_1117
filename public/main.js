@@ -1,7 +1,7 @@
 /* pagevariable */
 var pg = 0
 
-const ipUrl = '10.50.100.192:9000';
+const ipUrl = '192.168.45.210:9000';
 
 /*시작화면 팝업창코드*/
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
