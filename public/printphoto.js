@@ -1,3 +1,5 @@
+/* 사진 프린트용 창 */
+
 const ipUrl = '10.50.100.192:9000';
 window.onload = () => {
     let imgUrlList0;

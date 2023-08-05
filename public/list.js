@@ -2,6 +2,8 @@ function decorate() {
     alert("WOO Filter")
 }
 
+/* 사진 리스트창 */
+/*사진 선택*/
 var printCheckVariable = 1;
 let imgUrlList0;
 function photochoice1(self) {
@@ -21,7 +23,7 @@ function photochoice4(self) {
     console.log(printCheckVariable);
 }
 
-
+/*지정사진 프린트용 주소로 넘기기*/
 function printcheck(){
     if(printCheckVariable == 1) {
         axios.get('https://'+ipUrl+'/ImageUrl1').then(response =>{
@@ -105,7 +107,7 @@ function printcheck(){
     }
 }
 
-
+/*매크로 실행*/
 function yes() {
     let macro_window = window.open("https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man","_blank");
     //https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man
@@ -115,7 +117,7 @@ function yes() {
     
 }
 
-
+/* 팝업창 코드 */
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')

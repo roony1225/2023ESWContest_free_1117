@@ -137,7 +137,7 @@ window.onunload = window.onbeforeunload = () => {
 
 
 
-//------버튼-------
+//촬영 버튼 동작
 var imgList1 = [];
 var imgUrlList1 = [];
 var imgList2 = [];
@@ -325,25 +325,11 @@ function imgCapture(self){
   else{
     alert("Y U SO RUSH MAN?");
   }
-
-//이미지 다운로드
-/*
-  const imagefile = canvasElement.toDataURL('image/png');
-      
-  // Create a download link
-  const downloadLink = document.createElement('a');
-  downloadLink.href = imagefile;
-  downloadLink.download = 'image.png';
-  downloadLink.style.display = 'none';
-
-  // Add the download link to the document and trigger the download
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
-*/
 }
 
-const pose = [, "<img src='image/sticker-icon.png'>", "<img src='image/capture.png'>", "<img src='image/filter-icon.png'>", "<img src='Lens-removebg-preview.png'>"]
+
+//포즈 이미지 선택
+const pose = [, "<img src='image/sticker-icon.png'>", "<img src='image/capture.png'>", "<img src='image/filter-icon.png'>", "<img src='Lens-removebg-preview.png'>"]//예시 이미지, 추후 수정 필요
 function person1(){
   document.getElementById("poselist").innerHTML = pose[1];
 }
@@ -360,7 +346,7 @@ function person4(){
 
 
 
-/*Popup*/
+/*팝업창 열기/닫기*/
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 

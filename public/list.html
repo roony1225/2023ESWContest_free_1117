@@ -10,6 +10,7 @@
     <script>
         // import imageUrlList from './watch.js';
         const ipUrl = '10.50.100.192:9000';
+        //촬영이미지 불러오기
         window.onload = () => {
             console.log("?????");
             let imgUrlList1;
@@ -62,14 +63,14 @@
 <body>
     <script src="/socket.io/socket.io.js"></script>
 
-    <!--Choose photo by clicking it-->
+    <!--이미지 클릭시 선택-->
     <li><a href="printphoto.html">check(dev)</a></li>
     <button id="image-section1" data-modal-target="#modal" onclick="photochoice1(this)"></button>
     <button id="image-section2" data-modal-target="#modal" onclick="photochoice2(this)"></button>
     <button id="image-section3" data-modal-target="#modal" onclick="photochoice3(this)"></button>
     <button id="image-section4" data-modal-target="#modal" onclick="photochoice4(this)"></button>
 
-    <!--popup 1-->
+    <!--팝업창 1-->
     <div class="modal" id="modal">
         <div class="modal-header">
           <div class="title">Example Modal</div>
@@ -82,7 +83,7 @@
         </div>
     </div>
 
-    <!--popup 2-->
+    <!--팝업창 2-->
     <div class="modal2" id="modal2">
         <div class="modal-header2">
           <div class="title2">Are you sure?</div>
