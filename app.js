@@ -1,34 +1,44 @@
-// setting server
+const dotenv = require('dotenv');
+const ip = require("ip");
 const express = require("express");
-const app = express();
-const fs = require('fs');
-
-let broadcaster;
-const port = 9000;
-const path = require('path');
-var cors = require('cors');
-
+const cors = require('cors');
+const bodyParser = require('body-parser');
 // const http = require("http");
-// const server = http.createServer(options, app);
-
 const https = require("https");
+const socketIo = require("socket.io");
+
+const fs = require('fs'); 
+const path = require('path');
+
+// Import .env
+dotenv.config();
+const env = process.env;
+
+// Networking setup
+const IP_ADDRESS = ip.address();
+const PORT = env.PORT;
+
+// Setting server
+const app = express();
+
+app.use(cors())
+app.use(express.static(__dirname + "/public")); // load files below /public
+app.use(express.static(__dirname + '/node_modules'));
+app.use(express.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 const options = {
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem'),
   // ca: fs.readFileSync('C:/Windows/System32/server.csr'),
 };
+
+// const server = http.createServer(options, app);
 const server = https.createServer(options, app);
+const io = socketIo(server);
 
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-const io = require("socket.io")(server);
-app.use(cors())
-app.use(express.static(__dirname + "/public")); // load files below /public
-app.use(express.static(__dirname + '/node_modules'));
-app.use(express.json());
+// Add Api
 
 app.get('/broadcast', (req, res)=>{
   res.sendFile(path.join(__dirname, 'public/broadcast.html'));
@@ -101,7 +111,7 @@ app.post('/ImageUrl0', (req, res)=>{
 });
 //----------------
 
-
+let broadcaster;
 
 io.sockets.on("error", e => console.log(e));
 io.sockets.on("connection", socket => {
@@ -120,7 +130,6 @@ io.sockets.on("connection", socket => {
     console.log("d");
   });
 
-
   // initiate webrtc
   socket.on("offer", (id, message) => {
     socket.to(id).emit("offer", socket.id, message);
@@ -136,6 +145,4 @@ io.sockets.on("connection", socket => {
   });
 });
 
-server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://192.168.45.210:9000/broadcast\nUser interface -> https://192.168.45.210:9000/main`));
-
-// commit 예제 test
+server.listen(PORT, () => console.log(`Server is running on port https://${IP_ADDRESS}:${PORT}\n Broadcasting page -> https://${IP_ADDRESS}:${PORT}/broadcast\nUser interface -> https://${IP_ADDRESS}:${PORT}/main`));

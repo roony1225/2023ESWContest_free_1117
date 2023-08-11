@@ -44,7 +44,6 @@ function applyFilter(pixels, filterVariable) {
   }
 }
 
-
 //filter Effect
 function filterNormal() {
   console.log('normal')
@@ -69,10 +68,6 @@ function filterSepia() {
   document.getElementById('videostream').style.filter='sepia(100%)';
   filterVariable = 3;
 }
-
-
-
-
 
 let peerConnection;
 const config = {
@@ -109,7 +104,6 @@ socket.on("offer", (id, description) => {
   };
 });
 
-
 socket.on("candidate", (id, candidate) => {
   console.log("4", candidate);
   peerConnection
@@ -132,10 +126,6 @@ window.onunload = window.onbeforeunload = () => {
   socket.close();
   peerConnection.close();
 };
-
-
-
-
 
 //촬영 버튼 동작
 var imgList1 = [];
@@ -342,9 +332,6 @@ function person3(){
 function person4(){
   document.getElementById("poselist").innerHTML = pose[4];
 }
-
-
-
 
 /*팝업창 열기/닫기*/
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
