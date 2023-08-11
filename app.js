@@ -39,7 +39,6 @@ const server = https.createServer(options, app);
 const io = socketIo(server);
 
 // Add Api
-
 app.get('/broadcast', (req, res)=>{
   res.sendFile(path.join(__dirname, 'public/broadcast.html'));
 });
@@ -145,4 +144,4 @@ io.sockets.on("connection", socket => {
   });
 });
 
-server.listen(PORT, () => console.log(`Server is running on port https://${IP_ADDRESS}:${PORT}\n Broadcasting page -> https://${IP_ADDRESS}:${PORT}/broadcast\nUser interface -> https://${IP_ADDRESS}:${PORT}/main`));
+server.listen(PORT, () => console.log(`Server is running on port https://${IP_ADDRESS}:${PORT}\nBroadcasting page -> https://${IP_ADDRESS}:${PORT}/broadcast\nUser interface -> https://${IP_ADDRESS}:${PORT}/main`));
