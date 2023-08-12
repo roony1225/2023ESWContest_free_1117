@@ -2,7 +2,7 @@
 HTML: main > index > list > printphoto
 CSS: main > index > list
 JS: main > watch > list > printphoto */
-
+//
 //1.QR코드 입력시 시작 js
 
 const ipUrl = '10.50.10.50:9000'; //ip 주소

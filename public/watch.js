@@ -2,7 +2,7 @@
 HTML: main > index > list > printphoto
 CSS: main > index > list
 JS: main > watch > list > printphoto */
-
+//
 //2.촬영화면 js
 
 const ipUrl = '10.50.10.50:9000';

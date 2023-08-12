@@ -2,7 +2,7 @@
 HTML: main > index > list > printphoto
 CSS: main > index > list
 JS: main > watch > list > printphoto */
-
+/*  */
 //3.이미지 선택창 js
 
 //꾸미기 버튼: 미구현
