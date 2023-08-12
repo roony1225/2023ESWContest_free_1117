@@ -1,4 +1,9 @@
-<!-- 시작화면 -->
+<!-- 페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto -->
+
+<!-- 1.QR코드 입력시 시작 html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,38 +13,53 @@
     <link href="main.css" rel="stylesheet">
     <script defer src="main.js"></script>
   </head>
+
   <body>
     <style>
+        /* 배경화면 이미지 설정 */
         body {
           background-image: url('https://i.pinimg.com/originals/92/31/92/923192a69918fd07747dbb84b94cd2d7.jpg');
-          background-repeat: no-repeat;
+          background-repeat: no-repeat; 
           background-attachment: fixed;
           background-size: 100% 100%;
         }
     </style>
-    <!-- button -->
-      <div style = "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);">
+
+      <!-- 중앙 버튼 -->
+      <div style = "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);"> <!-- 버튼 위치 -->
         <button data-modal-target="#modal" class="main-button"><img class="button-img" src="image/Lens-removebg-preview.png" alt="buttonpng" border="0"></button>
       </div>
-      <!-- popup -->
+
+      <!-- 중앙버튼 누를시 출력되는 팝업창 -->
       <div class="modal" id="modal">
         <div class="modal-header">
           <div class="title">Example Modal</div>
           <button data-close-button class="close-button">&times;</button>
         </div>
+
+        <!-- 팝업창 텍스트 내용란 -->
         <div class="modal-body">
-          <!-- page -->
           <p id="page"></p>
         </div>
-        <!-- pagemove -->
+
+        <!-- 팝업창 페이지 이동 -->
         <div class="page-move">
+
+          <!-- 이전페이지 버튼 -->
           <button class="previous" onclick="pagedown()">&lt;</button>
+
+          <!-- 현재 페이지 출력 -->
           <div id="current-page"></div>
+
+          <!-- 다음페이지 버튼 -->
           <button class="next" onclick="pageup()">&gt;</button>
         </div>
       </div>
-      <div id="overlay"></div>
 
+      <!-- 팝업창 띄울시 주변 배경 어두워지는 오베레이 -->
+      <div id="overlay"></div>
 
   </body>
 </html>
+
+<!-- 다음 화면: index.html -->

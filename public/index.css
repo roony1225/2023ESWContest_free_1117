@@ -1,31 +1,37 @@
+/* 페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto */
+
+/* 2.촬영화면 CSS */
+
 html {
   overflow: hidden;
   height: 100%;
   background-color: white;
 }
 
+/* 비디오 화면 */
 video {
   width: 900px;
   height: 700px;
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
 }
-
 body {
   text-align: center;
 }
 
 
-/*buttons*/
+/* 포즈/캡처/필터 버튼 */
 .photosettingbtn {
-/*   justify-content: space-between;
-  align-items: center; */
   position: fixed;
   bottom: 5%;
   right: 0;
   left: 0;
 }
 
+/* 캡처버튼 */
 .capture {
   border: none;
   cursor: pointer;
@@ -34,38 +40,12 @@ body {
   transition: transform .7s ease-in-out;
   margin-left:10px;
 }
-
 .capture-image {
   width: 250px;
   height: 250px;
 }
 
-.sticker {
-  border: none;
-  cursor: pointer;
-  appearance: none;
-  background-color: inherit;
-  transition: transform .7s ease-in-out;
-  margin-left:10px;
-}
-.sticker-image {
-  width: 200px;
-  height: 200px;
-}
-
-.filter {
-  border: none;
-  cursor: pointer;
-  appearance: none;
-  background-color: inherit;
-  transition: transform .7s ease-in-out;
-  margin-left:10px;
-}
-.filter-image {
-  width: 200px;
-  height: 200px;
-}
-
+/* 포즈버튼 */
 .pose {
   border: none;
   cursor: pointer;
@@ -79,14 +59,29 @@ body {
   height: 200px;
 }
 
-/*timer*/
+/* 필터버튼 */
+.filter {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: inherit;
+  transition: transform .7s ease-in-out;
+  margin-left:10px;
+}
+.filter-image {
+  width: 200px;
+  height: 200px;
+}
+
+
+/* 타이머 폰트 */
 #timer {
   font-size: 5rem;
   font-weight: bold;
 }
 
 
-/*Popup-filter*/
+/* 필터 팝업창 설정 */
 *, *::after, *::before {
   box-sizing: border-box;
 }
@@ -131,7 +126,7 @@ body {
 }
 
 
-/*popup-pose*/
+/* 포즈 팝업창 설정 */
 .modal2 {
   position: fixed;
   top: 50%;

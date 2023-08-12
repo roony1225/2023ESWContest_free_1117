@@ -1,9 +1,16 @@
+/* 페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto */
+
+/* 3.이미지 선택창 CSS */
+
 *, *::after, *::before {
     box-sizing: border-box;
 }
 
-/* modal1 */
 
+/* 이미지 선택시 출력되는 팝업창 */
 .modal {
     position: fixed;
     top: 50%;
@@ -17,11 +24,9 @@
     width: 500px;
     max-width: 80%;
 }
-
 .modal.active {
     transform: translate(-50%, -50%) scale(1);
 }
-
 .modal-header {
     padding: 10px 15px;
     display: flex;
@@ -29,12 +34,10 @@
     align-items: center;
     border-bottom: 1px solid black;
 }
-
 .modal-header .title {
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .modal-header .close-button {
     cursor: pointer;
     border: none;
@@ -55,19 +58,17 @@
     background-color: rgba(0,0,0, .5);
     pointer-events: none;
 }
-
 #overlay.active {
     opacity: 1;
     pointer-events: all;
 }
 
-
+/* decorate/print버튼 */
 .checkbtn {
     padding: 10px 15px;
     align-items: center;
     border-top: 1px solid black;
 }
-
 .checkbtn .decorate{
     cursor: pointer;
     border: none;
@@ -76,7 +77,6 @@
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .checkbtn .printcheck{
     cursor: pointer;
     border: none;
@@ -86,9 +86,7 @@
     font-weight: bold;
 }
 
-
-
-/* modal2 */
+/* print 버튼 입력시 출력 팝업창 */
 .modal2 {
     position: fixed;
     top: 50%;
@@ -102,11 +100,9 @@
     width: 500px;
     max-width: 80%;
 }
-
 .modal2.active {
     transform: translate(-50%, -50%) scale(1);
 }
-
 .modal-header2 {
     padding: 10px 15px;
     display: flex;
@@ -114,12 +110,10 @@
     align-items: center;
     border-bottom: 1px solid black;
 }
-
 .modal-header2 .title2 {
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .modal-header2 .close-button2 {
     cursor: pointer;
     border: none;
@@ -129,13 +123,12 @@
     font-weight: bold;
 }
 
-
+/* yes/no버튼 */
 .yesorno {
     padding: 10px 15px;
     align-items: center;
     border-top: 1px solid black;
 }
-
 .yesorno .yes{
     cursor: pointer;
     border: none;
@@ -144,7 +137,6 @@
     font-size: 1.25rem;
     font-weight: bold;
 }
-
 .yesorno .close-button2{
     cursor: pointer;
     border: none;

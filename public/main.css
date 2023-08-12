@@ -1,4 +1,30 @@
-/* popup */
+/* 페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto */
+
+/* 1.QR코드 입력시 시작화면 CSS */
+
+/* 중앙 버튼 사이즈 설정 */
+.main-button{
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+      transition: transform .7s ease-in-out;
+    margin-left:10px;
+}
+.main-button:focus{
+    transform: rotate(360deg); /* 버튼 회전 */
+}
+.button-img{
+    width: 300px;
+    height: 300px;
+}
+
+
+
+/* 팝업 설정 */
 *, *::after, *::before {
     box-sizing: border-box;
 }
@@ -49,6 +75,7 @@
     max-height: 400px;
 }
 
+/* 오버레이 설정 */
 #overlay {
     position: fixed;
     opacity: 0;
@@ -66,7 +93,7 @@
     pointer-events: all;
 }
 
-/*popup page up down*/
+/* page-move클래스 텍스트란 */
 .page-move {
     padding: 10px 15px;
     display: flex;
@@ -75,6 +102,7 @@
     border-top: 1px solid black;
 }
 
+/* 이전 페이지 버튼 */
 .page-move .previous{
     cursor: pointer;
     border: none;
@@ -84,6 +112,7 @@
     font-weight: bold;
 }
 
+/* 다음 페이지 버튼 */
 .page-move .next{
     cursor: pointer;
     border: none;
@@ -93,24 +122,8 @@
     font-weight: bold;
 }
 
+/* 현재 페이지 출력 */
 .page-move #current-page{
     font-size: 1.25rem;
     font-weight: bold;
-}
-
-/* button size & spin */
-.main-button{
-    border: none;
-    cursor: pointer;
-    appearance: none;
-    background-color: inherit;
-      transition: transform .7s ease-in-out;
-    margin-left:10px;
-}
-.main-button:focus{
-    transform: rotate(360deg);
-}
-.button-img{
-    width: 300px;
-    height: 300px;
 }

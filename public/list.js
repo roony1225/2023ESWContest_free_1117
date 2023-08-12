@@ -1,31 +1,48 @@
+/* 페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto */
+
+//3.이미지 선택창 js
+
+//꾸미기 버튼: 미구현
 function decorate() {
     alert("WOO Filter")
 }
 
-/* 사진 리스트창 */
-/*사진 선택*/
-var printCheckVariable = 1;
-let imgUrlList0;
+var printCheckVariable = 1; //n번째 이미지 선택 변수
+let imgUrlList0; //프린트용 주소로 넘길 0번째 이미지 주소
+
+//1번째 이미지 선택
 function photochoice1(self) {
     printCheckVariable = 1;
     console.log(printCheckVariable);
 }
+
+//2번째 이미지 선택
 function photochoice2(self) {
     printCheckVariable = 2;
     console.log(printCheckVariable);
 }
+
+//3번째 이미지 선택
 function photochoice3(self) {
     printCheckVariable = 3;
     console.log(printCheckVariable);
 }
+
+//4번째 이미지 선택
 function photochoice4(self) {
     printCheckVariable = 4;
     console.log(printCheckVariable);
 }
 
-/*지정사진 프린트용 주소로 넘기기*/
+//지정사진 프린트용 주소로 넘기기
 function printcheck(){
+
+    //1번째 이미지 선택
     if(printCheckVariable == 1) {
+        //1번째 이미지 가져오기
         axios.get('https://'+ipUrl+'/ImageUrl1').then(response =>{
             imgUrlList0 = response.data;
             console.log(imgUrlList0);
@@ -34,6 +51,8 @@ function printcheck(){
             const childElement0 = document.createElement('img');
             childElement0.src = url;
             imageSection0.appendChild(childElement0);
+
+            //1번째 이미지를 프린트용 0번재 이미지 주소에 저장
             axios.post('https://'+ipUrl+'/ImageUrl0', {
                 'imgUrlList' : imgUrlList0
               }, {
@@ -45,7 +64,10 @@ function printcheck(){
         });
         });
     }
+
+    //2번째 이미지 선택
     else if(printCheckVariable == 2) {
+        //2번째 이미지 가져오기
         axios.get('https://'+ipUrl+'/ImageUrl2').then(response =>{
             imgUrlList0 = response.data;
             console.log(imgUrlList0);
@@ -54,6 +76,8 @@ function printcheck(){
             const childElement0 = document.createElement('img');
             childElement0.src = url;
             imageSection0.appendChild(childElement0);
+
+            //2번째 이미지를 프린트용 0번재 이미지 주소에 저장
             axios.post('https://'+ipUrl+'/ImageUrl0', {
                 'imgUrlList' : imgUrlList0
               }, {
@@ -65,7 +89,10 @@ function printcheck(){
         });
         });
     }
+
+    //3번째 이미지 선택
     else if(printCheckVariable == 3) {
+        //3번째 이미지 가져오기
         axios.get('https://'+ipUrl+'/ImageUrl3').then(response =>{
             imgUrlList0 = response.data;
             console.log(imgUrlList0);
@@ -74,6 +101,8 @@ function printcheck(){
             const childElement0 = document.createElement('img');
             childElement0.src = url;
             imageSection0.appendChild(childElement0);
+
+            //3번째 이미지를 프린트용 0번재 이미지 주소에 저장
             axios.post('https://'+ipUrl+'/ImageUrl0', {
                 'imgUrlList' : imgUrlList0
               }, {
@@ -85,7 +114,10 @@ function printcheck(){
         });
         });
     }
+
+    //4번째 이미지 선택
     else {
+        //4번째 이미지 가져오기
         axios.get('https://'+ipUrl+'/ImageUrl4').then(response =>{
             imgUrlList0 = response.data;
             console.log(imgUrlList0);
@@ -94,6 +126,8 @@ function printcheck(){
             const childElement0 = document.createElement('img');
             childElement0.src = url;
             imageSection0.appendChild(childElement0);
+
+            //4번째 이미지를 프린트용 0번재 이미지 주소에 저장
             axios.post('https://'+ipUrl+'/ImageUrl0', {
                 'imgUrlList' : imgUrlList0
               }, {
@@ -107,17 +141,16 @@ function printcheck(){
     }
 }
 
-/*매크로 실행*/
+//프린트 매크로 실행
 function yes() {
-    let macro_window = window.open("https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man","_blank");
-    //https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man
+    let macro_window = window.open("https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man","_blank");//매크로 실행 트리거
     setTimeout(()=> {
         macro_window.close();
-    },3000);
+    },3000);//3초후 매크로 창 종료
     
 }
 
-/* 팝업창 코드 */
+//팝업창
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
@@ -154,4 +187,3 @@ function closeModal2(modal) {
     if (modal == null) return
     modal.classList.remove('active')
 }
-

@@ -1,3 +1,9 @@
+/*페이지 순서
+HTML: main > index > list > printphoto
+CSS: main > index > list
+JS: main > watch > list > printphoto*/
+
+
 // setting server
 const express = require("express");
 const app = express();
@@ -136,6 +142,7 @@ io.sockets.on("connection", socket => {
   });
 });
 
-server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://192.168.45.210:9000/broadcast\nUser interface -> https://192.168.45.210:9000/main`));
+server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://10.50.10.50:9000/broadcast\nUser interface -> https://10.50.10.50:9000/main`));
 
 // commit 예제 test
+
