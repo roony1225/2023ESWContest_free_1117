@@ -7,7 +7,7 @@ const config = {
   ]
 };
 
-const ipUrl = '192.168.45.210:9000';
+const ipUrl = '10.50.10.50:9000';
 
 // setting video
 // const socket = io.connect(window.location.origin);
