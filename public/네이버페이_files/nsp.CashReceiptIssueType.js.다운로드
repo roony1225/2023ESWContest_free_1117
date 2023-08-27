@@ -1,0 +1,35 @@
+if (typeof nsp == "undefined") {
+	nsp = {};
+}
+
+nsp.CashReceiptIssueType = {
+	'PR_CELL_PHONE_NUMBER' : {
+		usageCode : 'PERSONAL_INCOME_TAX',
+		classCode : 'PR_CELL_PHONE_NUMBER',
+		desc : '휴대폰 번호를 입력해주세요',
+		format : [ "cellPhoneFirst", "cellPhoneSecond", "cellPhoneThird" ],
+		boxType : 'mobilePhone'
+	},
+	'PR_SOCIAL_NUMBER' : {
+		usageCode : 'PERSONAL_INCOME_TAX',
+		classCode : 'PR_SOCIAL_NUMBER',
+		desc : '주민등록 번호를 입력해주세요',
+		format : [ "socialNumberFirst", "socialNumberSecond" ],
+		boxType : 'socialNum'
+
+	},
+	'PR_CASH_RECEIPT_CARD_NUMBER' : {
+		usageCode : 'PERSONAL_INCOME_TAX',
+		classCode : 'PR_CASH_RECEIPT_CARD_NUMBER',
+		desc : '현금 영수증 카드 번호를 입력해주세요',
+		format : [ "receiptCardFirst", "receiptCardSend", "receiptCardThird","receiptCardFourth" ],
+		boxType : 'receiptCardNum'
+	},
+	'BUSINESS_REGISTRATION_NUMBER' : {
+		usageCode : 'BIZ_EXPENSE_PROOF',
+		classCode : 'BUSINESS_REGISTRATION_NUMBER',
+		desc : '사업자 등록 번호를 입력해주세요',
+		format : [ "receiptBizNoFirst", "receiptBizNoSecond", "receiptBizNoThird" ],
+		boxType : 'bizNum'
+	}
+};

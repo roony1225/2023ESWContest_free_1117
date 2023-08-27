@@ -1,0 +1,162 @@
+pug.createModule("checkout.mobile.order.ui", {
+	initialize : function(){
+		pug.layer.initialize();
+		this.attachEventDelegator();
+	},
+	_htElementSelector : {
+		"root" : "body",
+		"" : ""
+	},
+	_htEventHandler : {},
+	attachEventDelegator : function() {
+		pug.event.delegator.attach(this._getElement("root"), "click", this);
+	},
+	initializeFormHelper : function(elRoot, fSuccessHandler, fBeforeSubmitHandler) {
+		var formHeleper = new pug.component.FormHelper({
+			"elRoot" : elRoot
+		});
+		if ( fSuccessHandler ) {
+			formHeleper.attach("success", fSuccessHandler);
+		}
+
+		if ( fBeforeSubmitHandler ) {
+			formHeleper.attach("beforeSubmit", fBeforeSubmitHandler);
+		}
+
+		return formHeleper;
+	},
+	enableFields : function (elRootElement, bEnable) {
+		var inputFields = $Element(elRootElement).queryAll("select,input,textarea");
+		$ElementList(inputFields).attr("disabled", !bEnable);
+	},
+	setThousandComma : function(num) {
+		 var returnVal = String(num);
+
+		 while(returnVal.match(/^(-?\d+)(\d{3})/))	{
+			 returnVal = returnVal.replace(/^(-?\d+)(\d{3})/, '$1,$2');
+		 }
+
+		 return returnVal;
+	},
+	initializeUnloadEvent : function() {
+		this.enableUnloadCheck();
+	},
+	enableUnloadCheck : function(){
+		this.disableUnloadCheck();
+		this._htEventHandler["beforeunload"] = this._attachEventHandler(window, "beforeunload", $Fn(this._onBeforeUnload, this).bind());
+	},
+	disableUnloadCheck : function(){
+		if(this._htEventHandler["beforeunload"]) {
+			this._detachEventHandler(this._htEventHandler["beforeunload"]);
+		}
+	},
+	_onBeforeUnload : function(weBeforeUnload){
+		weBeforeUnload.$value().returnValue = "";
+		return "";
+    },
+    /**
+	 * 개별 섹션 펼치기/접기 공통 액션 수행
+	 * @param we, sClassName
+	 */
+	toggleSection: function(we, sClassName, bIframe, sParentClassName){
+		if(we == undefined || sClassName == undefined){
+			return;
+		}
+		// 현재 엘레먼트의 tt_close/tt_open 클래스 반복 처리
+		var welSection = $Element(we.element);
+		while(welSection != undefined && !welSection.hasClass(sParentClassName)){
+			welSection = $Element(welSection.$value().parentElement);
+		}
+
+		if(welSection.hasClass(sClassName)){
+			welSection.removeClass(sClassName);
+			if (welSection.hasClass("_productDetail")) {
+				var elDiscountForm = $$.getSingle("._discountForm");
+				if (elDiscountForm != null) {
+					$Element(elDiscountForm).show();
+				}
+			}
+		}else{
+			welSection.addClass(sClassName);
+			if (welSection.hasClass("_productDetail")) {
+				var elDiscountForm = $$.getSingle("._discountForm");
+				if (elDiscountForm != null) {
+					$Element(elDiscountForm).hide();
+				}
+			}
+		}
+
+		var clickElement = welSection.query(".tt_togle");
+
+		if(clickElement.hasClass("tt_close")){
+			clickElement.removeClass("tt_close");
+			clickElement.addClass("tt_open");
+		}else{
+			clickElement.addClass("tt_close");
+			clickElement.removeClass("tt_open");
+		}
+
+		if (bIframe != undefined && top != undefined && bIframe) {
+			top.pug.mobile.refreshIframeScroll();
+		}
+	},
+	historyBackIframe : function(we) {
+		top.history.back();
+	},
+	hideIframe : function(we) {
+		try {
+			if (layout != undefined && layout.footer != undefined) {
+				var currentUrl = document.location.href;
+
+				if (currentUrl.indexOf("/o/linedeal/cart") > -1) {
+					layout.footer.centerText = "Cart";
+				} else if (currentUrl.indexOf("/o/linedeal/orderSheet/") > -1) {
+					layout.footer.centerText = "Buy Now";
+				}
+
+				if (LCS != undefined && LCS.Interface != undefined) {
+					LCS.Interface.updateTitleBar(layout.footer.getTitleBarOption());
+					LCS.Interface.registerTitleBarCallback(layout.footer.getCallBackOption());
+				}
+			}
+		} catch (e) {}
+
+		top.pug.mobile.hideIframe();
+	},
+	hideIframeTop : function(we) {
+		this.hideIframe();
+		checkout.mobile.order.linedeal.order_sheet.moveFocusToMobileNumber();
+	},
+	loadLazyImage : function(elContainer) {
+		var welTarget = $Element(elContainer || document.body);
+
+		pug.mobile.loadLazyImage(elContainer);
+
+		var aLoadingImg = welTarget.queryAll("._loading");
+		if (aLoadingImg != null) {
+			aLoadingImg.forEach(function(v,i,a) {
+				$Element(a[i]).hide();
+			});
+		}
+	},
+	moveFocusOnTop : function(htEvent, sElementName) {
+		top.checkout.mobile.order.order_sheet.moveFocusOn(sElementName, true);
+	},
+	isElementVisible : function(el) {
+		return el.offsetWidth > 0 && el.offsetHeight > 0;
+	},
+	toggleVisibility : function(welTarget, bShow) {
+		if (welTarget == undefined) {
+			return;
+		}
+		if (bShow) {
+			welTarget.show();
+		} else {
+			welTarget.hide();
+		}
+	},
+	convertDollarFormat : function(sValue) {
+		return parseFloat(String(sValue).replace(/,/g, "")).toFixed(2);
+	},
+	"":""
+}, true);

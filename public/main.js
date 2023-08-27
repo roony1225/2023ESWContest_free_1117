@@ -5,7 +5,12 @@ JS: main > watch > list > printphoto */
 //
 //1.QR코드 입력시 시작 js
 
-const ipUrl = '10.50.10.50:9000'; //ip 주소
+const ipUrl = '10.50.8.200:9000'; //ip 주소
+
+function goToNextPage() {
+    window.open("https://"+ipUrl,"_self");
+}
+
 
 //팝업창 변수
 const openModalButtons = document.querySelectorAll('[data-modal-target]')

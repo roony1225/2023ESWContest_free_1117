@@ -9,101 +9,92 @@ JS: main > watch > list > printphoto -->
 <head>
     <title>List</title>
     <meta charset="UTF-8">
-    <link href="index.css" rel="stylesheet" />
+    <!-- <link href="index.css" rel="stylesheet" /> -->
     <link href="list.css" rel="stylesheet"/>
     <script defer src="list.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
     <script>
-        const ipUrl = '10.50.10.50:9000';
+        const ipUrl = '10.50.8.200:9000';
 
         //촬영된 이미지 불러오기
         window.onload = () => {
-            console.log("?????");
-            let imgUrlList1;
-            let imgUrlList2;
-            let imgUrlList3;
-            let imgUrlList4;
-            axios.get('https://'+ipUrl+'/ImageUrl1').then(response =>{
-                imgUrlList1 = response.data;
-                console.log(imgUrlList1);
-                imgUrlList1.forEach(url => {
-                const imageSection1 = document.getElementById("image-section1");
-                const childElement1 = document.createElement('img');
-                childElement1.src = url;
-                imageSection1.appendChild(childElement1);
+            let width = (window.innerWidth - 140) / 2;
+            let height = Math.floor(0.75 * width);
+
+            let indexList = [1, 2, 3, 4];
+            indexList.forEach((i)=>{
+                let imgUrl;
+                axios.get(`https://${ipUrl}/ImageUrl${i}`).then(response =>{
+                    imgUrl = response.data[0];
+                    console.log(imgUrl);
+                    
+                    const imageSection = document.getElementById(`image-section${i}`);
+                    const childElement = document.createElement('img');
+                    childElement.src = imgUrl;
+                    childElement.width = width;
+                    childElement.height = height;
+                    imageSection.appendChild(childElement);
+                    console.log(childElement);
+                });
+
             });
-            });
-            axios.get('https://'+ipUrl+'/ImageUrl2').then(response =>{
-                imgUrlList2 = response.data;
-                console.log(imgUrlList2);
-                imgUrlList2.forEach(url => {
-                const imageSection2 = document.getElementById("image-section2");
-                const childElement2 = document.createElement('img');
-                childElement2.src = url;
-                imageSection2.appendChild(childElement2);
-            });
-            });
-            axios.get('https://'+ipUrl+'/ImageUrl3').then(response =>{
-                imgUrlList3 = response.data;
-                console.log(imgUrlList3);
-                imgUrlList3.forEach(url => {
-                const imageSection3 = document.getElementById("image-section3");
-                const childElement3 = document.createElement('img');
-                childElement3.src = url;
-                imageSection3.appendChild(childElement3);
-            });
-            });
-            axios.get('https://'+ipUrl+'/ImageUrl4').then(response =>{
-                imgUrlList4 = response.data;
-                console.log(imgUrlList4);
-                imgUrlList4.forEach(url => {
-                const imageSection4 = document.getElementById("image-section4");
-                const childElement4 = document.createElement('img');
-                childElement4.src = url;
-                imageSection4.appendChild(childElement4);
-            });
-            });
+            if(getQueryParam("isPayed")) {
+                let macro_window = window.open("https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man", "_blank");
+                setTimeout(()=>{
+                    macro_window.close();
+                }, 3000);
+            }
         };
     </script>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
-    <script src="/socket.io/socket.io.js"></script>
-
-    <!--이미지 클릭시 선택/팝업창 출력-->
-    <li><a href="printphoto.html">check(dev)</a></li>
-    <button id="image-section1" data-modal-target="#modal" onclick="photochoice1(this)"></button><!-- 1번째 이미지 선택 -->
-    <button id="image-section2" data-modal-target="#modal" onclick="photochoice2(this)"></button><!-- 2번째 이미지 선택 -->
-    <button id="image-section3" data-modal-target="#modal" onclick="photochoice3(this)"></button><!-- 3번째 이미지 선택 -->
-    <button id="image-section4" data-modal-target="#modal" onclick="photochoice4(this)"></button><!-- 4번째 이미지 선택 -->
-
-    <!--이미지 선택시 출력되는 팝업창-->
-    <div class="modal" id="modal">
-        <div class="modal-header">
-          <div class="title">Example Modal</div>
-          <button data-close-button class="close-button">&times;</button>
+    <h1>출력할 사진을 골라주세요.</h1>
+    <div id="list-outer">
+        <!--이미지 클릭시 선택/팝업창 출력-->
+        <!-- <li><a href="printphoto.html">check(dev)</a></li> -->
+        <div id="bl-1">
+            <button class="image-btn" id="image-section1" data-modal-target="#modal" onclick="photochoice1(this)"></button><!-- 1번째 이미지 선택 -->
         </div>
-        <div class="checkbtn">
-            <button class="decorate" onclick="decorate()">Decorate</button> <!-- 꾸미기버튼: 미구현 -->
-            <br>
-            <button class="printcheck" data-modal-target="#modal2" onclick="printcheck()">Print</button> <!-- 이미지 프린트버튼 -->
+        <div id="bl-2">
+            <button class="image-btn" id="image-section2" data-modal-target="#modal" onclick="photochoice2(this)"></button><!-- 2번째 이미지 선택 -->
         </div>
+        <div id="bl-3">
+            <button class="image-btn" id="image-section3" data-modal-target="#modal" onclick="photochoice3(this)"></button><!-- 3번째 이미지 선택 -->
+        </div>
+        <div id="bl-4">
+            <button class="image-btn" id="image-section4" data-modal-target="#modal" onclick="photochoice4(this)"></button><!-- 4번째 이미지 선택 -->
+        </div>
+
+        <!--이미지 선택시 출력되는 팝업창-->
+        <div class="modal" id="modal">
+            <div class="modal-header">
+            <div class="title">Example Modal</div>
+            <button data-close-button class="close-button">&times;</button>
+            </div>
+            <div class="checkbtn">
+                <button class="decorate" onclick="decorate()">Decorate</button> <!-- 꾸미기버튼: 미구현 -->
+                <br>
+                <button class="printcheck" data-modal-target="#modal2" onclick="printcheck()">Print</button> <!-- 이미지 프린트버튼 -->
+            </div>
+        </div>
+
+        <!-- 이미지 프린트버튼 입력시 확인용 팝업창 -->
+        <div class="modal2" id="modal2">
+            <div class="modal-header2">
+            <div class="title2">Are you sure?</div>
+            </div>
+            <div class="yesorno">
+                <button data-close-button class="yes" onclick="yes()">YES</button> <!-- 이미지 프린트 -->
+                <br>
+                <button data-close-button class="close-button2">NO</button>
+            </div>
+        </div>
+
+        <div id="overlay"></div>
+        <div id="image-section0"></div>
     </div>
-
-    <!-- 이미지 프린트버튼 입력시 확인용 팝업창 -->
-    <div class="modal2" id="modal2">
-        <div class="modal-header2">
-          <div class="title2">Are you sure?</div>
-        </div>
-        <div class="yesorno">
-            <button data-close-button class="yes" onclick="yes()">YES</button> <!-- 이미지 프린트 -->
-            <br>
-            <button data-close-button class="close-button2">NO</button>
-        </div>
-    </div>
-
-    <div id="overlay"></div>
-    <div id="image-section0"></div>
-
 </body>
 </html>

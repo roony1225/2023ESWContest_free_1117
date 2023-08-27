@@ -5,6 +5,41 @@ JS: main > watch > list > printphoto */
 /*  */
 /* 3.이미지 선택창 CSS */
 
+/* .image-btn {
+    width: 640px;
+} */
+
+h1 {
+    text-align: center;
+    font-size: 72px;
+}
+#list-outer {
+    display: grid;
+    padding: 40px;
+    grid-template-columns: 1fr 20px 1fr;
+    grid-template-rows: 1fr 20px 1fr;
+    grid-template-areas: 
+        "bl-1 . bl-2"
+        ". . ."
+        "bl-3 . bl-4";
+}
+
+#bl-1 {
+    grid-area: bl-1;
+}
+
+#bl-2 {
+    grid-area: bl-2;
+}
+
+#bl-3 {
+    grid-area: bl-3;
+}
+
+#bl-4 {
+    grid-area: bl-4;
+}
+
 *, *::after, *::before {
     box-sizing: border-box;
 }
@@ -144,4 +179,8 @@ JS: main > watch > list > printphoto */
     background: none;
     font-size: 1.25rem;
     font-weight: bold;
+}
+
+#image-section0 {
+    display: none;
 }

@@ -5,125 +5,59 @@ JS: main > watch > list > printphoto */
 /*  */
 /* 1.QR코드 입력시 시작화면 CSS */
 
-/* 중앙 버튼 사이즈 설정 */
-.main-button{
-    border: none;
-    cursor: pointer;
-    appearance: none;
-    background-color: inherit;
-      transition: transform .7s ease-in-out;
-    margin-left:10px;
-}
-.main-button:focus{
-    transform: rotate(360deg); /* 버튼 회전 */
-}
-.button-img{
-    width: 300px;
-    height: 300px;
-}
-
-
-
-/* 팝업 설정 */
-*, *::after, *::before {
-    box-sizing: border-box;
+#outer {
+    background-color: #ffffff;
+    display: grid;
+    margin: 40px;
+    grid-template-rows: 200px 40px 40px 10px 40px 40px 40px 20px 40px;
+    grid-template-areas: 
+        "section-photo"
+        "."
+        "section-title"
+        "."
+        "section-subtitle"
+        "."
+        "section-button-next"
+        "."
+        "section-button-help"
+    ;
 }
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 200ms ease-in-out;
-    border: 1px solid black;
-    border-radius: 10px;
-    z-index: 10;
-    background-color: white;
-    width: 500px;
-    max-width: 80%;
+#section-photo {
+    grid-area: section-photo;
+    background-image: url('image/main-image.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.modal.active {
-    transform: translate(-50%, -50%) scale(1);
+#section-title {
+    grid-area: section-title;
+    font-size: 30px;
+    font-weight: 900;
 }
 
-.modal-header {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid black;
+#section-subtitle {
+    grid-area: section-subtitle;
+    font-size: 18px;
+    font-weight: 500;
+    color: #727272;
 }
 
-.modal-header .title {
-    font-size: 1.25rem;
-    font-weight: bold;
+.btn-custom-large {
+    width: 100%;
+    font-size: 20px;
+    padding: 15px 30px;
 }
 
-.modal-header .close-button {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 1.25rem;
-    font-weight: bold;
+#section-button-next {
+    grid-area: section-button-next;
 }
 
-.modal-body {
-    padding: 10px 15px;
-    overflow-y: scroll !important;
-    max-height: 400px;
+#section-button-help {
+    grid-area: section-button-help;
 }
 
-/* 오버레이 설정 */
-#overlay {
-    position: fixed;
-    opacity: 0;
-    transition: 200ms ease-in-out;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0, .5);
-    pointer-events: none;
-}
-
-#overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* page-move클래스 텍스트란 */
-.page-move {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid black;
-}
-
-/* 이전 페이지 버튼 */
-.page-move .previous{
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-/* 다음 페이지 버튼 */
-.page-move .next{
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-/* 현재 페이지 출력 */
-.page-move #current-page{
-    font-size: 1.25rem;
-    font-weight: bold;
+.modal-content {
+    overflow-y: scroll;
 }

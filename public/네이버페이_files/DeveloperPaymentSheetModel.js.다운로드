@@ -1,0 +1,792 @@
+if (typeof nsp == "undefined") {
+    nsp = {};
+}
+
+nsp.DeveloperPaymentSheetModel = jindo.$Class({
+    _htInstance: {},
+
+    _bIsOnAuthorize: false, //가맹점 OnAuthorize 구현 여부
+    _bAgreedOpenBank: false, // 오픈 뱅킹 동의 여부
+    _sMerchantItemId: '',
+
+    _sMemberNickName: '', //닉네임명
+    _sMemberMaskingNaverId: '', //마스킹네이버아이디
+    _sMemberImgUrl: '', //이미지URL
+
+    _sMerchantName: '', //가맹점명
+    _sProductName: '', //상품명
+    _nAmount: 0, //상품가격
+
+    _bAvailableNaverPoint: true, //포인트사용여부
+    _bNaverPointLimitPolicy: true, //포인트제한정책 사용여부
+    _nAvailableNaverPointForOneMonth: 0, //포인트제한정책 - 한달 포인트사용한도
+    _nNaverPoint: 0, //보유포인트
+    _nNaverPointAvailable: true,
+    _nUsedNaverPoint: 0, //사용포인트
+
+
+    _sPayMethod: '', //내가 선택한 결제수단: 카드 추가화면 - 'REGISTER_CARD' / 나머지는 card code
+    _sCkey: '', // CKEY
+    _sPayMethodInGeneralTab: '',
+    _sPayMethodTab: '', //내가 선택한 결제수단 탭
+    _sInstallmentMonth: "01", // 할부 개월 수, string value 이며, "01", "02" 의 format 으로 되어 있음
+
+    _sDefaultEasyCardCode: "",
+    _sDefaultEasyBankCode: "",
+    _sDefaultMultiBankAccountCode: "",
+    _sDefaultCid: "",
+
+    _htLastPayMeans: {}, //마지막결제수단정보
+
+    _bCashReceiptPublish: false, // 현금영수증제공하는 가맹점 확인
+    _defaultCashReceiptInfo: '', // 서버로부터 받은 현금영수증정보
+    _bCashReceiptApply: true,    // 현금영수증 신청 / 신청안함
+    _oReceiptIssue: {},          // 현금영수증 번호 format : value ex)cellPhoneFirst : "010"
+    _bUpdateReceiptInfo: false,  // 현금영수증 신청정보 저장 / 저장안함
+    _bChangedCashReceiptIssue: false,    // 현금영수증정보 변경 클릭 유, 무
+    _bRegisteredCashReceiptIssue: false, // 등록된 현금영수증 있는지 유, 무
+    _cashReceiptIssueType: nsp.CashReceiptIssueType['PR_CELL_PHONE_NUMBER'], // 현금영수증 타입
+
+    _sPaymentHost: '', //결제창 Host
+    _sReserveId: '', //reserveId
+    _sLogoutUrl: '', //로그아웃요청URL
+    _sEnvPhase: '', //phase
+
+    _cardType: nsp.CardType['PRIVATE'],
+    _bSupportGeneralPayMeans: false,
+    _htPayMeansInfos: {},
+    _sMobilePayPhoneNumber: '',
+    _easyPayBankRegistrationDate: '',
+    _easyPayBankRegisteredCode: '',
+    _easyPayBankRegisteredText: '',
+
+    _bAvailableCard: true,
+    _bAvailableBank: true,
+    _bDisableInstallment: false,
+    _bNaverMovie: false,
+    _oSimplePaymentMethodComponent: {},
+    _bHiddenCardPoint: false,
+    _bUsedCardPoint: false,
+    _bOpendNaverAccount: false, // 네이버통장 개설 여부
+
+    _nTotalPointBenefit: 0, // 총 포인트 혜택
+    _nDefaultPointBenefit: 0, // 기본 적립 포인트 혜택
+    _nPointPlusPointBenefit: 0, // 포인트플러스 적립 포인트 혜택
+    _nAdPointBenefit: 0, // 파워 적립 포인트 혜택
+    _nNaverAccountPointBenefit: 0, // 네이버통장 포인트 혜택
+
+    $init: function (htParams) {
+        this._bIsOnAuthorize = htParams['isOnAuthorize'];
+        this._bAgreedOpenBank = htParams['bAgreedOpenBank'];
+        this._sMerchantItemId = htParams['merchantItemId'];
+
+        this._sMemberNickName = htParams['memberNickName'];
+        this._sMemberMaskingNaverId = htParams['memberMaskingNaverId'];
+        this._sMemberImgUrl = htParams['memberImgUrl'];
+
+        this._sMerchantName = htParams['merchantName'];
+        this._sProductName = htParams['productName'];
+        this._nAmount = htParams['amount'];
+
+        this._bAvailableNaverPoint = htParams['isAvailableNaverPoint'];
+        this._bNaverPointLimitPolicy = htParams['isNaverPointLimitPolicy'];
+        this._nAvailableNaverPointForOneMonth = htParams['_availableNaverPointForOneMonth'];
+        this._nNaverPoint = htParams['naverPoint'];
+        this._nNaverPointAvailable = htParams['naverPointAvailable'];
+        this._nUsedNpayPoint = htParams['usedNaverPoint'];
+
+        this._htLastPayMeans = htParams['lastPayMeans'];
+
+        this._sPaymentHost = htParams['paymentHost'];
+        this._sReserveId = htParams['reserveId'];
+        this._sLogoutUrl = htParams['logoutUrl'];
+        this._sEnvPhase = htParams['envPhase'];
+
+        this._defaultCashReceiptInfo = htParams['defaultCashReceiptInfo'];
+        this._bSupportGeneralPayMeans = htParams['isSupportGeneralPayMeans'];
+        this._bCashReceiptPublish = htParams['isCashReceiptPublish'];
+        this._bRegisteredCashReceiptIssue = htParams['isRegisteredCashReceiptIssue'];
+        this._easyPayBankRegistrationDate = htParams['easyPayBankRegistrationDate'];
+        this._easyPayBankRegisteredCode = htParams['easyPayBankRegisteredCode'];
+        this._easyPayBankRegisteredText = htParams['easyPayBankRegisteredText'];
+
+        this._bAvailableCard = htParams['isAvailableCard'];
+        this._bAvailableBank = htParams['isAvailableBank'];
+        this._htPayMeansInfos = htParams['payMeansInfos'];
+        this._bDisableInstallment = htParams['isDisableInstallment'];
+        this._bNaverMovie = htParams['isNaverMovie'];
+        this._bHiddenCardPoint = htParams['hiddenCardPoint'];
+        this._bOpendNaverAccount = htParams['opendNaverAccount'];
+
+        this._nTotalPointBenefit = htParams['totalPointBenefit'];
+        this._nDefaultPointBenefit = htParams['defaultPointBenefit'];
+        this._nPointPlusPointBenefit = htParams['pointPlusPointBenefit'];
+        this._nAdPointBenefit = htParams['adPointBenefit'];
+        this._nNaverAccountPointBenefit = htParams['naverAccountPointBenefit'];
+
+        // 현금영수증
+        if (this._defaultCashReceiptInfo['receiptIssueClassCode']) {
+            this.setCashReceiptIssueType(this._defaultCashReceiptInfo['receiptIssueClassCode']);
+        }
+
+        var oTmpReceiptInfo = $H({});
+        for (var idx in this.getCashReceiptIssueType()['format']) {
+            var sKey = this.getCashReceiptIssueType()['format'][idx];
+            oTmpReceiptInfo.add(sKey, this._defaultCashReceiptInfo[sKey]);
+        }
+        this._oReceiptIssue = oTmpReceiptInfo.$value();
+    },
+
+    getPaymentHost: function () {
+        return this._sPaymentHost;
+    },
+
+    getEnvPhase: function () {
+        return this._sEnvPhase;
+    },
+
+    isRealEnv: function () {
+        return this._sEnvPhase === "real" ? true : false;
+    },
+
+    getReserveId: function () {
+        return this._sReserveId;
+    },
+
+    getLogoutUrl: function () {
+        return this._sLogoutUrl;
+    },
+
+    isOnAuthorize: function () {
+        return this._bIsOnAuthorize;
+    },
+
+    /**
+     * 가맹점 itemId
+     * @returns {string}
+     */
+    getMerchantItemId: function () {
+        return this._sMerchantItemId;
+    },
+
+    /**
+     * 네이버 로그인 닉네임, 아이디, 이미지URL
+     */
+    setMemberNickName: function (memberNickName) {
+        this._sMemberNickName = memberNickName;
+    },
+    getMemberNickName: function () {
+        return this._sMemberNickName;
+    },
+    setMemberMaskingNaverId: function (memberMaskingNaverId) {
+        this._sMemberMaskingNaverId = memberMaskingNaverId;
+    },
+    getMemberMaskingNaverId: function () {
+        return this._sMemberMaskingNaverId;
+    },
+    setMemberImgUrl: function (memberImgUrl) {
+        this._sMemberImgUrl = memberImgUrl;
+    },
+    getMemberImgUrl: function () {
+        return this._sMemberImgUrl;
+    },
+
+    /**
+     * 가맹점명
+     */
+    setMerchantName: function (merChantName) {
+        this._sMerchantName = merChantName;
+    },
+    getMerchantName: function () {
+        return this._sMerchantName;
+    },
+
+    /**
+     * 상품명
+     */
+    setProductName: function (productName) {
+        this._sProductName = productName;
+    },
+    getProductName: function () {
+        return this._sProductName;
+    },
+    getProductNameTitle: function () {
+        // ( 문자는 일반결제 inicis pg 비허용문자
+        return this._sProductName.replace(/(&lt;|&gt;|&amp;|&quot;|\(|')/gi, '');
+    },
+
+    /**
+     * 상품가격
+     */
+    setAmount: function (amount) {
+        this._nAmount = amount;
+    },
+    getAmount: function () {
+        return this._nAmount;
+    },
+
+    /**
+     * 네이버포인트 사용여부
+     */
+    setIsAvailableNaverPoint: function (isAvailableNaverPoint) {
+        this._bAvailableNaverPoint = isAvailableNaverPoint;
+    },
+    isAvailableNaverPoint: function () {
+        return this._bAvailableNaverPoint;
+    },
+
+    /**
+     * 네이버포인트제한결제 사용여부
+     */
+    setIsNaverPointLimitPolicy: function (isNaverPointLimitPolicy) {
+        this._bNaverPointLimitPolicy = isNaverPointLimitPolicy;
+    },
+    isNaverPointLimitPolicy: function () {
+        return this._bNaverPointLimitPolicy;
+    },
+
+    /**
+     * 네이버포인트제한결제 - 네이버포인트 한달한도
+     */
+    setAvailableNaverPointForOneMonth: function (availableNaverPointForOneMonth) {
+        this._nAvailableNaverPointForOneMonth = availableNaverPointForOneMonth;
+    },
+    getAvailableNaverPointForOneMonth: function () {
+        return this._nAvailableNaverPointForOneMonth;
+    },
+
+    /**
+     * 보유하고 있는 네이버포인트
+     */
+    setNaverPoint: function (nNaverPoint) {
+        this._nNaverPoint = nNaverPoint;
+    },
+    getNaverPoint: function () {
+        return this._nNaverPoint;
+    },
+    getNaverPointAvailable: function () {
+        return this._nNaverPointAvailable;
+    },
+
+    /**
+     * 현재 사용 중인 네이버포인트
+     */
+    setUsedNaverPoint: function (nUsedNaverPoint) {
+        this._nUsedNpayPoint = nUsedNaverPoint;
+    },
+    getUsedNaverPoint: function () {
+        return this._nUsedNpayPoint;
+    },
+
+    /**
+     * 디폴트 결제 수단
+     */
+    setDefaultEasyCardCode: function (defaultEasyCardCode) {
+        this._sDefaultEasyCardCode = defaultEasyCardCode;
+    },
+
+    getDefaultEasyCardCode: function () {
+        return this._sDefaultEasyCardCode;
+    },
+
+    setDefaultEasyBankCode: function (defaultEasyBankCode) {
+        this._sDefaultEasyBankCode = defaultEasyBankCode;
+    },
+
+    getDefaultEasyBankCode: function () {
+        return this._sDefaultEasyBankCode;
+    },
+
+    setDefaultMultiBankAccountCode: function (defaultMultiBankAccountCode) {
+        this._sDefaultMultiBankAccountCode = defaultMultiBankAccountCode;
+    },
+
+    getDefaultMultiBankAccountCode: function () {
+        return this._sDefaultMultiBankAccountCode;
+    },
+
+    setDefaultCid: function (defaultCid) {
+        this._sDefaultCid = defaultCid;
+    },
+
+    getDefaultCid: function () {
+        return this._sDefaultCid;
+    },
+
+    /**
+     * 내가 선택한 결제수단
+     */
+    setPayMethod: function (payMethod) {
+        this._sPayMethod = payMethod;
+    },
+    getPayMethod: function () {
+        return this._sPayMethod;
+    },
+
+    /**
+     * CKEY
+     */
+
+    setCkey: function (ckey) {
+        this._sCkey = ckey;
+    },
+
+    getCkey: function () {
+        return this._sCkey;
+    },
+
+    /**
+     * 일반 결제 탭에서 선택한 결제수단
+     */
+    setPayMethodInGeneralTab: function (payMethodInGeneralTab) {
+        this._sPayMethodInGeneralTab = payMethodInGeneralTab;
+    },
+    getPayMethodInGeneralTab: function () {
+        return this._sPayMethodInGeneralTab;
+    },
+    /**
+     * 내가 선택한 결제수단탭
+     */
+    setPayMethodTab: function (payMethodTab) {
+        this._sPayMethodTab = payMethodTab;
+    },
+    getPayMethodTab: function () {
+        return this._sPayMethodTab;
+    },
+
+    /**
+     * 마지막 결제수단 정보
+     */
+    getLastPayMeansSimpleCheck: function () {
+
+        return this._htLastPayMeans["isSimplePayment"];
+    },
+    getLastPayMeansClassType: function () {
+
+        return this._htLastPayMeans["payMeansClassType"];
+    },
+    getLastPayMeansPayMethod: function () {
+        if (this._htLastPayMeans["isSimplePayment"] == false) {
+            if (this._htLastPayMeans["payMeansClassType"] == "CREDIT_CARD") {
+
+                return "CREDIT_CARD";
+            } else if (this._htLastPayMeans["payMeansClassType"] == "MOBILE") {
+
+                return "MOBILE";
+            }
+        }
+
+        return this._htLastPayMeans["corpCode"];
+    },
+
+    /**
+     * 현금영수증 발급 가맹점 여부
+     */
+    isCashReceiptPublish: function () {
+        return this._bCashReceiptPublish;
+    },
+
+    /**
+     * 현금 영수증 기본 발급 정보를 변경 버튼을 통해 변경하고자 했는 지 확인하는 flag
+     */
+    setChangedCashReceiptIssue: function (bFlag) {
+        this._bChangedCashReceiptIssue = bFlag;
+    },
+
+    isChangedCashReceiptIssue: function () {
+        return this._bChangedCashReceiptIssue;
+    },
+
+    /**
+     * 현금 영수증 신청 여부
+     */
+    isCashReceiptApply: function () {
+        return this._bCashReceiptApply;
+    },
+
+    setCashReceiptApply: function (bApply) {
+        this._bCashReceiptApply = bApply;
+    },
+
+    /**
+     * 현금 영수증 정보 저장
+     */
+    isUpdateReceiptInfo: function () {
+        return this._bUpdateReceiptInfo;
+    },
+
+    setUpdateReceiptInfo: function (bUpdate) {
+        this._bUpdateReceiptInfo = bUpdate;
+    },
+
+    /**
+     * 현금영수증 타입에 따라 enum set
+     */
+    getCashReceiptIssueType: function () {
+        return this._cashReceiptIssueType;
+    },
+
+    setCashReceiptIssueType: function (sType) {
+        if (!sType) {
+            this._cashReceiptIssueType = nsp.CashReceiptIssueType['PR_CELL_PHONE_NUMBER'];
+        } else {
+            this._cashReceiptIssueType = nsp.CashReceiptIssueType[sType];
+        }
+    },
+
+    getCashReceiptIssueTypeDesc: function () {
+        return this.getCashReceiptIssueType()['desc'];
+    },
+
+    /**
+     * 서버로 보낼 현금영수증 정보
+     */
+    findReceiptInfo: function () {
+
+        var oReceiptInfo = $H({
+
+            // 휴대폰 번호
+            "cellPhoneFirst": "",
+            "cellPhoneSecond": "",
+            "cellPhoneThird": "",
+            // 신청 여부
+            // 사업자 등록 번호
+            "receiptBizNoFirst": "",
+            "receiptBizNoSecond": "",
+            "receiptBizNoThird": "",
+            // 현금 영수증 카드번호
+            "receiptCardFirst": "",
+            "receiptCardFourth": "",
+            "receiptCardSend": "",
+            "receiptCardThird": "",
+            // 주민등록 번호
+            "socialNumberFirst": "",
+            "socialNumberSecond": "",
+
+            "receiptApplyed": this.isCashReceiptApply(),
+            "receiptIssueClassCode": this.getCashReceiptIssueType()['classCode'],
+            "receiptIssueUsageCode": this.getCashReceiptIssueType()['usageCode'],
+            // 정보 업데이트 여부
+            "updateReceiptInfo": this.isUpdateReceiptInfo()
+        });
+
+        for (var key in this.getCashReceiptIssue()) {
+            oReceiptInfo.add(key, this.getCashReceiptIssue()[key]);
+        }
+
+        return oReceiptInfo.$value();
+    },
+
+    /**
+     * 화면에 새로운 현금영수증 값 입력 시 셋팅
+     */
+    setCashReceiptIssueValue: function (sReceiptIssue) {
+        this._oReceiptIssue = this._findReceiptIssue(sReceiptIssue);
+    },
+
+    _findReceiptIssue: function (sReceiptIssue) {
+
+        var aReceiptIssue = sReceiptIssue.split('-'), oTmpReceiptInfo = $H({});
+
+        for (var idx in this.getCashReceiptIssueType()['format']) {
+            var sKey = this.getCashReceiptIssueType()['format'][idx];
+            oTmpReceiptInfo.add(sKey, aReceiptIssue[idx]);
+        }
+        return oTmpReceiptInfo.$value();
+    },
+
+    getCashReceiptIssue: function () {
+        return this._oReceiptIssue;
+    },
+
+
+    /**
+     * 등록 된 현금영수증 있는지 여부
+     */
+    isRegisteredCashReceiptIssue: function () {
+        return this._bRegisteredCashReceiptIssue;
+    },
+
+    /**
+     * 현금영수증영역 비즈니스로직
+     */
+    //bo
+    getDefaultCashReceiptIssueNums: function () {
+        var sIssueNums = [];
+        for (var idx in this.getCashReceiptIssueType()['format']) {
+            var sKey = this.getCashReceiptIssueType()['format'][idx];
+            if (this.getCashReceiptIssue()[sKey]) {
+                var sIssueNum = this.getCashReceiptIssue()[sKey];
+                sIssueNums.push(sIssueNum);
+            }
+        }
+
+        return sIssueNums;
+    },
+
+    //bo 개인소득공제용 여부 판단
+    isPersonalCashReceipt: function () {
+        return this.getCashReceiptIssueType() !== nsp.CashReceiptIssueType['BUSINESS_REGISTRATION_NUMBER'];
+    },
+
+    //bo 현금영수증타입이 핸드폰번호 인지 판단
+    isPhoneIssueTypeCashReceipt: function () {
+        return this.getCashReceiptIssueType() === nsp.CashReceiptIssueType.PR_CELL_PHONE_NUMBER;
+    },
+
+
+    /**
+     * 일반 결제 카드 타입을 리턴한다.
+     *
+     * @return
+     */
+    getCardType: function () {
+        return this._cardType;
+    },
+
+    setCardType: function (sType) {
+        this._cardType = nsp.CardType[sType];
+    },
+
+    isSupportGeneralPayMeans: function () {
+        return this._bSupportGeneralPayMeans;
+    },
+
+    setPayMeansInfos: function (htParam) {
+        this._htPayMeansInfos = htParam;
+    },
+
+    getMobilePayPhoneNumber: function () {
+        return this._sMobilePayPhoneNumber;
+    },
+
+    setMobilePayPhoneNumber: function (sPhoneNo) {
+        this._sMobilePayPhoneNumber = sPhoneNo;
+    },
+
+    // 네이버 포인트
+    // 현재 결제 수단
+    // - 신용카드의 경우 할부 정보
+    // 현재 결제 금액
+    // 결제 예약 ID
+    // 결제 수단 정보 , payMeansInfo
+    // billingId
+
+
+    _getBillingPayMethod: function (payMethod) {
+        if (this.getOption("easyCardCode").has(payMethod)) {
+            return "OCREDIT_CARD";
+        } else if (this.getOption("easyBankCode").has(payMethod)) {
+            return "OBANK";
+        }
+        return payMethod;
+    },
+
+    _getPgId: function (payMethod, generalPaymentPrice) {
+        var payMeansInfos = this._getOption("payMeansInfos");
+        var pgId = payMeansInfos[payMethod];
+        if (payMethod == "CREDIT_CARD" || payMethod == "SCREDIT_CARD" || payMethod == "OCREDIT_CARD") {
+            var cardcd = (payMethod == "SCREDIT_CARD" || payMethod == "OCREDIT_CARD") ? this.getPayMethod() : $Element(this._getElement("credit_card_form").query("select.cardCompanyTypeCode")).attr("value");
+
+            var welCurrentCreditCardForm = this.getCurrentCreditCardForm(),
+                elCardInstallmentPeriodClassCode = welCurrentCreditCardForm.query("select._cardInstallmentPeriodClassCode");
+            var instmo = $Element(elCardInstallmentPeriodClassCode).attr("value");
+            pgId = bill.convertPgId(pgId, cardcd, instmo, generalPaymentPrice);
+        }
+        return pgId;
+    },
+
+    checkAllAgreed: function (htEvent) {
+        var aAgreeBtn = $A(this._getElementList("agreeButtons", true));
+
+        var bAllAgreed = aAgreeBtn.every(function (v) {
+            return !nmp.front.order.ui.isElementVisible(v) || v.checked;
+        });
+
+        if (bAllAgreed) {
+            this._getElement('allAgreeButton').attr('checked', true);
+        } else {
+            this._getElement('allAgreeButton').attr('checked', false);
+        }
+    },
+
+    getNaverInitToken: function () {
+        return this._htInstance["naverInitToken"];
+    },
+
+    getAuthentificationLevel: function () {
+        return this._htInstance["authentificationLevel"];
+    },
+
+
+    /**
+     * 판매자명
+     */
+    getSellerNames: function () {
+        return this._getElement("sellerNames").attr("value");
+    },
+
+    /**
+     * 결제 금액, 아래 패턴에 대해 이 메소드로 바꾸자. 네이밍도 고민
+     */
+    getGeneralPayAmount: function () {
+        return this.getAmount() - this._getMileageAmount();
+    },
+
+    _hasPaymethod: function (payMethod) {
+        var hasPaymethod = false;
+        $A(this._getElementList("payMethod", true)).forEach($Fn(function (el) {
+            $A($Element(el).className().split(" ")).forEach(function (v) {
+                var sPayMethod = v.slice(1, v.length);
+                if (v != "_payMethod" && payMethod == sPayMethod) {
+                    hasPaymethod = true;
+                    $A.Break();
+                }
+            });
+        }, this).bind());
+
+        return hasPaymethod;
+    },
+
+    _isEasyPay: function (payMethod) {
+        return this._getOption("easyCardCode").has(payMethod) || this._getOption("easyBankCode").has(payMethod);
+    },
+
+    _isEasyCardPay: function (payMethod) {
+        return !!this._getOption("easyCardCode").has(payMethod);
+    },
+
+    /**
+     * 결제 수단 컴포넌트 객체
+     * @param we
+     */
+
+    getSimplePaymentMethodComponent: function () {
+        return this._oSimplePaymentMethodComponent;
+    },
+
+    setSimplePaymentMethodComponent: function (oSimplePaymentMethodComponent) {
+        this._oSimplePaymentMethodComponent = oSimplePaymentMethodComponent;
+    },
+
+    isUsedCardPoint: function () {
+        return this._bUsedCardPoint;
+    },
+
+    isHiddenCardPoint: function() {
+        return this._bHiddenCardPoint;
+    },
+
+    setUsedCardPoint: function (isUsedCardPoint) {
+        this._bUsedCardPoint = isUsedCardPoint;
+    },
+    //카드결제 사용여부
+    isAvailableCard: function () {
+        return this._bAvailableCard;
+    },
+    //계좌결제 사용여부
+    isAvailableBank: function () {
+        return this._bAvailableBank;
+    },
+
+    isGeneralPayMethod: function () {
+        return this.getPayMethod() === 'CREDIT_CARD';
+    },
+
+    getInstallmentMonth: function () {
+        return this._sInstallmentMonth;
+    },
+
+    setInstallmentMonth: function (installmentMonth) {
+        this._sInstallmentMonth = installmentMonth;
+    },
+    setOption: function (sKey, oValue) {
+        this._setOption(sKey, oValue);
+    },
+
+    getOption: function (sKey) {
+        return this._getOption(sKey);
+    },
+
+    makeMsgForAvailablePayMethod: function (sMerchantName) {
+        var msg = sMerchantName + " 주문 시 ";
+        if (this.isAvailableCard() == true && this.isAvailableBank() == true) {
+            msg += "카드 간편 결제, 계좌 간편결제(으)로 선택되어 카드 간편 결제, 계좌 간편결제만 가능 합니다.";
+        } else if (this.isAvailableCard() == true && this.isAvailableBank() == false) {
+            msg += "카드 간편 결제(으)로 선택되어 카드 간편 결제만 가능 합니다.";
+        } else if (this.isAvailableCard() == false && this.isAvailableBank() == true) {
+            msg += "계좌 간편결제(으)로 선택되어 계좌 간편결제만 가능 합니다.";
+        } else {
+            msg += "카드 간편 결제, 계좌 간편 결제가 모두 불가능 합니다.";
+        }
+
+        return msg;
+    },
+
+    isHyundaiCard: function (sCardCode) {
+        if (this.getPayMethod() === this._HYUNDAI_CARD_CODE || sCardCode === this._HYUNDAI_CARD_CODE) {
+            return true;
+        }
+
+        return false;
+    },
+
+    isGeneralKakaoBankCheckCard: function (sCardCode) {
+        if (this.isGeneralPayMethod() && sCardCode === this._KAKAO_BANK_CHECKCARD_CODE) {
+            return true;
+        }
+
+        return false;
+    },
+
+    isDisableInstallment: function () {
+        return this._bDisableInstallment;
+    },
+
+    isNaverMovie: function () {
+        return this._bNaverMovie;
+    },
+
+    isAgreedOpenBank: function () {
+        return this._bAgreedOpenBank;
+    },
+
+    setAgreedOpenBank: function (bAgreedOpenBank) {
+        this._bAgreedOpenBank = bAgreedOpenBank;
+    },
+
+    isOpendNaverAccount: function () {
+        return this._bOpendNaverAccount;
+    },
+
+    getTotalPointBenefit: function () {
+        return this._nTotalPointBenefit || 0;
+    },
+    getDefaultPointBenefit: function () {
+        return this._nDefaultPointBenefit;
+    },
+    getPointPlusPointBenefit: function () {
+        return this._nPointPlusPointBenefit;
+    },
+    getAdPointBenefit: function () {
+        return this._nAdPointBenefit;
+    },
+    getNaverAccountPointBenefit: function () {
+        return this._nNaverAccountPointBenefit || 0;
+    },
+    setNaverAccountPointBenefit: function (nNaverAccountPointBenefit) {
+        this._nNaverAccountPointBenefit = nNaverAccountPointBenefit;
+    },
+
+    _KAKAO_BANK_CHECKCARD_CODE: 'CP',
+    _HYUNDAI_CARD_CODE: 'CH',
+
+    _oExceptionCategory: {
+        'NPOINT': 'NPOINT',
+        'PG': 'PG',
+        'WEBHOOK': 'WEBHOOK',
+        'ETC': 'ETC'
+    },
+
+    "": ""
+});

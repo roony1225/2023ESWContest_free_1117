@@ -18,8 +18,8 @@ var cors = require('cors');
 
 const https = require("https");
 const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem'),
+  key: fs.readFileSync('cert-files/key.pem'),
+  cert: fs.readFileSync('cert-files/cert.pem'),
   // ca: fs.readFileSync('C:/Windows/System32/server.csr'),
 };
 const server = https.createServer(options, app);
@@ -142,6 +142,6 @@ io.sockets.on("connection", socket => {
 });
 
 
-server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://10.50.10.50:9000/broadcast\nUser interface -> https://10.50.10.50:9000/main`));
+server.listen(port, () => console.log(`Server is running on port ${port}\nBroadcasting page -> https://10.50.8.200:9000/broadcast\nUser interface -> https://10.50.8.200:9000/main`));
 
 // commit 예제 test

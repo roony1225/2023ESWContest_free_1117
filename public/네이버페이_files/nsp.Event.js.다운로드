@@ -1,0 +1,71 @@
+if (typeof nsp == "undefined") {
+	nsp = {};
+}
+
+nsp.Event = jindo.$Class({
+	attach : function(sEvent, fHandlerToAttach) {
+		if (arguments.length == 1) {
+
+			jindo.$H(arguments[0]).forEach(jindo.$Fn(function(fHandler, sEvent) {
+				this.attach(sEvent, fHandler);
+			}, this).bind());
+
+			return this;
+		}
+
+		var aHandler = this._htEventHandler[sEvent];
+
+		if (typeof aHandler == 'undefined') {
+			aHandler = this._htEventHandler[sEvent] = [];
+		}
+
+		aHandler.push(fHandlerToAttach);
+
+		return this;
+	},
+
+	fireEvent : function(sEvent, oEvent) {
+		oEvent = oEvent || {};
+		var fInlineHandler = this['on' + sEvent], aHandlerList = this._htEventHandler[sEvent] || [], bHasInlineHandler = typeof fInlineHandler == "function", bHasHandlerList = aHandlerList.length > 0;
+
+		if (!bHasInlineHandler && !bHasHandlerList) {
+			return true;
+		}
+		aHandlerList = aHandlerList.concat(); // fireEvent수행시 핸들러 내부에서
+		// detach되어도 최초수행시의 핸들러리스트는 모두
+		// 수행
+
+		oEvent.sType = sEvent;
+		if (typeof oEvent._aExtend == 'undefined') {
+			oEvent._aExtend = [];
+			oEvent.stop = function() {
+				if (oEvent._aExtend.length > 0) {
+					oEvent._aExtend[oEvent._aExtend.length - 1].bCanceled = true;
+				}
+			};
+		}
+		oEvent._aExtend.push({
+			sType : sEvent,
+			bCanceled : false
+		});
+
+		var aArg = [ oEvent ], i, nLen;
+
+		for (i = 2, nLen = arguments.length; i < nLen; i++) {
+			aArg.push(arguments[i]);
+		}
+
+		if (bHasInlineHandler) {
+			fInlineHandler.apply(this, aArg);
+		}
+
+		if (bHasHandlerList) {
+			var fHandler;
+			for (i = 0, fHandler; (fHandler = aHandlerList[i]); i++) {
+				fHandler.apply(this, aArg);
+			}
+		}
+
+		return !oEvent._aExtend.pop().bCanceled;
+	}
+});

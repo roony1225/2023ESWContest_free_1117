@@ -4,31 +4,117 @@ CSS: main > index > list
 JS: main > watch > list > printphoto */
 /*  */
 /* 2.촬영화면 CSS */
-
-html {
-  overflow: hidden;
-  height: 100%;
-  background-color: white;
+body {
+  margin: 0px;
+  padding: 0px;
 }
 
-/* 비디오 화면 */
+#photo-outer {
+  background-color: #ffffff;
+  display: grid;
+  margin: 40px;
+  grid-template-rows: 1fr 10px 240px;
+  grid-template-areas: 
+      "section-video"
+      "."
+      "section-snapshot"
+  ;
+}
+
 video {
   width: 900px;
   height: 700px;
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
 }
-body {
-  text-align: center;
+
+#text-overlay {
+  position: absolute;
+  top: 660px;
+  left: calc(100vw - 100px);
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: #2b2b2b;
+  font-size: 48px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+#section-video {
+  grid-area: section-video;
+}
 
-/* 포즈/캡처/필터 버튼 */
-.photosettingbtn {
-  position: fixed;
-  bottom: 5%;
-  right: 0;
-  left: 0;
+#section-snapshot {
+  grid-area: section-snapshot;
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr 10px 1fr 10px 1fr;
+  grid-template-areas: "sns-1 . sns-2 . sns-3 . sns-4";
+}
+
+.sns {
+  background-color: #b2b2b2;
+  display: flex;
+  align-items: center; /* Vertically center content */
+}
+
+/* .sns:focus {
+  outline: 2px #648bf7;
+} */
+
+
+#sns-1 {
+  grid-area: sns-1;
+}
+
+#sns-2 {
+  grid-area: sns-2;
+}
+
+#sns-3 {
+  grid-area: sns-3;
+}
+
+#sns-4 {
+  grid-area: sns-4;
+}
+
+#section-timer {
+  grid-area: section-timer;
+  background-color: black;
+}
+
+#navbar {
+  position: absolute;
+  bottom: 0;
+  height: 260px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #92c5ff;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px 1fr 40px 1fr 40px;
+  grid-template-areas: ". nc-1 . nc-2 . nc-3 .";
+}
+
+.nc {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+}
+
+#nc-1 {
+  grid-area: nc-1;
+}
+#nc-2 {
+  grid-area: nc-2;
+}
+#nc-3 {
+  grid-area: nc-3;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+  background-color: white;
 }
 
 /* 캡처버튼 */
@@ -72,14 +158,6 @@ body {
   width: 200px;
   height: 200px;
 }
-
-
-/* 타이머 폰트 */
-#timer {
-  font-size: 5rem;
-  font-weight: bold;
-}
-
 
 /* 필터 팝업창 설정 */
 *, *::after, *::before {

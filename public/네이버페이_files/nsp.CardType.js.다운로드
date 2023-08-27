@@ -1,0 +1,8 @@
+if (typeof nsp == "undefined") {
+	nsp = {};
+}
+
+nsp.CardType = {
+	'PRIVATE' : 'PRIVATE',
+	'CORPORATION' : 'CORPORATION'
+};

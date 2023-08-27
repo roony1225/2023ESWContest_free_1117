@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //이미지 프린트용 js
 
-const ipUrl = '10.50.10.50:9000';
+const ipUrl = '10.50.8.200:9000';
 
 window.onload = () => {
     let imgUrlList0;

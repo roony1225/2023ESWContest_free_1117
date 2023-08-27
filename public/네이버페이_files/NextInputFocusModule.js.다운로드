@@ -1,0 +1,98 @@
+/**
+ * Created by Naver on 2016-04-11.
+ * Need: jindo
+ * KangShinHyun
+ * shinhyun.kang@navercorp.com
+ */
+//JINDO 1.5.3 기준 상위버전도 사용가능
+var NextInputFocusModule = function(parentClassName, targetClassName) { //부모 wrap 클래스명, 타겟 inputBox 클래스명
+
+    //클로저 사용
+    var sParentClassName = parentClassName;
+    var sTargetClassName = targetClassName;
+
+    var _registerKeyUpEvt = function() {
+        //예외처리
+        var userAgent = navigator.userAgent.toLowerCase();
+        var isIOSInApp = (((userAgent.indexOf("iphone") > -1) || (userAgent.indexOf("ipad") > -1)) && (userAgent.indexOf("safari") === -1));
+        var isWKWebView = ((isIOSInApp == true) && (window.indexedDB)); //웹뷰이고 window.indexedDB값이 있을경우 WKWebView
+        if(isIOSInApp == true){
+            if((userAgent.indexOf("naver") > -1) || (((isWKWebView == undefined) || (isWKWebView == false)))){
+                //아이폰-웹뷰-네앱인 경우 적용안함
+                //아이폰-웹뷰-WKWebView 아니고 UIWebView인 경우에는 적용안함
+                return;
+            }   
+        }
+
+        var sKeyUpSearchClassName  = "." + sParentClassName + " ." + sTargetClassName;
+        var elKeyUpEvt = jindo.$$(sKeyUpSearchClassName);
+        var nLength = elKeyUpEvt.length;
+        //Keyup Evt attach
+        for(var i = 0 ; i < nLength - 1 ; i++) {
+            jindo.$Fn(_onKeyUpEvt, this).attach(elKeyUpEvt[i], "keyup");
+        }
+    };
+
+    //키가 눌렸을 때
+    var _onKeyUpEvt = function(we) {
+        var welTarget = $Element(we.element);
+
+        if(welTarget == null){
+            return;
+        }
+
+        //뷰에 maxLength 값이 있는지 확인
+        var maxLength = welTarget.attr("maxLength") ? welTarget.attr("maxLength") : -1 ;
+        if(maxLength == -1){
+            return;
+        }
+
+        //maxLength만큼 입력이 됬을 때 다음 포커스를 받을 "타겟" 탐색시작
+        if(welTarget.text().length >= maxLength) {
+            while (welTarget.hasClass(sParentClassName) == false) {  //타겟이 "ParentClass"에 도달 할 시 멈춤
+                if(_isNextFocus(welTarget) == true){ //keyup이벤트가 걸린 타겟의  "next타겟"이나 "next타겟의 자식" 중 포커스를 줄 input이 있는지 확인
+                    return; //포커스를 주고 리턴
+                } else {
+                    welTarget = welTarget.parent(); //next타켓 내에 포커스를 줄 타겟가 없으면 "부모를 탐색"
+                }
+            }
+        }
+    };
+
+    //next타겟에 "포커스를 줄 타겟"이 있는지 확인
+    var _isNextFocus = function(welTarget) {
+        var isNextFocus = false;
+        var welNextTarget = welTarget.next();
+
+        // "next타겟"를 탐색하는데 NULL이 아닐 경우에만 탐색한다.
+        while(welNextTarget != null) {
+
+            //Next타겟 자체가 "다음 포커스를 받을 타겟"인 경우
+            if(welNextTarget.hasClass(sTargetClassName) == true) {
+                welNextTarget.$value().focus();
+                isNextFocus = true;
+                break;
+            }
+
+            //Next타겟의 자식이 "다음 포커스를 받을 타겟"인 경우
+            var elNextInput = welNextTarget.child(function(v){return v.hasClass(sTargetClassName)});
+            if(elNextInput != null && elNextInput[0] != null) {
+                elNextInput[0].$value().focus();
+                isNextFocus = true;
+                break;
+            }
+
+            //두개 다 해당되지 않을 경우 "Next타겟의 Next"로 변경하여 탐색
+            welNextTarget = welNextTarget.next();
+        }
+
+        return isNextFocus;
+    };
+    
+    return {
+        registerKeyUpEvt : function(){
+            return _registerKeyUpEvt();
+        }
+    }
+};
+

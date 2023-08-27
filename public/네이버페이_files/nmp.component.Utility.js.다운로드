@@ -1,0 +1,33 @@
+if (typeof nmp == "undefined") {
+    nmp = {};
+};
+
+if (typeof nmp.component == "undefined") {
+    nmp.component = {};
+};
+
+nmp.component.Utility = jindo.$Class({
+	
+    $init : function(htOption) {
+    },
+    
+    hideArea : function(aClassName) {
+	$A(aClassName).forEach(function(className) {
+	    $A($$(className)).forEach(function(v) {
+		$Element(v).hide();
+	    });
+	});
+    },
+    
+    showArea : function(aClassName) {
+	$A(aClassName).forEach(function(className) {
+	    $A($$(className)).forEach(function(v) {
+		$Element(v).visible(true, '');
+		//$Element(v).show();
+	    });
+	});
+    },
+    "" : ""
+});
+
+var oUtil = new nmp.component.Utility();

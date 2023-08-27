@@ -1,0 +1,1394 @@
+@charset "utf-8";
+/* NHN Technology Services UI Development 2Team LYM */
+.sp_ordersheet:before,
+.sp_ordersheet:after{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat;background-size:150px auto;content:'';-webkit-background-size:150px auto}
+.sp_ordersheet.icon_nppoint:before{width:36px;height:16px;background-position:0 0}
+.sp_ordersheet.icon_nppoint2:before{width:67px;height:67px;background-position:-75px 0}
+.sp_ordersheet.icon_info_big:before{width:53px;height:53px;background-position:0 -20px}
+.sp_ordersheet.icon_plus:before{background-position:0 -75px}
+.sp_ordersheet.icon_info_small:before{width:15px;height:15px;background-position:-42px -128px}
+.sp_ordersheet.icon_info_small2:before{width:13px;height:18px;background-position:-42px -125px}
+.sp_ordersheet.icon_help:after{width:14px;height:22px;background-position:-60px 0}
+.sp_ordersheet.icon_note:after{width:16px;height:19px;background-position:-75px -80px}
+.sp_ordersheet.button_del:before{width:17px;height:17px;background-position:-40px -80px}
+.sp_ordersheet.button_checked:before{width:28px;height:28px;background-position:-40px -165px}
+.sp_ordersheet.btn_close:before{width:15px;height:15px;background-position:-40px -110px}
+.sp_ordersheet.icon_error_big:before{width:71px;height:71px;background-position:-78px -78px}
+.sp_ordersheet.icon_infocharge:before{width:13px;height:13px;background-position:-40px -145px;margin-top:3px}
+
+.sp_heading:before{border-radius:2px;background:url(../../../../img/service/mobile/nsp/sp_ordersheet_h_icon.png) no-repeat;background-size:30px auto;-webkit-background-size:30px auto;content:'';-webkit-border-radius:2px}
+.sp_heading.head_nppoint:before{background-color:#00c73c;background-position:0 0}
+.sp_heading.head_totamount:before{background-color:#1088ed;background-position:0 -30px}
+.sp_heading.head_simplepay:before{background-color:#00c73c;background-position:0 -60px}
+
+.sp_arrow:after{background:url(../../../../img/service/mobile/nsp/sp_arrow_icon.png) no-repeat;background-size:25px auto;-webkit-background-size:25px auto;content:''}
+.sp_arrow.icon_arrow:after{width:4px;height:6px;background-position:0 -25px}
+.sp_arrow.icon_arrow2:after{width:4px;height:18px;background-position:0 -35px}
+
+.sp_h2{background:url(../../../../img/service/mobile/nsp/sp_h2.png) no-repeat;background-size:16px auto;-webkit-background-size:16px auto}
+.sp_h2.icon_note{padding-left:32px;background-position:8px 0}
+
+.head_arrow:after{width:20px;height:20px;background:url(../../../../img/service/mobile/nsp/head_arrow.png) no-repeat;background-size:20px auto;-webkit-background-size:20px auto;content:''}
+:checked + .fold_wrap .head_arrow:after{transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+
+.sp_checkbox:after,.sp_radio:after{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_check_20190417.png) no-repeat;background-size:60px auto;-webkit-background-size:60px auto;content:''}
+.sp_checkbox.large:after{width:25px;height:25px;background-position:0 0}
+:checked + .sp_checkbox.large:after{background-position:-30px 0}
+.sp_checkbox.small:after{width:19px;height:19px;background-position:0 -30px}
+:checked + .sp_checkbox.small:after{background-position:-25px -30px}
+.sp_radio:after{width:19px;height:19px;background-position:0 -55px}
+:checked + .sp_radio:after{background-position:-25px -55px}
+
+.sp_select_icon{background:url(../../../../img/service/mobile/nsp/sp_select_icon.png) no-repeat;background-size:30px auto;-webkit-background-size:30px auto}
+
+/* placeholder */
+::-webkit-input-placeholder{font-size:14px;color:#b3b3b3}
+::-moz-placeholder{font-size:14px;color:#b3b3b3}		/* firefox 19+ */
+:-ms-input-placeholder{font-size:14px;color:#b3b3b3}	/* ie */
+input:-moz-placeholder{font-size:14px;color:#b3b3b3}
+
+.h2{position:relative;font-weight:normal;font-size:16px;line-height:20px;color:#252525;letter-spacing:-1px;text-align:left}
+
+.spot_section{padding:0 12px 19px}
+.spot_section .spot_detail{line-height:20px}
+.spot_head .h_icon{display:inline-block;height:18px;padding:0 7px;border:1px solid #f16257;border-radius:10px;font-size:12px;font-weight:normal;line-height:18px;color:#f16257;-webkit-border-radius:10px}
+.spot_h3{padding-right:36px;font-weight:normal;font-size:18px;line-height:24px;white-space:nowrap}
+.spot_h3 .heading{display:inline-block;overflow:hidden;max-width:100%;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-SemiBold,'나눔고딕',nanumgothic,sans-serif;vertical-align:top;white-space:nowrap;word-wrap:normal;text-overflow:ellipsis}
+.spot_h3.full_title{padding-right:0}
+.h_icon + .spot_h3{margin-top:5px}
+.spot_detail .amount{display:inline-block;font-size:17px;color:#1088ed}
+.spot_detail .amount strong{font-size:20px;font-weight:normal;font-family:HelveticaNeue-medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;vertical-align:top}
+.spot_detail .vat{color:#8f8f8f;font-size:14px}
+.spot_detail .np_point{display:inline-block;position:relative;padding-left:40px;color:#8f8f8f}
+.spot_detail .np_point.icon_nppoint:before{position:absolute;top:50%;left:0;margin-top:-8px}
+.spot_detail .np_point strong{font-weight:normal;font-size:14px;color:#00c73c}
+.spot_head+.spot_detail{margin-top:2px}
+
+.hidden{visibility:hidden;position:absolute}
+:checked + .fold_wrap .fold_head{}
+:checked + .fold_wrap .summary{display:none}
+:checked + .fold_wrap .fold_content{display:block}
+:checked + .fold_wrap{margin-bottom:7px}
+
+.fold_wrap,
+.agree_section,
+.receipt_wrap{margin-bottom:5px;border:1px solid #d5dbe0;border-radius:3px;background-color:#fff !important}
+.receipt_wrap {margin:5px 0 0;border:1px solid #d5dbe0 !important}
+.receipt_wrap + .agree_section,
+.benefit_point + .agree_section{margin-top:7px}
+.fold_head{display:block;position:relative}
+.fold_head:before{position:absolute;top:50%;left:13px;width:30px;height:30px;margin-top:-15px}
+.fold_head:after{position:absolute;top:50%;right:11px;margin-top:-10px}
+.fold_head .summary{overflow:hidden;position:absolute;top:16px;right:36px;left:135px;font-size:16px;line-height:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#1088ed;text-align:right;white-space:nowrap;text-overflow:ellipsis}
+.fold_head .summary.number{font-size:18px}
+.fold_head .summary.number .unit{display:inline-block;margin:0 0 0 2px;font-size:16px;vertical-align:top}
+.fold_h{padding:15px 0 15px 52px;font-size:16px;line-height:20px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-weight:normal}
+.fold_content{display:none;position:relative}
+.fold_head + .fold_content{border-top:1px solid #e2e6e9}
+
+.label{position:absolute;top:0;right:0;left:0;bottom:0;padding:7px 0;line-height:36px;font-size:15px}
+.value{display:block;position:relative;z-index:10;width:100%;padding:6px 0;border:0;border-radius:0;background-color:transparent;line-height:24px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-align:right}
+.value.number{font-size:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+.value.number_v2{font-size:18px;font-family:HelveticaNeue,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+.unit{display:inline-block;margin-left:2px;font-size:16px;vertical-align:top}
+.point_green{color:#00c73c !important}
+.point_yellow{color:#fff600 !important}
+.point_black{color:#252525 !important}
+.align_left{text-align:left !important}
+.switch_button{position:absolute;top:0;right:0;left:0;bottom:0;width:100%;height:100%}
+.info_desc{padding:13px 13px 8px;border-top:1px solid #e2e6e9;background-color:#f8f9fa}
+.guide_text{display:block;position:relative;z-index:10;padding:0 0 5px 18px;font-size:13px;line-height:18px;color:#8f8f8f}
+.guide_text strong{font-weight:normal;color:#252525}
+.guide_text:before{position:absolute;top:0;left:0}
+
+.verification .form_area{}
+.verification .full_area{position:relative;padding:7px 3px}
+.verification .full_area + .full_area{border-top:1px solid #f1f3f5}
+.verification .full_area .value{color:#b3b3b3}
+.verification .box_margin{margin:0 13px}
+.verification .label_margin{padding-left:88px}
+.verification .text_won{position:absolute;top:7px;right:24px;line-height:36px}
+.verification .button_margin{padding-right:71px}
+.verification .button_margin2{padding-right:40px}
+.verification .button{position:absolute;top:0;right:0;bottom:0;height:35px;margin:auto}
+.verification .button .size1, .btn_use_all{display:block;width:70px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
+.verification .button2{position:absolute;top:50%;right:3px;width:17px;height:35px;margin-top:-17px}
+.button_del{display:block;overflow:hidden;width:100%;height:100%;text-indent:-9999px}
+.button_del:before{position:absolute;top:50%;right:0;margin-top:-8px}
+
+.label2,
+.p_text{display:block;color:#252525}
+.p_text{width:100%;padding:0;border:0;line-height:18px;font-size:17px}
+
+.input_area li{position:relative;padding:8px 0 7px}
+.input_area li + li{border-top:1px solid #ebedf0}
+.input_area li .inner{margin:-8px 0 -7px;padding:14px 15px 13px}
+.input_area .label2{font-size:13px;line-height:18px}
+.input_area .select{display:block;width:100%;height:25px;padding:0;padding-right:25px;border:0;background:url(../../../../img/service/mobile/nsp/icon_select_arrow.png) no-repeat 100% 50%;background-size:15px 28px;line-height:25px;font-size:17px;color:#8f8f8f;-webkit-background-size:15px 28px;-webkit-appearance:none}
+.input_area .p_text em{display:inline-block;margin:-2px 0 2px;font-size:20px;vertical-align:middle}
+.input_area .p_text.sum{color:#1088ed}
+.input_area .half_area{float:left;width:50%}
+.input_area .half_area + .half_area{overflow:hidden;float:none;width:auto;border-left:1px solid #ebedf0;border-top:none}
+.input_area .label_margin{padding-left:60px}
+.input_area .button_margin{padding-right:75px}
+.input_area .label{padding-left:15px;font-size:13px;color:#8f8f8f}
+.input_area .value{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif !important}
+.input_area .button{position:absolute;top:0;right:15px;bottom:0;height:35px;margin:auto}
+.input_area .button .size1{display:block;width:50px;border-radius:2px;background:#a4abb9;font-size:13px;line-height:35px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;color:#fff;text-align:center}
+.input_area .bank_logo{position:absolute;right:15px;bottom:16px;width:83px;height:15px}
+
+.input_area .way_area{position:relative}
+.input_area .way_area select{border:none}
+.input_area .direct{position:absolute;top:0;left:0;right:25px;background-color:#FFF;border:none}
+.input_area .direct .value{height:23px;padding:0 0 0 4px;line-height:26px;text-align:left}
+.input_area .direct .value::-webkit-input-placeholder{font-size:17px;color:#8f8f8f}
+.input_area .direct .option{overflow:hidden;position:absolute;top:0;right:0;width:15px;height:100%;font-size:0;line-height:0}
+.input_area .direct .option:before{position:absolute;top:0;left:0;width:100%;height:100%;background:url(../../../../img/service/mobile/nsp/icon_select_arrow.png) no-repeat 0 0;background-size:15px 28px;-webkit-background-size:15px 28px;content:''}
+
+.complete_area .label2{color:#8f8f8f}
+.label2 + .p_text{margin-top:4px}
+
+.amount_section .form_area{margin:9px 13px}
+.amount_section .full_area{position:relative}
+.amount_section .full_area .label{padding:0;line-height:30px}
+.amount_section .full_area .value{padding:3px 0}
+.amount_total{position:relative;padding:10px 13px 9px;font-size:16px;color:#1088ed}
+.amount_total .label{padding:9px 13px 10px}
+.amount_total .value.number{margin:-2px 0 2px;font-size:20px}
+.amount_total .unit{font-size:17px}
+.amount_total .guide_text{padding:8px 0 4px 18px;border-top:1px solid #e9f0f5}
+.amount_total .guide_text + .guide_text{border-top:0}
+.amount_total .guide_text:before{top:8px}
+.amount_section .form_area + .amount_total{border-top:1px solid #e9f0f5;border-radius:0 0 3px 3px;background-color:#f7fcff}
+
+.pay_tab_area{margin:15px 13px;border:1px solid #e2e6e9;border-radius:3px}
+.pay_tab{display:table;width:100%;table-layout:fixed}
+.pay_tab_menu{display:table-cell;background-color:#f7f7f9}
+.pay_tab_menu + .pay_tab_menu{border-left:1px solid #e9ecef}
+.pay_tab_menu a{display:block;font-size:14px;line-height:33px;color:#8f8f8f;text-align:center}
+.pay_tab_menu a strong{font-weight:normal}
+.pay_tab_menu.on a{position:relative;z-index:10;margin:-1px;border:1px solid #00bd39;background-color:#00c73c;color:#fff}
+.pay_tab_menu.on a strong{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-SemiBold,'나눔고딕',nanumgothic,sans-serif;font-weight:bold}
+.pay_tab_menu:first-child,
+.pay_tab_menu:first-child a{border-radius:3px 0 0 3px}
+.pay_tab_menu:last-child,
+.pay_tab_menu:last-child a{border-radius:0 3px 3px 0}
+.tab_content{margin:0 0 7px;border-color:#d5dbe0}
+.tab_content:first-child{margin-top:5px}
+.tab_content .pay_tab_menu.on a{border-color:#a3b8c9;background-color:#a9bfd1;color:#fff}
+
+.text_link{display:inline-block;position:relative;padding-right:8px;font-size:12px;color:#8f8f8f;text-decoration:underline}
+.text_link:after{position:absolute;top:50%;right:0;margin-top:-3px}
+
+.benefit_area{padding:13px 0 2px}
+.benefit_title{font-size:15px}
+.benefit_title strong{font-weight:normal}
+.benefit_title strong,
+.benefit_title .text_link{display:inline-block;vertical-align:middle}
+.benefit_info{color:#8f8f8f}
+.benefit_info a{margin-left:6px;color:#8f8f8f;text-decoration:underline}
+.benefit_info a:after{display:inline-block;margin-left:5px}
+.benefit_title + .benefit_info{margin-top:3px}
+.benefit_info + .benefit_info{margin-top:1px}
+.benefit_info .business_card{color:#6b6b6b}
+
+.toggle{position:absolute;top:10px;right:0;z-index:1;width:39px;height:24px;border:1px solid #dde0e8;border-radius:13px;background:#e6e8ee;-webkit-transition-duration:.1s}
+.toggle:after{position:absolute;top:1px;left:1px;width:22px;height:22px;border-radius:11px;background:#fff;content:'';-webkit-transition-duration:.1s}
+.switch_button:checked + .form_area .full_area .toggle,
+:checked + .receipt_area .toggle{border-color:#00bd39;background:#00c73c}
+.switch_button:checked + .form_area .full_area .toggle:after,
+:checked + .receipt_area .toggle:after{left:16px}
+:checked + .receipt_area .receipt_cont{display:block}
+:disabled + .receipt_area .toggle{display:none}
+.switch_button:checked + .form_area .value {color:#00c73c}
+
+.radio_list{overflow:hidden}
+.radio_list_item{float:left;font-size:15px}
+.radio_list_item + .radio_list_item{margin-left:22px}
+.radio_list_item .radio_left{display:block;position:relative;padding:15px 0 16px 25px;color:#8f8f8f}
+.radio_list_item .radio_left:after{position:absolute;top:50%;left:0;margin-top:-10px}
+.radio_list_item :checked + .radio_left{color:#252525}
+
+.receipt_area{position:relative;padding:0 13px;border-top:1px solid #e2e6e9;background-color:#fbfcfc}
+.receipt_cont{display:none;padding-bottom:7px;border-top:1px solid #edf0f2}
+.receipt_cont .check_agree{padding:10px 0 12px 27px;font-size:14px}
+.receipt_cont .check_agree.small:after{top:10px;left:0;margin:0}
+.receipt_cont .agree_section{margin-bottom:0;padding:0;border:none;border-radius:0;background:none}
+.receipt_view{padding:15px 0 20px}
+.receipt_view .info_text{position:relative;padding:0 0 0 22px;line-height:22px;color:#8f8f8f}
+.receipt_view .info_text:before{position:absolute;top:3px;left:0}
+.receipt_info dt{color:#8f8f8f}
+.receipt_info dd .wayid,.receipt_info dd .number{vertical-align:middle}
+.receipt_info dd .wayid{font-weight:normal}
+.receipt_info dd .number{margin-left:6px;font-size:17px}
+.receipt_info + .cont_button{margin-top:7px}
+.receipt_wrap .fold_h{font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif}
+
+
+.check_agree .link{color:inherit}
+.check_agree .link:after{display:inline-block;width:4px;height:8px;margin:-2px 0 2px 4px;vertical-align:middle;content:'';background:url(../../../../img/service/mobile/nsp/sp_cmn.png) no-repeat -70px -75px;background-size:225px auto;-webkit-background-size:225px auto}
+
+.check_agree{display:block;position:relative;padding:16px 0 15px 45px;font-size:16px;line-height:18px;color:#8f8f8f}
+:checked + .check_agree{color:#252525}
+.check_agree.large:after{position:absolute;top:50%;left:13px;margin-top:-12px}
+.check_agree.small:after{position:absolute;top:50%;left:14px;margin-top:-8px}
+.checkall{}
+.checklist{padding:0 13px;background-color:#f8f9fa}
+.check_item .check_agree{padding:15px 0 14px 33px;font-size:15px}
+.check_item .check_agree.large:after{left:0}
+.check_item :checked + .check_agree{color:#8f8f8f}
+.check_item + .check_item,.checkall + .checklist{border-top:1px solid #e9ecee}
+
+.use_select{overflow:hidden}
+.use_select_item{float:left}
+.use_select_item + .use_select_item{margin-left:22px}
+
+.value_select{}
+.value_select .value2{width:100%;height:41px;border:1px solid #d7dadd;border-radius:3px;background-color:#fff;line-height:41px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;text-indent:10px;-webkit-border-radius:3px;box-sizing:border-box;-webkit-box-sizing:border-box;-webkit-appearance:none}
+.value_select .value2.number{font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;font-size:18px}
+.value_select .value2.select{background:url(../../../../img/service/mobile/nsp/icon_select_arrow.png) no-repeat 90% 50%;background-size:15px 28px;-webkit-background-size:15px 28px}
+.value_select select.value2{background-color:#fff;background-position:100% 0;font-size:15px;vertical-align:top}
+.value_select select.value2 + input.value2{margin-top:5px}
+.value_select select.value3{font-size:17px;padding-right:24px;width:100%;height:41px;border:1px solid #d7dadd;border-radius:3px;background-color:#fff;line-height:41px;font-family:HelveticaNeue,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;-webkit-border-radius:3px;box-sizing:border-box;-webkit-box-sizing:border-box;-webkit-appearance:none;direction:rtl;background-position:100% 0;vertical-align:top}
+
+.select_point{background-color:#f8f9fa;padding:13px 13px 8px;border-top:1px solid #e9ecee}
+.select_point .value_select{position:relative}
+.select_point .value_select.type_use{padding:0 77px 0 39px}
+.select_point .value_select.type_use .label_tit{left:0;padding-left:0;line-height:35px}
+.select_point .value_select.type_use .wrap_use_input{position:relative}
+.select_point .value_select.type_use .btn_use_all{position:absolute;right:0;top:0;}
+.select_point .value_select.type_use .button_del{position:absolute;right:8px;top:0;width:17px}
+.select_point .wrap_use_input .unit_won{position:absolute;right:31px;top:0;line-height:35px}
+.select_point .label_tit{position:absolute;left:2px;top:0;height:41px;line-height:41px;padding-left:9px;font-size:15px}
+.select_point .guide_text{margin-top:13px}
+.select_point .value_select.disabled .label_tit{color:#a9a9a9}
+.select_point select:disabled{color:#bdbdbd}
+.select_point .none_point{background:#f8f7da;margin:-14px -13px 0 -13px;text-align:center;color:#f16156;padding:13px 0 11px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;border-bottom:1px solid #e2e6e9}
+.select_point .value_select .input_use{width:100%;height:35px;border:1px solid #d9dadc;border-radius:3px;text-align:right;box-sizing:border-box;padding-right:46px;color:#b3b3b3;font-size:18px;font-family:HelveticaNeue-Medium,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;-webkit-appearance:none}
+
+
+.sp_band_icon:after{width:38px;height:38px;background:url(../../../../img/service/mobile/nsp/sp_ordersheet_bandicon.png) no-repeat;background-size:50px auto;-webkit-background-size:50px auto;content:''}
+.sp_band_icon.icon_reg:after{background-position:0 0}
+.sp_band_icon.icon_wait:after{background-position:0 -50px}
+
+.payway_area{padding:0 13px 15px}
+.payway_disabled{text-align:center;color:#8f8f8f;font-size:13px;padding:16px 0;}
+.regway_select{width:100%;border:1px solid #e2e6e9;border-radius:3px;border-collapse:separate;-webkit-border-radius:3px;table-layout:fixed}
+.regway_select td{position:relative;height:70px;background:#f5f7f8 url(../../../../img/service/mobile/nsp/logo_empt.png) no-repeat 50%;background-size:24px 19px;text-align:center;-webkit-background-size:24px 19px}
+.regway_select td a,
+.regway_select td .disabled{display:box;display:-webkit-box;position:relative;width:100%;height:70px;background-color:#f5f7f8;font-size:13px;color:#252525;-webkit-box-orient:vertical;-webkit-box-pack:center}
+.regway_select td .disabled{color:#b3b3b3}
+.regway_select td .disabled .icon_check{display:inline-block;display:block;width:32px;height:14px;margin:2px auto 3px;border:1px solid #9ca2b0;border-radius:14px;background-color:#a4abb9;font-size:9px;line-height:14px;color:#fff;text-align:center}
+.regway_select td .disabled .icon_check:before{width:auto !important;height:auto !important;background:none !important}
+.regway_select td .disabled .icon_check:after{background:none}
+.regway_select td a span{display:block}
+.regway_select td a strong.p_txt{display:block;margin-top:4px;font-size:9px;font-weight:normal;line-height:normal;color:#00c73c}
+.regway_select td a.on{z-index:10;margin:-1px;border:1px solid #00c73c;color:#00c73c}
+.regway_select td a span:before,
+.regway_select td .disabled span:before{display:block;width:52px;height:31px;margin:0 auto;background:url(../../../../img/service/mobile/nsp/sp_companybi_small_20190424.png) no-repeat;background-size:165px auto;content:'';-webkit-background-size:165px auto}
+.regway_select td .disabled span:before{height:34px}
+.regway_select td .disabled_chk span:before{height:28px}
+.regway_select td a.general span:before{width:41px;height:38px;background:url(../../../../img/service/mobile/nsp/sp_general_pay.png) no-repeat;background-size:200px auto;-webkit-background-size:200px auto}
+.regway_select td a.credit_C0 span:before,
+.regway_select td a.bank_088 span:before{background-position:0 0}
+.regway_select td a.credit_C3 span:before,
+.regway_select td a.bank_004 span:before{background-position:0 -35px}
+.regway_select td a.credit_CF span:before,
+.regway_select td a.bank_025 span:before{background-position:0 -70px}
+.regway_select td a.credit_CH span:before{background-position:-55px 0}
+.regway_select td a.credit_C7 span:before,
+.regway_select td a.bank_240 span:before{background-position:-55px -35px}	/* 삼성카드, 삼성증권 */
+.regway_select td a.credit_C1 span:before{background-position:-55px -105px}
+.regway_select td a.credit_C5 span:before{background-position:-55px -140px}
+.regway_select td a.credit_C9 span:before{background-position:0 -175px}
+.regway_select td a.bank_003 span:before{background-position:-110px 0}
+.regway_select td a.bank_020 span:before{background-position:-110px -35px}
+.regway_select td a.credit_C4 span:before,
+.regway_select td a.bank_011 span:before,
+.regway_select td a.bank_012 span:before,
+.regway_select td a.bank_013 span:before{background-position:-110px -70px}
+.regway_select td a.bank_032 span:before,
+.regway_select td a.bank_039 span:before{background-position:-110px -105px}
+.regway_select td a.bank_071 span:before{background-position:-110px -140px}
+.regway_select td a.bank_007 span:before{background-position:0 -105px}
+.regway_select td a.bank_023 span:before{background-position:0 -140px}	/* 스탠다드차타드은행 */
+.regway_select td a.bank_238 span:before{background-position:-55px -175px}
+.regway_select td a.bank_031 span:before{background-position:-110px -175px}
+.regway_select td a.bank_034 span:before{background-position:0 -210px}
+.regway_select td a.bank_037 span:before{background-position:-55px -210px}
+.regway_select td a.bank_035 span:before{background-position:-110px -210px}
+.regway_select td a.bank_045 span:before{background-position:0 -245px}
+.regway_select td a.bank_048 span:before{background-position:-55px -245px}
+.regway_select td a.bank_081 span:before{background-position:-110px -245px}
+.regway_select td a.bank_089 span:before{background-position:0 -280px}
+.regway_select td a.credit_CP span:before{background-position:-55px -280px}
+
+.regway_select td .disabled span:before{background:url(../../../../img/service/mobile/nsp/sp_companybi_disabled_20190424.png) no-repeat;background-size:165px auto;-webkit-background-size:165px auto}
+.regway_select td .disabled.credit_C0 span:before,
+.regway_select td .disabled.bank_088 span:before{background-position:0 0}
+.regway_select td .disabled.credit_C3 span:before,
+.regway_select td .disabled.bank_004 span:before{background-position:0 -35px}
+.regway_select td .disabled.credit_CF span:before,
+.regway_select td .disabled.bank_025 span:before{background-position:0 -70px}
+.regway_select td .disabled.credit_CH span:before{background-position:-55px 0}
+.regway_select td .disabled.credit_C7 span:before,
+.regway_select td .disabled.bank_240 span:before{background-position:-55px -35px}	/* 삼성카드, 삼성증권 */
+.regway_select td .disabled.credit_C1 span:before{background-position:-55px -105px}
+.regway_select td .disabled.credit_C5 span:before{background-position:-55px -140px}
+.regway_select td .disabled.credit_C9 span:before{background-position:0 -175px}
+.regway_select td .disabled.bank_003 span:before{background-position:-110px 0}
+.regway_select td .disabled.bank_020 span:before{background-position:-110px -35px}
+.regway_select td .disabled.credit_C4 span:before,
+.regway_select td .disabled.bank_011 span:before,
+.regway_select td .disabled.bank_012 span:before,
+.regway_select td .disabled.bank_013 span:before{background-position:-110px -70px}
+
+.regway_select td .disabled.bank_032 span:before,
+.regway_select td .disabled.bank_039 span:before{background-position:-110px -105px}
+.regway_select td .disabled.bank_071 span:before{background-position:-110px -140px}
+.regway_select td .disabled.bank_007 span:before{background-position:0 -105px}
+.regway_select td .disabled.bank_023 span:before{background-position:0 -140px}
+.regway_select td .disabled.bank_238 span:before{background-position:-55px -175px}
+.regway_select td .disabled.bank_031 span:before{background-position:-110px -175px}
+.regway_select td .disabled.bank_034 span:before{background-position:0 -210px}
+.regway_select td .disabled.bank_037 span:before{background-position:-55px -210px}
+.regway_select td .disabled.bank_035 span:before{background-position:-110px -210px}
+.regway_select td .disabled.bank_045 span:before{background-position:0 -245px}
+.regway_select td .disabled.bank_048 span:before{background-position:-55px -245px}
+.regway_select td .disabled.bank_081 span:before{background-position:-110px -245px}
+.regway_select td .disabled.bank_089 span:before{background-position:0 -280px}
+.regway_select td .disabled.credit_CP span:before{background-position:-55px -280px}
+
+.regway_select td a.general.CREDIT_CARD span:before{background-position:0 0}
+.regway_select td a.general.VIRTUAL_ACCOUNT span:before{background-position:-50px 0}
+.regway_select td a.general.MOBILE span:before{background-position:-100px 0}
+.regway_select td a.general.giftcard span:before{background-position:-150px 0}
+.regway_select td .band_icon{overflow:hidden;position:absolute;top:-1px;left:-1px;width:39px;height:38px;font-size:0;line-height:9999px}
+.regway_select td .band_icon:before{background:none !important}
+.regway_select td .band_icon:after{position:absolute;top:0;left:0}
+.regway_select td + td{border-left:1px solid #ebedee}
+.regway_select tr + tr td{border-top:1px solid #ebedee}
+.regway_select tr:first-child td:first-child,
+.regway_select tr:first-child td:first-child a{border-radius:3px 0 0 0}
+.regway_select tr:first-child td:last-child,
+.regway_select tr:first-child td:last-child a{border-radius:0 3px 0 0}
+.regway_select tr:last-child td:first-child,
+.regway_select tr:last-child td:first-child a{border-radius:0 0 0 3px}
+.regway_select tr:last-child td:last-child,
+.regway_select tr:last-child td:last-child a{border-radius:0 0 3px 0}
+.regway_select + .value_select{margin-top:5px}
+
+.error_info{position:relative;margin:5px 0;padding:12px 30px 12px 15px;border:1px solid #e2e6e9;border-radius:3px;background-color:#f8f7da;font-size:13px;line-height:18px;color:#252525}
+.error_info .btn_close{position:absolute;top:5px;right:5px;width:15px;height:15px;font-size:0;line-height:9999px;overflow:hidden}
+.error_info .btn_close:before{display:block}
+.name_shop{display:inline-block;max-width:120px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;word-break:normal;word-wrap:normal;line-height:18px;vertical-align:top}
+.interest_area{padding:0 13px;border-top:1px solid #e2e6e9;background-color:#fbfcfc}
+.interest_area .fold_h,
+.receipt_area .fold_h{padding:14px 0 13px}
+.interest_area .fold_head:after{right:-2px}
+.interest_cont{display:none;padding:15px 0;border-top:1px solid #edf0f2}
+.interest_cont .h5{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #ededed;font-weight:normal;font-size:14px;color:#313131}
+.interest_cont .h5 + .interest_list + .h5{margin-top:12px;padding-top:12px;border-top:1px solid #ededed}
+:checked + .interest_area .interest_cont{display:block}
+.interest_area .fold_head.head_arrow:after{transform:rotate(0);-webkit-transform:rotate(0)}
+:checked + .interest_area .fold_head.head_arrow:after{transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+
+.sp_card:before{width:79px;height:16px;background:url(../../../../img/service/mobile/nsp/sp_companybi_full_20190424.png) no-repeat;background-size:340px 60px;content:'';-webkit-background-size:340px 60px}
+.sp_card.credit_C0:before{background-position:0 0}
+.sp_card.credit_C7:before{background-position:-85px 0}
+.sp_card.credit_C1:before{background-position:-170px 0}
+.sp_card.credit_C4:before{background-position:-255px 0}
+.sp_card.credit_CH:before{background-position:0 -20px}
+.sp_card.credit_C5:before{background-position:-85px -20px}
+.sp_card.credit_C3:before{background-position:-170px -20px}
+.sp_card.credit_CF:before{background-position:-255px -20px}
+.sp_card.credit_CA:before{width:87px;background-position:0 -40px}
+.sp_card.credit_C9:before{width:24px;background-position:-100px -40px}
+.sp_card.credit_CP:before{width:70px;background-position:-135px -40px}
+
+.interest_list dt span{overflow:hidden;position:absolute;width:1px;height:1px;margin:-1px;clip:rect(0 0 0 0)}
+.interest_list dt:before{display:block}
+.interest_list dt + dd{margin-top:6px}
+.interest_list dd + dt{margin-top:12px}
+.interest_list dd{font-size:13px;color:#8f8f8f}
+.interest_list dd li{margin:2px 0}
+
+.system_info{margin:10px 0 7px;text-align:center}
+.system_info:before{display:inline-block;height:60px !important}
+.system_info dt{font-size:16px}
+.system_info dd{color:#8f8f8f}
+.system_info dt + dd{margin-top:7px}
+.pay_tab_area + .payway_area .system_info{margin-top:25px}
+
+.sp_button_icon{position:relative;padding:0 0 0 18px}
+.sp_button_icon:after{display:inline-block;position:absolute;top:50%;left:0;width:15px;height:15px;margin-top:-8px;background:url(../../../../img/service/mobile/nsp/sp_button_cmn.png) no-repeat;background-size:15px auto;-webkit-background-size:15px auto;content:''}
+.sp_button_icon.icon_plus:after{background-position:0 0}
+.sp_button_icon.icon_check:after{background-position:0 -15px}
+.sp_button_icon.icon_edit:after{background-position:0 -30px}
+
+.button_section{margin-top:10px}
+.button_area{display:table;width:100%;table-layout:fixed}
+.button_bottom{display:table-cell;height:50px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;box-sizing:border-box;-webkit-box-sizing:border-box}
+.button_bottom span.button,
+.button_bottom a.button{display:block;position:relative;margin:0 2px;padding:14px 0;border-radius:2px;border:1px solid rgba(0,0,0,0.05);background:#00c73c;font-size:16px;line-height:20px;color:#fff;letter-spacing:-1px;text-align:center;-webkit-border-radius:2px}
+.button_bottom span.button,
+.type_gray a.button{background:#8991a3}
+.button_bottom .button .sp_button_icon{display:inline-block;position:relative}
+.button_bottom .button .sp_button_icon:after{position:absolute;top:50%;left:0;margin-top:-8px}
+.button_bottom:first-child .button{margin-left:0}
+.button_bottom:last-child .button{margin-right:0}
+
+.flick-container .flick-ct-dmm .ct-dmm{display:block;position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;opacity:0.75}
+.flick-container .flick-ct .flick-wrap{position:relative;max-width:100%;margin-left:auto;margin-right:auto;text-align:center}
+.simplepay_select{position:relative;padding:0 3px 0 4px;margin:0 auto}
+.button_checked{display:none;position:absolute;top:12px;right:15px;z-index:10}
+.button_checked:before{display:block}
+.simplepay_select.select .button_checked{display:block}
+
+.button_section.button_cont .button_bottom{height:42px}
+.button_section.button_cont .button_bottom a.button{padding:10px 0;background-color:#a4abb9;font-size:14px}
+
+.pay_selected .flick_area{position:relative;padding:20px 0}
+.pay_selected .flick_area.paging{padding-bottom:36px}
+.pay_selected .flick_area + .benefit_area{margin:0 13px;padding:12px 0 15px;border-top:1px solid #f1f3f5}
+.pay_selected .page_num{position:absolute;bottom:10px;left:0;right:0;font-family:HelveticaNeue,Helvetica,sans-serif;font-size:16px;font-weight:500;text-align:center;color:#8f8f8f}
+.single_selected{padding:15px 13px}
+
+.pay_tab_area + .flick_area {padding-top: 5px}
+
+.sp_credit:after{width:153px;height:45px;background:url(../../../../img/service/mobile/nsp/sp_creditbi_20190613.png) no-repeat;background-size:160px auto;-webkit-background-size:160px auto;content:''}
+.credit_C1 .sp_credit:after{background-position:0 0}		/* 비씨카드 */
+.credit_C3 .sp_credit:after{background-position:0 -50px}	/* 국민카드 */
+.credit_CH .sp_credit:after{background-position:0 -100px}	/* 현대카드 */
+.credit_C7 .sp_credit:after{background-position:0 -150px}	/* 삼성카드 */
+.credit_C0 .sp_credit:after{background-position:0 -200px}	/* 신한카드 */
+.credit_C5 .sp_credit:after{background-position:0 -250px}	/* 롯데카드 */
+.credit_C4 .sp_credit:after{background-position:0 -300px}	/* 농협카드 */
+.credit_CF .sp_credit:after{background-position:0 -350px}	/* 하나카드 */
+.credit_C9 .sp_credit:after{background-position:0 -400px}	/* 씨티카드 */
+.credit_CP .sp_credit:after{background-position:0 -450px}	/* 카카오뱅크 */
+
+.sp_bank:after{width:153px;height:45px;background:url(../../../../img/service/mobile/nsp/sp_bankbi_20190617.png) no-repeat;background-size:320px auto;-webkit-background-size:320px auto;content:''}
+.bank_003 .sp_bank:after{background-position:0 0}			/* 기업은행 */
+.bank_004 .sp_bank:after{background-position:0 -50px}		/* 국민은행 */
+.bank_007 .sp_bank:after{background-position:0 -100px}		/* 수협은행 */
+.bank_011 .sp_bank:after,
+.bank_012 .sp_bank:after,
+.bank_013 .sp_bank:after{background-position:0 -150px}		/* 농협은행 */
+.bank_020 .sp_bank:after{background-position:0 -200px}		/* 우리은행 */
+.bank_088 .sp_bank:after{background-position:0 -250px}		/* 신한은행 */
+.SHINHAN_A001 .sp_bank:after{background-position:0 -300px}	/* 신한은행(제휴) */
+.bank_023 .sp_bank:after{background-position:0 -350px}		/* SC제일은행 */
+.bank_031 .sp_bank:after{background-position:0 -400px}		/* 대구은행 */
+.bank_032 .sp_bank:after{background-position:0 -450px}		/* 부산은행 */
+.bank_034 .sp_bank:after{background-position:-160px 0}		/* 광주은행 */
+.bank_035 .sp_bank:after{background-position:-160px -50px}	/* 제주은행 */
+.bank_037 .sp_bank:after{background-position:-160px -100px}	/* 전북은행 */
+.bank_039 .sp_bank:after{background-position:-160px -150px}	/* 경남은행 */
+.bank_045 .sp_bank:after{background-position:-160px -200px}	/* 새마을금고 */
+.bank_048 .sp_bank:after{background-position:-160px -250px}	/* 신협 */
+.bank_071 .sp_bank:after{background-position:-160px -300px}	/* 우체국 */
+.bank_081 .sp_bank:after{background-position:-160px -350px}	/* KEB하나은행 */
+.bank_238 .sp_bank:after{background-position:-160px -400px}	/* 미래에셋대우 */
+.MIRAEASSET_CMA .sp_bank:after{background-position:-160px -450px}	/* 미래에셋대우(제휴) */
+.bank_089 .sp_bank:after{background-position:0 -500px}		/* 케이뱅크 */
+.bank_090 .sp_bank:after{background-position:-160px -500px}	/* 카카오뱅크(은행제휴) */
+.KBANK_A001 .sp_bank:after{background-position:0 -550px}	/* 케이뱅크(제휴) */
+
+.slt_value{display:block;width:100%;height:32px;border-color:rgba(255,255,255,0.25);border-radius:1px;background-color:rgba(255,255,255,0.07);background-position:100% -45px;line-height:30px;font-size:15px;color:rgba(255,255,255,0.9);text-indent:10px;-webkit-border-radius:1px;-webkit-appearance:none}
+.select_area{position:absolute;right:0;left:0;bottom:12px;padding:0 18px}
+.card_select{position:relative;display:block;padding:57px 15px 58px;border-radius:4px;-webkit-border-radius:4px;}
+.general_pay .card_select{padding:56px 15px 57px;border:1px solid #d3d9df}
+.card_select.sp_credit:after,
+.card_select.sp_bank:after{position: absolute;top:0;left:0;}
+.card_select.card_add{display:block;padding:39px 0 38px;border:2px dashed #c4cbd1;background-color:#f9fbfd}
+.card_select.card_add.regist{padding:21px 0 19px}
+.card_select .card_type {position: absolute;color:#fff;font-size:11px;letter-spacing:-1px;top:13px;right:15px}
+.card_select .card_number{display:table;width:100%;table-layout:fixed;font-size:20px;font-family:sans-serif-light,HelveticaNeue-Light,Helvetica,sans-serif;line-height:30px;color:#fff;text-align:center;}
+.card_select .card_number span{display:table-cell;text-align:center;}
+.card_select .card_text{font-size:15px;line-height:20px;color:#252525}
+.card_select .card_text:before{display:block;margin:0 auto 10px;width:34px;height:34px;background:url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat 0 -165px;background-size:150px auto;content:''}
+.card_select .card_subtext{margin-top:5px;font-size:13px;line-height:16px;color:#8f8f8f}
+.card_select .account_name{position:absolute;bottom:46px;left:15px;right:15px;font-size:13px;line-height:16px;text-align:left;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#fff}
+.card_select .account_name.noname{color:rgba(255,255,255,0.5)}
+.card_select.bank{overflow:hidden;padding:100px 15px 15px}
+.card_select.bank:before{position:absolute;bottom:0;left:0;right:0;height:4px;background-color:rgba(255,255,255,0.3);content:''}
+.card_select.bank.disabled{padding:62px 0 43px;background-color:#cacdd2}
+.card_select.bank .card_number{display:block;font-size:18px;text-align:left}
+.card_select .checking {position:absolute;top:15px;right:15px;border:1px solid #f8f8f8;border-radius:2px;padding:0 6px;font-size:12px;font-weight:500;line-height:18px;color:#fff}
+.card_select .disable_text{font-size:14px;line-height:20px;letter-spacing:-1px;color:#fff}
+.card_select.general_pay{padding:57px 12px 58px;border:1px solid #d3d9df;box-shadow:0 0}
+.credit_C0 .card_select{background:#2b40ab}
+.credit_C7 .card_select{background:#0072bc}
+.credit_CH .card_select{background:#259bff}
+.credit_C4 .card_select{background:#03a64a}
+.credit_CF .card_select{background:#00a9ae}
+.credit_C1 .card_select{background:#c73632}
+.credit_C5 .card_select{background:#6f11c1}
+.credit_C3 .card_select{background:#ffbc00}
+.credit_CP .card_select{background:#ffdf00}
+.credit_C3 .card_select .card_number,
+.credit_CP .card_select .card_number{color:#5e513b}
+.general_pay .card_select .card_number{color:#252525}
+.credit_C3 .slt_value,
+.credit_CP .slt_value{border-color:rgba(94, 81, 59, 0.25);background-position:100% -80px;color:rgba(94, 81, 59, 0.9)}
+.bank_088 .card_select,
+.SHINHAN_A001 .card_select{background:#2b40ab}
+.bank_020 .card_select{background:#00b4ec}
+.bank_003 .card_select{background:#75bdeb}
+.bank_032 .card_select{background:#665c50}
+.bank_011 .card_select,
+.bank_012 .card_select,
+.bank_013 .card_select{background:#08b353}
+.bank_039 .card_select{background:#665c50}
+.bank_007 .card_select{background:#0777c0}
+.bank_071 .card_select{background:#da3027}
+.credit_C9 .card_select{background:#00abe2}
+.bank_023 .card_select{background:#0078ae}
+.bank_004 .card_select{background:#776c61}
+.bank_240 .card_select{background:#1428a0}
+.bank_238 .card_select,
+.MIRAEASSET_CMA .card_select{background:#f5821f}
+.bank_031 .card_select{background:#0073c0}
+.bank_034 .card_select{background:#012d6c}
+.bank_037 .card_select{background:#012d6c}
+.bank_035 .card_select{background:#2b40ab}
+.bank_045 .card_select{background:#c09c6b}
+.bank_048 .card_select{background:#0061ae}
+.bank_081 .card_select{background:#00a9ae}
+.bank_089 .card_select,
+.KBANK_A001 .card_select{background:#333e48}
+.bank_090 .card_select{background:#ffdf00}
+.bank_090 .card_select .card_number{color:#5e513b}
+.bank_090 .card_select .account_name.noname{color: rgba(94, 81, 59, 0.7)}
+.bank_090 .card_select.disabled:after{background:url(../../../../img/service/mobile/nsp/bi_kakaobank_306_90_disabled.png) no-repeat 0 0;background-size:153px auto}
+.select_area .slt_value:disabled{border-color:rgba(0,0,0,0.1);background-color:rgba(0,0,0,0.07);background-image:none;color:rgba(0,0,0,0.4)}
+.card_select.credit_CP .card_number{color:#252525}
+
+.card_select.hp_olleh{background:url(../../../../img/service/mobile/nsp/bi_olleh_180_38.png) no-repeat 10px 7px}
+.card_select.hp_sk{background:url(../../../../img/service/mobile/nsp/bi_sk_180_38.png) no-repeat 10px 7px;background-size:90px 24px !important}
+.card_select.hp_lgu{background:url(../../../../img/service/mobile/nsp/bi_lgu_180_38.png) no-repeat 10px 7px}
+.card_select.account{background:url(../../../../img/service/mobile/nsp/bi_account_180_38.png) no-repeat 10px 7px}
+.card_select.general{background:url(../../../../img/service/mobile/nsp/bi_general_180_38.png) no-repeat 10px 7px}
+.card_select.frugal{background:url(../../../../img/service/mobile/nsp/bi_frugal_180_38.png) no-repeat 10px 7px}
+.card_select.credit{background:url(../../../../img/service/mobile/nsp/bi_credit_180_38.png) no-repeat 10px 7px;background-size:110px 19px !important;}
+.card_select.hp_olleh,
+.card_select.hp_sk,
+.card_select.hp_lgu,
+.card_select.account,
+.card_select.general,
+.card_select.frugal{background-color:#f1f5f9;background-size:90px 19px}
+
+/* 결제 제한 */
+.card_select.disabled{border:1px solid #e8ebee;box-shadow:none}
+.card_select.disabled .card_number{font-size:22px;font-family:sans-serif-light,HelveticaNeue-thin,Helvetica,sans-serif;line-height:30px;color: #a5abb6;text-align:center;text-shadow:none}
+.card_select.disabled +.select_area .sp_select_icon{background:none}
+.card_select.disabled +.select_area .slt_value{border-color:#e2e7ec;background-position:100% -80px;color:#d6dce1;box-shadow:0 1px 0 rgba(255,255,255,0.15)}
+.card_select.disabled +.select_area .slt_value:disabled{background-color:transparent}
+.select_area .slt_value:disabled{border-color:rgba(0,0,0,0.1);background-color:rgba(0,0,0,0.07);background-image:none;color:rgba(0,0,0,0.4)}
+
+.h_arrow:after{width:16px;height:9px;background:url(../../../../img/service/mobile/nsp/h_ordersheet_arrow.png) no-repeat;background-size:16px 9px;-webkit-background-size:16px 9px;content:''}
+.benefit_point{margin-top:7px;border:1px solid #00bd39;border-radius:2px;background-color:#00c73c;-webkit-border-radius:2px}
+.benefit_point .fold_h{display:block;position:relative;padding:0}
+.benefit_point .fold_h:before{position:absolute;top:50%;left:10px;width:47px;height:19px;margin-top:-9px}
+.benefit_point .fold_h:after{position:absolute;top:50%;right:10px;margin-top:-5px}
+.benefit_point .sp_h:before{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_benefit_20161117.png) no-repeat;background-size:47px auto;-webkit-background-size:47px auto;content:''}
+.benefit_point .h_point:before{background-position:0 0}
+.benefit_point .point_h{padding:11px 0 11px 61px;font-weight:normal;font-size:15px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#fff}
+.benefit_point .point_content{display:none;padding:10px 11px;border-top:1px solid #00bf3a}
+.benefit_point .point_guide{font-size:13px;line-height:18px;color:rgba(255,255,255,0.5)}
+.s_benefit_list{color:#fff}
+.s_benefit_item strong,
+.s_benefit_item span{display:inline-block;font-size:14px;line-height:22px}
+.s_benefit_item strong{float:left;width:80px;margin-left:-80px;font-weight:normal}
+.s_benefit_item strong{float:left;width:80px;margin-left:-80px;font-weight:normal}
+.s_benefit_item span{color:#a3e4b0}
+.s_benefit_item .icon_help{display:inline-block;overflow:hidden;position:relative;width:15px;height:22px;margin-left:4px;line-height:9999px;vertical-align:middle}
+.s_benefit_item .icon_help:after{position:absolute;top:0;left:0}
+.benefit_list + input + .benefit_point{margin-top:14px}
+:checked + .benefit_point .point_content{display:block}
+:checked + .benefit_point .fold_h:after{transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+.point_content .s_benefit_list + .point_guide{margin-top:9px;padding-top:11px;border-top:1px solid rgba(0,0,0,0.04)}
+
+.complete_info{margin-top:-7px;padding:9px 0 16px;font-size:22px;line-height:26px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Light,'나눔고딕',nanumgothic,sans-serif;color:#252525;letter-spacing:-1px;text-align:center}
+.complete_info strong{font-weight:normal}
+.complete_box{position:relative;margin:34px 0 0;border:1px solid #e2e6e9;border-radius:0 0 3px 3px;background-color:#fff}
+.complete_box .point_box{height:56px;border-radius:3px 3px 0 0}
+.complete_box .icon_nppoint2:before{position:absolute;top:-34px;left:50%;margin-left:-34px}
+.complete_box.payment.bank_088 .point_box{background:#2b40ab}
+.complete_box.payment.bank_088 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_shinhanbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_011 .point_box{background:#08b353}
+.complete_box.payment.bank_011 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_nhbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_020 .point_box{background:#00b4ec}
+.complete_box.payment.bank_020 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_wooribank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_003 .point_box{background:#68baef}
+.complete_box.payment.bank_003 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_ibkbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_004 .point_box{background:#7C7356}
+.complete_box.payment.bank_004 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_kbbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_032 .point_box{background:#665c50}
+.complete_box.payment.bank_032 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_busanbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_039 .point_box{background:#665c50}
+.complete_box.payment.bank_039 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_knbank_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_071 .point_box{background:#da3027}
+.complete_box.payment.bank_071 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_post_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.bank_007 .point_box{background:#0777c0}
+.complete_box.payment.bank_007 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_suhyup_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C5 .point_box{background:#a0a6b6}
+.complete_box.payment.credit_C5 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_lottecard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_CF .point_box{background:#00a9ae}
+.complete_box.payment.credit_CF .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_hanacard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C4 .point_box{background:#03a64a}
+.complete_box.payment.credit_C4 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_nhcard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C3 .point_box{background:#ffd426}
+.complete_box.payment.credit_C3 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_kbcard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C7 .point_box{background:#0072bc}
+.complete_box.payment.credit_C7 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_samsung_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_CH .point_box{background:#259bff}
+.complete_box.payment.credit_CH .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_hyundaicard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C0 .point_box{background:#2b40ab}
+.complete_box.payment.credit_C0 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_sinhancard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_C1 .point_box{background:#c73632}
+.complete_box.payment.credit_C1 .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_bccard_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.credit_CP .point_box{background:#ffdf00}
+.complete_box.payment.credit_CP .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_kakao_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.olleh .point_box,
+.complete_box.payment.sk .point_box,
+.complete_box.payment.lgu .point_box,
+.complete_box.payment.frugal .point_box,
+.complete_box.payment.account .point_box,
+.complete_box.payment.general .point_box{background:#f1f5f9}
+.complete_box.payment.olleh .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_olleh_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.sk .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_sk_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.lgu .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_lgu_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.frugal .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_frugal_166_30.png) no-repeat 100% 0;background-size:83px 17px; height:17px}
+.complete_box.payment.account .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_account_166_30.png) no-repeat 100% 0;background-size:83px 15px}
+.complete_box.payment.general .bank_logo{background:url(../../../../img/service/mobile/nsp/bi_general_166_30.png) no-repeat 100% 0;background-size:83px 17px; height:17px}
+
+.complete_box + .h2{margin-top:25px}
+.guide_text + .button_section{margin-top:18px}
+
+.stamp{position:absolute;top:40px;right:-6px;width:61px;height:99px;background:url(../../../../img/service/mobile/nsp/stamp_npay.png) no-repeat;background-size:61px 99px}
+
+.notify_area li{padding:17px 15px;line-height:20px;font-size:14px}
+.notify_area li + li{border-top:1px solid #f1f3f5}
+.notify_area li a{color:#252525;text-decoration:underline}
+.notify_area dt{color:#252525}
+.notify_area dd{color:#8f8f8f}
+.notify_area dt + dd{margin-top:7px}
+
+.phonenumber{position:relative;padding-left:77px}
+.phonenumber .value2:disabled{background-color:#f1f3f5;opacity:1;-webkit-text-fill-color:#252525}
+.phonenumber .value2.company{position:absolute;top:0;left:0;width:72px}
+
+.bt_lst{overflow:hidden;padding:12px 0 13px;border-bottom:1px solid #f1f3f5}
+.bt_lst li{float:left;width:33.3%;font-size:13px}
+.bt_lst li a{position:relative;padding-right:7px;color:#696969}
+.bt_lst li a:after{position:absolute;top:0;right:0}
+.bt_lst + .inf_lst{margin:7px -13px -17px}
+
+.inp_d{display:table;width:100%;table-layout:fixed}
+.inp_d li{display:table-cell;width:auto;padding-left:10px;vertical-align:top}
+.inp_d li:before{float:left;width:10px;height:32px;margin-left:-10px;line-height:32px;color:#dbdbdb;text-align:center;content:'-'}
+.inp_d li:first-child{padding:0 !important}
+.inp_d li:first-child:before{width:0 !important;height:0 !important;margin-left:0 !important;line-height:0 !important;content:'' !important}
+.inp_d.tel li{width:35%}
+
+.value_select + .value_select{margin-top:5px}
+.h2 + .fold_wrap{margin-top:12px}
+
+.pay_sim{margin:7px 0 -4px;padding:18px 0;border-style:solid;border-color:#ededed;border-width:1px 0;text-align:center}
+.pay_sim strong{font-size:17px;font-weight:normal;line-height:20px;color:#00c73c}
+.pay_sim strong em{font-family:HelveticaNeue-Roman,Helvetica,Arial,sans-serif !important}
+.pay_sim p{margin-top:7px;font-size:13px;line-height:17px;color:#8f8f8f}
+
+/* 로딩페이지 */
+.loading_wrap{min-height:100vh}
+.loading_wrap .logo_npay,
+.circle_area:before{background:url(../../../../img/service/mobile/nsp/sp_loading.png) no-repeat;background-size:90px auto;-webkit-background-size:90px auto}
+.loading_wrap .logo_npay{overflow:hidden;position:absolute;top:13px;left:50%;width:60px;height:23px;margin-left:-30px;background-position:0 -90px;line-height:99999px}
+.loading_section{position:relative;min-height:100vh}
+.guide_area{position:absolute;top:23%;left:50%;width:221px;margin-left:-110.5px}
+.circle_area{position:relative;width:221px;height:221px}
+.circle_area:before{position:absolute;top:50%;left:50%;width:82px;height:82px;margin:-41px 0 0 -41px;background-position:0 0;content:''}
+.loading_circle{width:221px;height:221px;background:url(../../../../img/service/mobile/nsp/loading_circle.png) no-repeat 50% 50%;background-size:221px 221px;-webkit-animation:loading 1.4s linear infinite}
+.loading_circle2{position:absolute;top:50%;left:50%;z-index:99999;width:20px;height:20px;margin:-10px 0 0 -10px;background:url(../../../../img/service/mobile/nsp/loading_circle2.png) no-repeat 50% 50%;background-size:20px 20px;-webkit-animation:loading 1s linear infinite}
+@-webkit-keyframes loading{
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(360deg)}
+}
+.square_area{position:relative;width:221px;height:221px;margin-bottom:-101px}
+.square_area:before{content:'';position:absolute;left:50%;top:50%;width:32px;height:8px;margin:-4px 0 0 -16px;background:url(../../../../img/service/mobile/nsp/loading_square.gif) no-repeat 0 0;background-size:32px 8px;-webkit-background-size:32px 8px}
+.text_area{width:100%;margin-top:20px;padding-bottom:20px;font-size:14px;color:#8f8f8f;text-align:center}
+.text_area strong{display:block;font-weight:normal;font-size:18px;line-height:25px;color:#252525}
+
+
+/* 레이어 팝업 */
+.ly_bx .inq li a span:before,
+.ly_bx .benefit_wrap .txt .ico_q,
+.ly_bx .txt_info a:after{background:url(../../../../img/service/mobile/nsp/sp_cmn.png) no-repeat;background-size:225px 200px;-webkit-background-size:225px 200px}
+
+.dimmed{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;width:100%;height:100%;background-color:rgba(0,0,0,0.6)}
+.ly_bx{position:absolute;left:50%;z-index:10000;width:270px;margin-left:-135px;border-radius:3px;background-color:#fff;-webkit-border-radius:3px}
+.ly_bx .func_lst li{border-top:1px solid #efefef;text-align:center}
+.ly_bx .func_lst li a{display:block;padding:14px 0;font-size:15px;color:#252525}
+.ly_bx .set{overflow:hidden;border-radius:3px;-webkit-border-radius:3px}
+.ly_bx .p_name{margin-top:-35px;padding-bottom:12px;text-align:center}
+.ly_bx .img_area,
+.ly_bx .img_area img,
+.ly_bx .img_area .bg{border-radius:65px}
+.ly_bx .img_area{position:relative;width:65px;height:65px;margin:0 auto}
+.ly_bx .img_area .bg{position:absolute;top:0;left:0;z-index:10;width:100%;height:100%;background-color:rgba(0,0,0,0.03)}
+.ly_bx .p_txt{margin-top:10px;line-height:19px;font-size:15px;color:#252525}
+.ly_bx .p_txt p{display:-webkit-box;overflow:hidden;margin:0 10px;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-wrap:break-word}
+.ly_bx .p_txt span{color:#b3b3b3}
+.ly_bx .p_txt em{font-family:Helvetica,sans-serif}
+.ly_bx .p_img .bg{display:block;position:absolute;top:0;left:0;width:65px;height:65px;background-color:#000}
+.ly_bx .inq{overflow:hidden;border-top:1px solid #efefef}
+.ly_bx .inq li{float:left;position:relative;width:50%;text-align:center}
+.ly_bx .inq li a{display:block;padding:14px 0;font-size:15px;color:#252525}
+.ly_bx .inq li:first-child:after{position:absolute;top:50%;right:0;width:1px;height:20px;margin-top:-10px;background-color:#e6e8e9;content:''}
+.ly_bx .inq li a span:before{display:inline-block;width:16px;height:17px;margin:-2px 6px 2px 0;vertical-align:middle;content:''}
+.ly_bx .inq li a.tel span:before{background-position:0 -70px}
+.ly_bx .inq li a.web span:before{background-position:-20px -70px}
+.ly_bx .ship_lst{overflow:auto;max-height:355px}
+.ly_bx .ship_lst ul{margin:2px 20px 5px}
+.ly_bx .ship_lst li{display:-webkit-box;position:relative;min-height:40px;padding:15px 0 15px 50px;border-top:1px solid #efefef;font-size:13px;color:#252525;-webkit-box-orient:vertical;-webkit-box-pack:center}
+.ly_bx .ship_lst li:first-child{border-top:none}
+.ly_bx .ship_lst li .thmb{position:absolute;top:50%;left:0;margin-top:-20px}
+.ly_bx .ship_lst li .thmb img{border-radius:20px;-webkit-border-radius:20px}
+.ly_bx .ship_lst li .pdt_txt p{display:-webkit-box;overflow:hidden;margin-bottom:1px;line-height:17px;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-wrap:break-word}
+.ly_bx .ship_lst li .pdt_txt span{color:#00c73c}
+.ly_bx .benefit_wrap dt{margin:22px 20px 6px;font-size:16px;line-height:26px;color:#252525}
+.ly_bx .benefit_wrap dt .npay{display:inline-block;overflow:hidden;float:none;width:55px;height:22px;margin-bottom:-5px;background-position:0 -39px !important;line-height:999px}
+.ly_bx .benefit_wrap .txt{position:relative;margin:0 20px 13px;font-size:13px;line-height:17px;color:#8f8f8f;letter-spacing:-1px}
+.ly_bx .benefit_wrap .txt2{position:relative;margin:0 20px 13px;font-size:14px;color:#000;line-height:20px;letter-spacing:-1px}
+.ly_bx .benefit_wrap .txt .ico_q{display:inline-block;overflow:hidden;width:15px;height:15px;margin:-1px 0 1px;background-position:-120px -90px;line-height:9999px;vertical-align:middle}
+.ly_bx .benefit_wrap .txt .toggle{position:absolute;right:0;bottom:0;width:20%;height:29px}
+.ly_bx .benefit_wrap .txt .toggle:after{position:absolute;right:0;bottom:2px;width:16px;height:9px;background-position:0 0}
+.ly_bx .benefit_wrap .txt .fold_txt{display:none}
+.ly_bx .benefit_wrap .txt .p_color,
+.ly_bx .benefit_wrap .txt2 .p_color{color:#00c73c}
+.ly_bx .benefit_wrap .txt .benefit_rate{padding-left:6px}
+.ly_bx .benefit_wrap .btn_txt{display:inline-block;font-size:11px;color:#c8c8c8;text-decoration:underline}
+.ly_bx .benefit_wrap .arrow{display:block;position:relative;margin-left:3px;padding-right:7px}
+.ly_bx .benefit_wrap .arrow:after{position:absolute;top:6px;right:0;width:3px;height:6px;background-position:-20px 0}
+.ly_bx .benefit_wrap .font_number{font-family:HelveticaNeue;font-weight:normal;letter-spacing:0}
+.ly_bx .benefit_wrap .point_color{color:#00c73c}
+.ly_bx .benefit_wrap .comment{display:block;margin-top:1px;font-size:11px;line-height:15px;color:#b3b3b3;letter-spacing:-1px}
+.ly_bx .benefit_wrap2 dt{margin:22px 17px 6px 20px}
+.ly_bx .benefit_lst{overflow:auto;max-height:220px;padding:0 20px;background:#f7f7f7}
+.ly_bx .benefit_lst .benefit_item{display:table;position:relative;width:100%;min-height:66px}
+.ly_bx .benefit_lst .benefit_item:nth-child(1){border-top:5px solid #f7f7f7}
+.ly_bx .benefit_lst .benefit_item + .benefit_item{border-top:1px solid #efefef}
+.ly_bx .benefit_lst .tmb{display:inline-block;position:absolute;top:50%;left:0;width:40px;height:40px;margin-top:-20px;border-radius:50%}
+.ly_bx .benefit_lst .tmb:after{position:absolute;top:0;right:0;left:0;bottom:0;border-radius:50%;content:'';-webkit-box-shadow:inset 0 0 1px rgba(0,0,0,.1);box-shadow:inset 0 0 1px rgba(0,0,0,.1)}
+.ly_bx .benefit_lst .tmb img{border-radius:50%}
+.ly_bx .benefit_lst .inr{display:table-cell;width:100%;padding:8px 0 9px 49px;vertical-align:middle}
+.ly_bx .benefit_lst .tit{display:-webkit-box;overflow:hidden;width:100%;margin-bottom:7px;font-size:13px;font-weight:normal;line-height:15px;color:#252525;letter-spacing:-1px;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical;word-wrap:break-word}
+.ly_bx .benefit_lst .detail{display:block;overflow:hidden;width:100%;font-family:AppleSDGothicNeo-Regular,sans-serif;font-size:12px;line-height:14px;color:#8f8f8f}
+.ly_bx .benefit_lst .detail .fr{float:right}
+.ly_bx .benefit_lst .detail strong{font-weight:normal;color:#00c73c}
+.ly_bx .benefit_lst_v2{padding:0;border-top:1px solid #e3e4e5;background:#fff}
+.ly_bx .benefit_lst_v2 .benefit_item{min-height:80px}
+.ly_bx .benefit_lst_v2 .benefit_item:nth-child(1){border-top-width:0}
+.ly_bx .benefit_lst_v2 .tmb{left:15px;width:50px;height:50px;margin-top:-25px}
+.ly_bx .benefit_lst_v2 .inr{padding:12px 15px 11px 74px;vertical-align:top}
+.ly_bx .benefit_lst_v2 .tit{margin-bottom:4px;font-size:15px;line-height:20px}
+.ly_bx .benefit_lst_v2 .detail{line-height:16px}
+.ly_bx .benefit_wrap .lay_help{display:none;position:absolute;top:38px;left:50%;z-index:10;width:161px;margin-left:-98px;padding:8px 22px 6px 11px;border:1px solid #6c6c6c;background:#fff;font-size:12px;color:#4f4f4f}
+.ly_bx .benefit_wrap .lay_help .btn_close{display:block;overflow:hidden;position:absolute;top:7px;right:7px;width:10px;height:10px;background-position:-63px 0 !important;line-height:999px}
+.ly_bx .cls_btn{border-radius:0 0 3px 3px;border-top:1px solid #efefef;background-color:#f2f3f4}
+.ly_bx .cls_btn a{display:block;padding:20px 0;font-size:16px;color:#b3b3b3;text-align:center}
+.ly_bx .cls_btn_v2 a{padding:18px 0}
+.ly_bx .txt_info{margin:25px 20px 22px}
+.ly_bx .txt_info h2{margin:-1px 0 11px;font-size:18px;font-weight:normal;color:#252525}
+.ly_bx .txt_info p{margin-bottom:6px;font-size:13px;line-height:19px;color:#8f8f8f}
+.ly_bx .txt_info p .p_col{color:#00c73c}
+.ly_bx .txt_info a{font-size:11px;color:#696969;text-decoration:underline}
+.ly_bx .txt_info a:after{display:inline-block;width:4px;height:8px;margin:-1px 0 1px 4px;background-position:-70px -75px;vertical-align:middle;content:''}
+.ly_bx .error_cont{padding:33px 0 25px;text-align:center}
+.ly_bx .error_cont:before{display:block;margin:0 auto 20px;}
+.ly_bx .error_cont dl{margin-top:19px}
+.ly_bx .error_cont dt{font-size:17px;line-height:23px}
+.ly_bx .error_cont dd{margin-top:8px;color:#8f8f8f}
+.ly_bx .error_cont .point_txt{color:#00c73c}
+
+/* 네이버페이 적립혜택 노출 */
+.sp_spot_benefit,
+.sp_spot_benefit:before,
+.sp_spot_benefit:after{background:url(../../../../img/service/mobile/nsp/sp_spot_benefit.png) no-repeat -200px 0;background-size:75px auto;-webkit-background-size:75px auto;content:''}
+.benefit_npay .font_number{font-family:Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#00c73c}
+.benefit_npay .benefit_title a{display:block;position:relative;color:#252525}
+.benefit_npay .benefit_title a:after{position:absolute;top:50%;right:15px;width:16px;height:9px;margin-top:-5px;background-position:0 0}
+.benefit_npay .benefit_title .logo_pay{display:inline-block;overflow:hidden;width:46px;height:18px;margin:-2px 0 2px;background-position:0 -16px;line-height:999px;vertical-align:middle}
+.benefit_npay .benefit_title small{font-size:13px;color:#5b5b5b}
+.benefit_npay dd{display:none}
+.benefit_npay .inf_lst{margin-top:12px;padding:0}
+.benefit_npay .inf_lst li{font-size:14px;color:#8f8f8f}
+.benefit_npay .inf_lst .benefit_label{display:inline-block;width:80px;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;color:#252525}
+.benefit_npay .benefit_txt{margin:12px 0 0;font-size:12px;color:rgba(255,255,255,0.7)}
+.benefit_npay .benefit_txt + .inf_lst{margin-top:6px}
+.benefit_npay.on .benefit_title a:after{transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+.benefit_npay.on dd{display:block}
+.benefit_npay.on dd:before{display:block;height:1px;background-color:#f1f3f5;content:''}
+.spot_benefit .benefit_title a{padding:15px 15px 13px}
+.spot_benefit dd{padding:0 15px 17px}
+.spot_benefit3{border-top:2px solid #6e727b;letter-spacing:0}
+.spot_benefit3 .benefit_title a{padding:15px 10px 12px}
+.spot_benefit3 .benefit_title a:after{right:11px;width:10px;height:6px;margin-top:-3px;background-position:-30px 0}
+.spot_benefit3 .benefit_title .logo_pay{float:none;width:48px;margin-right:-2px;background-position:0 -66px}
+.spot_benefit3 dd{padding:0 0 8px}
+.spot_benefit3 .inf_lst{margin:8px 10px 0 !important}
+.spot_benefit3 .inf_lst li+li{margin-top:2px}
+.spot_benefit3 .benefit_npay .ico_q2{display:inline-block;overflow:hidden;width:14px;height:14px;margin:-2px 0 2px 1px;background-position:-45px 0;line-height:999px;vertical-align:middle}
+
+.guide_box{border:1px solid #e2e6e9;border-radius:3px;background-color:#fff}
+.guide_content li{padding:15px 15px 13px}
+.guide_content li + li{border-top:1px solid #f1f3f5}
+.guide_content dt{font-size:14px;color:#252525}
+.guide_content dd{font-size:13px;line-height:20px;color:#8f8f8f}
+.guide_content dt + dd,
+.guide_content dd + dd{margin-top:7px}
+.guide_content dd .text_link2{color:#00c73c !important}
+.info_login{
+    position:relative;
+    margin:-20px -6px 21px -6px;
+    padding:0 84px 0 9px;
+    background:#fcfcfd;
+    font-size:14px;
+    height:47px;
+    line-height:46px;
+    border-bottom:1px solid #e0e3e6;
+    box-sizing:border-box
+}
+.info_login .img_area{float:left;width:32px;height:32px;background:url(../../../../img/service/mobile/nsp/profile_default.png) no-repeat 0 0;background-size:32px auto;-webkit-background-size:32px auto;border-radius:50%;margin:7px 9px 0 0;overflow:hidden}
+.info_login .name{color:#2ec543}
+.info_login .eng_name{color:#8a8980;font-family:HelveticaNeue,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;line-height:13px;vertical-align:1px}
+.info_login .btn_logout{
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 10px;
+    font-size: 13px;
+    color: #767676;
+    line-height: 30px;
+    background: #fff;
+    border: 1px solid #e0e3e6;
+    border-radius: 3px;
+}
+
+/* 제휴포인트 사용 */
+.full_area.change_point {
+    padding-left: 100px;
+    font-size: 14px;
+    line-height: 24px;
+}
+.full_area.change_point .label{
+    font-size: 14px;
+}
+.full_area.change_point .value {
+    width: auto;
+    padding-right: 10px;
+    letter-spacing: -1px;
+    color: #252525;
+}
+.full_area.change_point .value.fail {
+    padding-right: 5px;
+    color: #8f8f8f;
+}
+.full_area.change_point .unit{
+    margin-top: 1px;
+    font-size: 14px;
+    color: #252525;
+}
+.full_area.change_point .point_view {
+    padding-right: 0;
+    font-size: 13px;
+    color: #8f8f8f;
+}
+.change_point .link_box {
+    position: relative;
+    padding: 6px 0;
+    text-align: right;
+}
+.change_point .ico_loading {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin: 2px 112px 0 0;
+    background-image: url(../../../../img/service/mobile/nsp/ico_loading.gif);
+    vertical-align: top;
+}
+
+.point_view:after {
+    display:inline-block;
+    width:4px;
+    height:8px;
+    margin:-1px 0 1px 3px;
+    background: url(../../../../img/service/mobile/nsp/sp_cmn.png) no-repeat;
+    background-size: 225px auto;
+    -webkit-background-size: 225px auto;
+    background-position:-110px -50px;
+    content: '';
+}
+.btn_refresh {
+    color: #8f8f8f;
+}
+.btn_refresh:after {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 3px 0 3px 5px;
+    background:url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat;
+    background-size:150px auto;
+    -webkit-background-size:150px auto;
+    background-position: 0 -145px;
+    vertical-align: top;
+    content: '';
+}
+.point_area {
+    overflow: hidden;
+    margin: -2px 13px 11px;
+}
+.alliance_list {
+    overflow: hidden;
+    margin-top: -1px;
+    background-color: #f9fbfb;
+    font-size: 12px;
+    line-height: 33px;
+    letter-spacing: -1px;
+    text-align: center;
+}
+.alliance_list li {
+    float: left;
+    width: 33.33%;
+    min-height: 33px;
+    margin: 1px 0 -1px;
+    border-bottom: 1px solid #fff;
+}
+.alliance_list .alliance {
+    display: block;
+    overflow: hidden;
+    padding: 0 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #8f8f8f;
+}
+.alliance_list .logo{
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    margin: 6px 3px 0 0;
+    vertical-align: top;
+}
+.alliance_list .logo img{
+    vertical-align: top;
+}
+.ico_pointplus {
+    vertical-align: top;
+    background: url(../../../../img/service/mobile/nsp/sp_pointplus_20181218.png) no-repeat;
+    background-position: 0 0;
+    background-size: 45px auto;
+    width: 39px;
+    height: 14px;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+.pay_info .ico_pointplus {
+    display: block;
+}
+.cls_btn_v3 {
+    border: 1px solid #c5cbd0;
+    margin: 0 auto 15px;
+    width: 238px;
+    line-height: 38px;
+    text-align: center;
+}
+.cls_btn_v3 a {
+    font-size: 16px;
+    color: #424242;
+    display: block;
+}
+.txt .list_dot {
+    font-family: "Lucida Grande",HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;
+}
+.ly_bx .benefit_wrap .no_letterspace {
+    letter-spacing: 0;
+}
+/* 결제 정보*/
+.head_payinfo_icon:before{
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    display: block;
+    content: '';
+    width: 30px;
+    height: 30px;
+    background: url(../../../../img/service/mobile/order/im/sp_order_hicon_x2.png) no-repeat;
+    background-size: 105px auto;
+    -webkit-background-size: 105px auto;
+}
+.head_payinfo_icon.head_payinfo:before {
+    background-color: #e74c3c;
+    background-position: 0 0;
+}
+.ord_pdt{display:-webkit-box;position:relative;min-height:73px;padding:17px 0 17px 85px;-webkit-box-orient:vertical;-webkit-box-pack:center;margin: 0 13px;}
+.ord_pdt .thmb{display:block;overflow:hidden;position:absolute;top:17px;left:0;width:70px;height:70px;border:1px solid #e2e6e9;box-sizing:border-box;-webkit-box-sizing:border-box}
+.ord_pdt .thmb img{position:absolute;top:-1px;right:-1px;left:-1px;bottom:-1px;width:70px;height:70px;vertical-align:top}
+.ord_pdt dl {
+    margin-top: -11px;
+}
+.ord_pdt dt {margin-bottom:6px;}
+.ord_pdt .pay_info {
+    padding-right: 40px;
+    overflow:hidden;
+    max-width:100%;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    position:relative;
+}
+.ord_pdt dt strong {font-weight:normal; font-size: 16px;color: #252525}
+.ord_pdt dd.sum {font-size: 15px; color: #1088ed;}
+.ord_pdt dd.sum em {
+    font-size: 19px;
+}
+.ord_pdt .pay_info .more_pay_info {
+    font-size: 16px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.ly_bx .benefit_wrap .info_txt {
+    margin-bottom: 15px;
+}
+
+
+.terms_box{overflow:hidden;border:1px solid #e2e6e9;border-radius:3px;background:#fff}
+.terms_box .terms_list{padding:13px 15px;line-height:20px;color:#8f8f8f}
+.terms_list .terms_item + .terms_item{margin-top:7px}
+
+/* 신한포인트 배너 */
+.banner_point {
+    margin: 12px -13px -15px;
+}
+.banner_point a {
+    display: block;
+    padding: 13px 0;
+    border-top: 1px solid #e2e6e9;
+    text-align: center;
+}
+.banner_point a img {
+    vertical-align: top;
+}
+/* 편의점충전 */
+.full_area.point_link {
+    padding: 0;
+}
+.point_link a {
+    display: block;
+    padding: 15px 10px 17px 0;
+    color: #252525;
+    font-size: 13px;
+}
+.point_link a:after {
+    position: absolute;
+    top: 19px;
+    right: 0;
+    width: 5px;
+    height: 10px;
+    background: url(../../../../img/service/mobile/nsp/sp_cmn.png) -55px -50px no-repeat;
+    background-size: 225px auto;
+    content: '';
+}
+.point_link img {
+    display: inline-block;
+    margin-top: 4px;
+    vertical-align: top;
+}
+
+.banner_pointplus {
+    margin: -21px -6px 21px -6px;
+    padding: 12px 0 11px;
+    border-bottom: 1px solid #e0e3e6;
+    background-color: #f3fcff;
+    text-align: center;
+    line-height: 17px;
+    font-family: AppleSDGothicNeo-Regular,'나눔고딕',nanumgothic,sans-serif;
+}
+.banner_pointplus .user_name {
+    font-weight: bold;
+}
+.banner_pointplus .user_name span {
+    display: inline-block;
+    max-width: 111px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+}
+.banner_pointplus .ico_pointplus {
+    vertical-align: top;
+    background-position: 0 -20px;
+    width: 45px;
+    height: 16px;
+}
+.banner_pointplus .additional_info {
+    margin-top: 3px;
+    font-size: 13px;
+}
+.point_blue{
+    color: #24a2f6;
+}
+.info_text{
+    position: relative;
+    padding-left: 18px;
+    color: #8f8f8f;
+    font-size: 13px;
+    line-height: 18px;
+}
+.info_text:before{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.point_event_area {
+    background-color: #f4fbff;
+    border-top: 1px solid #ededed;
+}
+.point_event_area .link_box{
+    position: relative;
+    display: block;
+    padding: 17px 33px 17px 13px;
+    color: #242424;
+    font-size: 13px;
+    line-height: 16px;
+}
+.text_link.point_view:after{
+    height: 7px;
+    background-position: -120px -50px;
+}
+.point_guide_area .info_text {
+    padding-left: 0;
+    font-weight: bold;
+    letter-spacing: -1px;
+    text-align: center;
+    color: #252525;
+}
+.point_guide_area .highlight{
+    position: relative;
+}
+.point_guide_area .highlight:after{
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    bottom: -2px;
+    height: 12px;
+    background-color: #fcff70;
+    content: '';
+}
+.point_guide_area .highlight span {
+    position: relative;
+    z-index: 10;
+}
+.point_guide_area .text_link {
+    margin-left: 6px;
+    vertical-align: top;
+}
+.point_guide_area .text_link:after{
+    margin-top: -4px;
+}
+.point_guide_area + .regway_select {
+    margin-top: 7px;
+}
+.pay_selected .point_guide_area{
+    margin:10px 13px -5px;
+}
+.pay_selected .payway_area .point_guide_area{
+    margin: -5px 0 10px;
+}
+.point_charge {
+    border: 1px solid #f4f5b5;
+    background-color: #feffc0;
+    margin: 15px 13px -3px;
+}
+.point_charge .link{
+    display: block;
+    padding: 0 12px;
+    line-height: 34px;
+    letter-spacing: -1px;
+    font-size: 13px;
+    color: #252525;
+    position: relative;
+}
+.point_charge .link .point_color {
+    color: #24a2f6;
+}
+.point_charge .charge {
+    font-size: 12px;
+    text-decoration: underline;
+    position: absolute;
+    right: 15px;
+    top: 0;
+}
+.point_charge .icon_link:after {
+    display: inline-block;
+    vertical-align: top;
+    width: 5px;
+    height: 7px;
+    background: url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat -60px -145px;
+    background-size: 150px auto;
+    -webkit-background-size: 150px auto;
+    margin: 13px 0 0 4px;
+    content: '';
+}
+.point_charge + .form_area .button_margin {
+    margin-top: 2px;
+}
+.tooltip .pay_selected {
+    margin-top: 46px;
+}
+.tooltip_area {
+    position: relative;
+}
+.tooltip_event {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    padding: 7px 10px;
+    color: #fff;
+    font-size: 14px;
+    font-family: Helvetica, AppleSDGothicNeo-Medium, "나눔고딕", nanumgothic, sans-serif;
+    line-height: 17px;
+    letter-spacing: -1px;
+    text-align: left;
+    border-radius: 3px !important;
+    background-color: #24a2f6;
+    -webkit-box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.2);
+}
+.pay_tab_menu.on .tooltip_event {
+    position: absolute;
+    line-height: 17px;
+    border: none;
+    background-color: #24a2f6;
+    margin: 0;
+}
+.tooltip_event .edge {
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    border-top: 6px solid #24a2f6;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+}
+.tooltip_event p {
+    white-space: nowrap;
+}
+.pay_tab_menu .tooltip_event {
+    line-height: 17px;
+    color: #fff;
+}
+.tooltip_event .ico_link:after {
+    width: 4px;
+    height: 8px;
+    display: inline-block;
+    vertical-align: top;
+    background: url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat -70px -145px;
+    background-size: 150px auto;
+    -webkit-background-size: 150px auto;
+    margin: 4px 0 0 10px;
+    content: '';
+}
+.double_tab .tooltip_event {
+    left: auto;
+    right: 0;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(-0);
+}
+/* 포인트락 레이어팝업 */
+.ly_bx .ly_content {
+    padding: 25px 15px 15px;
+    text-align: center;
+}
+.ly_bx .ly_content .npay {
+    display: inline-block;
+    width: 55px;
+    height: 22px;
+    background-position: 0 -39px;
+    margin: -4px 0 10px;
+}
+.ly_bx .ly_content .popup_title {
+    display: block;
+}
+.ly_bx .point_wrap .popup_title {
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 22px;
+    font-size: 17px;
+}
+.ly_bx .point_wrap .p_txt {
+    font-size: 13px;
+    color: #8f8f8f;
+}
+.ly_bx .ly_button_area {
+    margin-top: 10px;
+}
+.ly_bx .ly_button_area button + button {
+    margin-top: 5px;
+}
+.pay_selected {
+    position: relative;
+}
+.floating_banner {
+    position: absolute;
+    z-index: 30;
+}
+.floating_banner .link {
+    display: block;
+}
+.floating_banner .close_link {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+}
+.signed_prepaid {
+    border: 1px solid #d2ecd3;
+    border-radius: 3px;
+    background-color: #e5f9e6;
+    padding: 11px 13px;
+    margin-bottom: 13px;
+}
+.full_area.label_margin + .signed_prepaid {
+    margin: 7px 0 5px;
+}
+.signed_prepaid p {
+    font-size: 13px;
+    line-height: 19px;
+    letter-spacing: -1px;
+}
+.signed_prepaid .link {
+    font-size: 12px;
+    color: #03b138;
+    text-decoration: underline;
+}
+.signed_prepaid .link:after {
+    display: inline-block;
+    background: url(../../../../img/service/mobile/nsp/sp_ordersheet_20190613.png) no-repeat -75px -165px;
+    background-size: 150px auto;
+    margin-left: 2px;
+    width: 4px;
+    height: 8px;
+    content: '';
+}
+

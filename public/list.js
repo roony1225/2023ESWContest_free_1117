@@ -143,11 +143,12 @@ function printcheck(){
 
 //프린트 매크로 실행
 function yes() {
-    let macro_window = window.open("https://trigger.macrodroid.com/a261d86e-69d6-4f9f-b9e9-ecd4af4dcb5c/man","_blank");//매크로 실행 트리거
-    setTimeout(()=> {
-        macro_window.close();
-    },3000);//3초후 매크로 창 종료
-    
+    window.location.href = "네이버페이.html";    
+}
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
 
 //팝업창

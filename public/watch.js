@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //2.촬영화면 js
 
-const ipUrl = '10.50.10.50:9000';
+const ipUrl = '10.50.8.200:9000';
 
 //필터 설정------------------------------------------------------
 var filterVariable = 0;//필터 변수 선언
@@ -103,7 +103,6 @@ function person4(){
   document.getElementById("poselist").innerHTML = pose[4]; //4명
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------
 let peerConnection;
 const config = {
@@ -165,203 +164,74 @@ window.onunload = window.onbeforeunload = () => {
 };
 //---------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-//촬영 이미지 1,2,3,4 변수들
-var imgList1 = []; //이미지주소1
-var imgUrlList1 = []; //이미지주소1
-var imgList2 = []; //이미지주소2
-var imgUrlList2 = []; //이미지주소2
-var imgList3 = []; //이미지주소3
-var imgUrlList3 = []; //이미지주소3
-var imgList4 = []; //이미지주소4
-var imgUrlList4 = []; //이미지주소4
-
 var photocount = 0; //촬영된 사진 수
-var photoDelay = 0; //촬영 딜레이
-const timer=["3","2","1",""]; //타이머 텍스트
+var isPhotoAvailable = true;
+const timer=["[ 3 ]","[ 2 ]","[ 1 ]",""]; //타이머 텍스트
+
+function takePhoto() {
+  var imgUrlList = [];
+
+  // console.log(video.srcObject.getVideoTracks());
+  const imageGrid = document.getElementById(`sns-${photocount}`);
+  const childElement = document.createElement('canvas');
+  childElement.width = imageGrid.offsetWidth;
+  childElement.height = Math.floor(0.75 * imageGrid.offsetWidth);
+
+  const context = childElement.getContext('2d');
+  context.scale(-1*childElement.width/640, childElement.height/480);
+  context.drawImage(video, 0, 0, -1* 640, 480);
+
+  // Get the image data from the canvas
+  // const imageData = context.getImageData(0, 0, 640, 480);
+
+  //필터 적용-------------
+  var pixels = context.getImageData(0,0, 640, 480);
+  var filteredData = applyFilter(pixels, filterVariable); //filterVariable 변수 값에 따라 필터 효과 적용
+  context.putImageData(filteredData, 0 , 0); //이미지에 필터 적용
+  //---------------------
+
+  imgUrlList.push(childElement.toDataURL(`image${photocount}/png`)); //n번째 이미지
+  // console.log(640+'x'+480);
+  imageGrid.appendChild(childElement);
+  // console.log(imgUrlList);
+
+  //n번째 이미지를 n번째 이미지주소에 저장
+  axios.post(`https://${ipUrl}/ImageUrl${photocount}`, {
+    'imgUrlList' : imgUrlList
+  }, {
+  })
+  .then(response => {
+    console.log(response);
+  });
+
+  imageGrid.style.backgroundColor = "#ffffff"
+  if(photocount == 4) {
+    window.open("list.html", "_self");
+  }
+}
 
 //촬영 기능
 function imgCapture(self){
-  if(photoDelay == 0) { //변수photoDelay가 0일때만 촬영가능
-    photoDelay = 1; 
-
+  if(isPhotoAvailable) {
+    isPhotoAvailable = false;
     //타이머 출력
     setTimeout(()=> {
-      document.getElementById("timer").innerHTML = timer[0];
+      document.getElementById("text-overlay").innerHTML = timer[0];
     },0); //바로 3출력
     setTimeout(()=> {
-      document.getElementById("timer").innerHTML = timer[1];
+      document.getElementById("text-overlay").innerHTML = timer[1];
     },1000); //1초후 2출력
     setTimeout(()=> {
-      document.getElementById("timer").innerHTML = timer[2];
+      document.getElementById("text-overlay").innerHTML = timer[2];
     },2000); //2초후 1출력
-
     setTimeout(()=> {
-
-      //1번째 촬영
-      if(photocount == 0) {
-        console.log(video.srcObject.getVideoTracks());
-        const imageGrid = document.getElementById("image-grid");
-        const childElement = document.createElement('canvas');
-        childElement.width = video.videoWidth;
-        childElement.height = video.videoHeight;
-        const context = childElement.getContext('2d');
-        context.scale(-1, 1);
-        context.drawImage(video, 0, 0, 640*-1, 480);
-
-        // Get the image data from the canvas
-        const imageData = context.getImageData(0, 0, 640, 480);
-
-        //필터 적용-------------
-        var pixels = context.getImageData(0,0, 640, 480);
-        var filteredData = applyFilter(pixels,filterVariable); //filterVariable 변수 값에 따라 필터 효과 적용
-        context.putImageData(filteredData, 0 , 0); //이미지에 필터 적용
-        //---------------------
-
-        imgUrlList1.push(childElement.toDataURL('image1/png')); //1번째 이미지
-        console.log(640+'x'+480);
-        imageGrid.appendChild(childElement);
-        console.log(imgUrlList1);
-        imgList1.push(imageData);
-
-        //1번째 이미지를 1번째 이미지주소에 저장
-        axios.post('https://'+ipUrl+'/ImageUrl1', {
-            'imgUrlList' : imgUrlList1
-          }, {
-        })
-        .then(response => {
-          console.log(response);
-        });
-        document.getElementById("timer").innerHTML = timer[3]; //타이머 숨김
-        photoDelay = 0; //다시 촬영 가능
-        photocount ++; //촬영횟수 1증가
-      }
-
-      //2번째 촬영
-      else if (photocount == 1) {
-        console.log(video.srcObject.getVideoTracks());
-        const imageGrid = document.getElementById("image-grid");
-        const childElement = document.createElement('canvas');
-        childElement.width = video.videoWidth;
-        childElement.height = video.videoHeight;
-        const context = childElement.getContext('2d');
-        context.scale(-1, 1);
-        context.drawImage(video, 0, 0, 640*-1, 480);
-      
-        imageGrid.appendChild(childElement);
-      
-        // Get the image data from the canvas
-        const imageData = context.getImageData(0, 0, 640, 480);
-
-        //필터 적용-------------
-        var pixels = context.getImageData(0,0, 640, 480);
-        var filteredData = applyFilter(pixels,filterVariable); //filterVariable 변수 값에 따라 필터 효과 적용
-        context.putImageData(filteredData, 0 , 0); //이미지에 필터 적용
-        //---------------------
-
-        imgUrlList2.push(childElement.toDataURL('image2/png')); //2번째 이미지
-        console.log(640+'x'+480);
-        console.log(imgUrlList2);
-        imgList2.push(imageData);
-
-        //2번째 이미지를 2번째 이미지주소에 저장
-        axios.post('https://'+ipUrl+'/ImageUrl2', {
-            'imgUrlList' : imgUrlList2
-          }, {
-        })
-        .then(response => {
-          console.log(response);
-        });
-        document.getElementById("timer").innerHTML = timer[3]; //타이머 숨김
-        photoDelay = 0; //다시 촬영 가능
-        photocount ++; //촬영횟수 1증가
-      }
-
-      //3번째 촬영
-      else if (photocount == 2) {
-        console.log(video.srcObject.getVideoTracks());
-        const imageGrid = document.getElementById("image-grid");
-        const childElement = document.createElement('canvas');
-        childElement.width = video.videoWidth;
-        childElement.height = video.videoHeight;
-        const context = childElement.getContext('2d');
-        context.scale(-1, 1);
-        context.drawImage(video, 0, 0, 640*-1, 480);
-      
-        imageGrid.appendChild(childElement);
-      
-        // Get the image data from the canvas
-        const imageData = context.getImageData(0, 0, 640, 480);
-
-        //필터 적용-------------
-        var pixels = context.getImageData(0,0, 640, 480);
-        var filteredData = applyFilter(pixels,filterVariable); //filterVariable 변수 값에 따라 필터 효과 적용
-        context.putImageData(filteredData, 0 , 0); //이미지에 필터 적용
-        //---------------------
-
-        imgUrlList3.push(childElement.toDataURL('image3/png'));
-        console.log(640+'x'+480);
-        console.log(imgUrlList3);
-        imgList3.push(imageData);
-
-        //3번째 이미지를 3번째 이미지주소에 저장
-        axios.post('https://'+ipUrl+'/ImageUrl3', {
-            'imgUrlList' : imgUrlList3
-          }, {
-        })
-        .then(response => {
-          console.log(response);
-        });
-        document.getElementById("timer").innerHTML = timer[3]; //타이머 숨김
-        photoDelay = 0; //다시 촬영 가능
-        photocount ++; //촬영횟수 1증가
-      }
-
-      //4번째 촬영
-      else {
-        console.log(video.srcObject.getVideoTracks());
-        const imageGrid = document.getElementById("image-grid");
-        const childElement = document.createElement('canvas');
-        childElement.width = video.videoWidth;
-        childElement.height = video.videoHeight;
-        const context = childElement.getContext('2d');
-        context.scale(-1, 1);
-        context.drawImage(video, 0, 0, 640*-1, 480);
-      
-        imageGrid.appendChild(childElement);
-      
-        // Get the image data from the canvas
-        const imageData = context.getImageData(0, 0, 640, 480);
-
-        //필터 적용-------------
-        var pixels = context.getImageData(0,0, 640, 480);
-        var filteredData = applyFilter(pixels,filterVariable); //filterVariable 변수 값에 따라 필터 효과 적용
-        context.putImageData(filteredData, 0 , 0); //이미지에 필터 적용
-        //---------------------
-
-        imgUrlList4.push(childElement.toDataURL('image4/png'));
-        console.log(640+'x'+480);
-        console.log(imgUrlList4);
-        imgList4.push(imageData);
-
-        //4번째 이미지를 4번째 이미지주소에 저장
-        axios.post('https://'+ipUrl+'/ImageUrl4', {
-            'imgUrlList' : imgUrlList4
-          }, {
-        })
-        .then(response => {
-          console.log(response);
-        });
-        document.getElementById("timer").innerHTML = timer[3]; //타이머 숨김
-        photoDelay = 0; //다시 촬영 가능
-        photocount = 0; //촬영횟수 1증가
-        window.open("list.html","_self"); //4번째 촬영 후 바로 list.html로 이동
-      }
-    },3000); //타이머 3초
+      photocount++;
+      takePhoto();
+      document.getElementById("text-overlay").innerHTML = timer[3];
+      isPhotoAvailable = true;
+    },3000); //3초후 찰칵    
   }
-  else{
+  else {
     alert("WAIT"); //촬영중에 캡처버튼 누르면 경고장 출력
   }
 }
@@ -389,6 +259,7 @@ closeModalButtons.forEach(button => {
 
 //팝업창 출력 함수
 function openModal(modal) {
+  console.log(modal);
     if (modal == null) return
     modal.classList.add('active')
 }

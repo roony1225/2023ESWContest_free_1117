@@ -11,61 +11,65 @@ JS: main > watch > list > printphoto -->
     <meta charset="UTF-8" />
     <link href="index.css" rel="stylesheet" />
     <script defer src="watch.js"></script>
-  </head>
-
-  <body>
-    <h1>Viewer</h1>
-    <li><a href="list.html">listpage(dev)</a></li>
-    <video id="videostream" playsinline autoplay muted></video><br>
-    <a href=#>redirect to Broadcaster's page</a>
-    <p id="timer"></p> <!-- 타이머 -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <br>
-
-    <!-- 촬영화면 포즈/캡처/필터버튼 -->
-    <div class="photosettingbtn">
-
-      <!-- 포즈버튼: 입력시 포즈 인원버튼 팝업창 띄움 -->
-      <button data-modal-target="#modal2" class="pose"><img class="pose-image" src="image/sticker-icon.png" alt="buttonpng" border="0"></button>
-
-      <!-- 캡처버튼: 입력시 카메라 캡처 -->
-      <button class="capture"><img class="capture-image" src="image/capture.png" alt="buttonpng" border="0" onclick="imgCapture(this)"></button>
-
-      <!-- 필터버튼: 입력시 필터 설정 팝업창 띄움 -->
-      <button data-modal-target="#modal" class="filter"><img class="filter-image" src="image/filter-icon.png" alt="buttonpng" border="0"></button>
-
-    </div>
-    <br>
-
-    <canvas id="canvasElement"></canvas><br>
-    <div id="image-grid"></div>
-
-    <!-- 포즈 팝업창 내용 -->
-    <div class="modal2" id="modal2">
-      <div class="modal-header2">
-        <button data-close-button class="close-button2">&times;</button><!-- 팝업창 종료버튼 -->
-        <button onclick="person1()">1</button><!-- 1명 -->
-        <button onclick="person2()">2</button><!-- 2명 -->
-        <button onclick="person3()">3</button><!-- 3명 -->
-        <button onclick="person4()">4</button><!-- 4명 -->
-      </div> 
-      <div class="modal-body2">
-        <p id="poselist"></p><!-- 포즈 이미지 출력 -->
+  </head>
+  
+  <body>
+    <div id="photo-outer">
+      <div id="section-video">
+        <video id="videostream" playsinline autoplay muted></video><br>
+        <div id="text-overlay"></div>
       </div>
-    </div>
       
-    <!-- 필터 팝업창 내용 -->
-    <div class="modal" id="modal">
-      <div class="modal-header">
-        <button data-close-button class="close-button">&times;</button><!-- 팝업창 종료버튼 -->
-        <button class="filter-normal" onclick="filterNormal()">Normal</button><!-- 필터: 일반 -->
-        <button class="filter-invert" onclick="filterInvert()">Invert</button><!-- 필터: 반전 -->
-        <button class="filter-grey" onclick="filterGrey()">Grey</button><!-- 필터: 흑백 -->
-        <button class="filter-sepia" onclick="filterSepia()">Sepia</button><!-- 필터: 세피아 -->
+      <div id="section-snapshot">
+        <div class="sns" id="sns-1"></div>
+        <div class="sns" id="sns-2"></div>
+        <div class="sns" id="sns-3"></div>
+        <div class="sns" id="sns-4"></div>
       </div>
-    </div>
 
+    </div>
+    <div id="navbar">
+        <div class="nc" id="nc-1">
+          <!-- 포즈버튼: 입력시 포즈 인원버튼 팝업창 띄움 -->
+          <button data-modal-target="#modal2" class="pose"><img class="pose-image" src="image/sticker-icon.png" alt="buttonpng" border="0"></button>
+          <!-- 포즈 팝업창 내용 -->
+          <div class="modal2" id="modal2">
+            <div class="modal-header2">
+              <button data-close-button class="close-button2">&times;</button><!-- 팝업창 종료버튼 -->
+              <button onclick="person1()">1</button><!-- 1명 -->
+              <button onclick="person2()">2</button><!-- 2명 -->
+              <button onclick="person3()">3</button><!-- 3명 -->
+              <button onclick="person4()">4</button><!-- 4명 -->
+            </div>
+            <div class="modal-body2">
+              <p id="poselist"></p><!-- 포즈 이미지 출력 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="nc" id="nc-2">
+          <!-- 캡처버튼: 입력시 카메라 캡처 -->
+          <!-- <button class="capture"></button> -->
+          <img class="capture-image" src="image/cap.png" alt="buttonpng" onclick="imgCapture(this)">
+        </div>
+        
+        <div class="nc" id="nc-3">
+          <!-- 필터버튼: 입력시 필터 설정 팝업창 띄움 -->
+          <button data-modal-target="#modal" class="filter"><img class="filter-image" src="image/filter-icon.png" alt="buttonpng" border="0"></button>
+          <!-- 필터 팝업창 내용 -->
+          <div class="modal" id="modal">
+            <div class="modal-header">
+              <button data-close-button class="close-button">&times;</button><!-- 팝업창 종료버튼 -->
+              <button class="filter-normal" onclick="filterNormal()">Normal</button><!-- 필터: 일반 -->
+              <button class="filter-invert" onclick="filterInvert()">Invert</button><!-- 필터: 반전 -->
+              <button class="filter-grey" onclick="filterGrey()">Grey</button><!-- 필터: 흑백 -->
+              <button class="filter-sepia" onclick="filterSepia()">Sepia</button><!-- 필터: 세피아 -->
+            </div>
+          </div>
+        </div>
+      </div>      
   </body>
 </html>
 

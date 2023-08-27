@@ -1,0 +1,24 @@
+/*
+ * nsp.SheetCommon.js 2018-10-23
+ *
+ * Copyright NAVER Corp. All rights Reserved.
+ * NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
+
+/**
+ * Created by Naver on 2018-10-23.
+ */
+if (typeof nsp == "undefined") {
+	nsp = {};
+}
+
+nsp.SheetCommon = {
+	setNaverPayPasswordAvailableFormValue: function (bAvailable) {
+		var elIsNaverPayPasswordAvailable = $Form("paymentSheetForm").element("isNaverPayPasswordAvailable");
+		elIsNaverPayPasswordAvailable.value = bAvailable;
+
+		//billing script에서 memberChk 값을 Y로 변경
+		bill.variable._memberChk = "Y";
+	},
+};
+

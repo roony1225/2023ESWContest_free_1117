@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* NHN Technology Services UI Development 2Team LYM */
+
+/* Layout */
+html{height:100%}
+body{height:100%;background:#e9ecef}
+.wrap{position:relative;min-height:100%}
+.header{position:relative;z-index:100;height:46px;border-bottom:1px solid rgba(0,0,0,0.07);background-color:#00c73c;text-align:center;box-sizing:border-box;-webkit-box-sizing:border-box}
+.container{position:relative;padding:20px 6px}
+.footer{padding:5px 0 25px;font-size:13px;text-align:center}
+.corp{font-family:Helvetica,sans-serif;color:#999}
+
+.sp_header:after{background:url(../../../../img/service/mobile/nsp/sp_ordersheet_header_20151204.png) no-repeat;background-size:56px auto;-webkit-background-size:56px auto;content:''}
+.sp_header.gnb_logo:after{width:56px;height:35px;background-position:0 0}
+.sp_header.gnb_cls:after{width:35px;height:35px;background-position:0 -35px}
+.sp_header.gnb_prev:after{width:35px;height:35px;background-position:0 -70px}
+
+.h1{height:100%;font-family:HelveticaNeue-Light,Helvetica,AppleSDGothicNeo-Medium,'나눔고딕',nanumgothic,sans-serif;font-size:19px;line-height:46px;font-weight:normal;color:#fff;text-align:center;text-shadow:0 0 1px rgba(0,0,0,0.3)}
+
+.gnb_logo{position:absolute;top:5px;left:10px;width:56px;height:35px}
+.gnb_cls{position:absolute;top:5px;right:0;width:35px;height:35px}
+.gnb_prev{position:absolute;top:5px;left:5px;width:35px;height:35px}
+.gnb_logo:after,
+.gnb_cls:after,
+.gnb_prev:after{position:absolute;top:0;left:0;width:100%;height:100%;content:''}

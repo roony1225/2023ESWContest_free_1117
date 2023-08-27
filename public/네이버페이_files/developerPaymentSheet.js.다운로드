@@ -1,0 +1,1217 @@
+pug.createModule("checkout.mobile.nsp.paymentSheet", {
+	__delimiter : "___",
+	_htInstance : {},
+	_model : {},
+	_htValidationFocusing : {
+		"InvalidData.CellPhone" : "select[name=receiptInfo\\.cellPhoneFirst]",
+		"InvalidData.SocialNumber" : "input[name=receiptInfo\\.socialNumberFirst]",
+		"InvalidData.ReceiptBizNo" : "input[name=receiptInfo\\.receiptBizNoFirst]",
+		"InvalidData.Card" : "input[name=receiptInfo\\.receiptCardFirst]",
+		"field.required.tempOrder.nonBankBookPayBankCode" : "select[name=nonBankBookSettleInfo\\.nonBankBookPayBankCode]",
+		"field.required.tempOrder.cardCompanyCode" : "select[name=cardSettleInfo\\.cardCompanyTypeCode]",
+		"recentPaymentMethodRolling" : "._recentPaymentMethodRolling",
+		"" : ""
+	},
+	_htElementSelector : {
+		"root" : "body",
+		"naverMileage" : "._naverMileage",
+		"recentPayMethodArea" : "._recentPayMethodArea",
+		"paymentSheetForm" : "#paymentSheetForm",
+		"authentificationToken" : "._authentificationToken",
+		"paymentCertForm" : "._paymentCertForm",
+		"commonForm" : "#commonForm",
+		"payMethodTab" : "._payMethodTab",
+		"easyCardCodeList" : "._easyCardCodeList",
+		"easyBankCodeList" : "._easyBankCodeList",
+		"agreeButtons" : "input._agreeBtn",
+		"allAgreeButton" : "input._allAgreeBtn",
+		"mileageUsedAmount" : "._mileageUsedAmount",
+		"paymentInfoTitle" : "._paymentInfoTitle",
+		"paymentMeansArea" : "._paymentMeansArea",
+		"recentPaymentMethodCode" : "._recentPaymentMethodCode",
+		"priceTarget" : "._onlyPriceTarget",
+		"numberTarget" : "._onlyNumberTarget",
+		"mobile_form" : "._mobileTemplate",
+		"credit_card_form" : "._creditcardTemplate",
+		"" : ""
+	},
+    _oFrontResultCode: {
+        UserCancel : {
+            resultCode : "UserCancel",
+            resultMessage : "결제를 취소하였습니다."
+        }
+    },
+	initialize : function() {
+		this._attachEventDelegator();
+		this._initParams();
+
+		this._model = new nsp.DeveloperPaymentSheetModel({
+			'memberNickName' : this._getOption('memberNickName'),
+			'memberMaskingNaverId' : this._getOption('memberMaskingNaverId'),
+			'memberImgUrl' : this._getOption('memberImgUrl'),
+
+			'merchantName' : this._getOption('merchantName'),
+			'productName' : this._getOption('productName'),
+			'amount' : this._getOption('amount'),
+
+			'isAvailableNaverPoint' : this._getOption('isAvailableNaverPoint'),
+			'isNaverPointLimitPolicy' : this._getOption('isNaverPointLimitPolicy'),
+			'availableNaverPointForOneMonth' : this._getOption('availableNaverPointForOneMonth'),
+			'naverPoint' : this._getOption("naverPoint"),
+			'naverPointAvailable' : this._getOption("naverPointAvailable"),
+			'usedNaverPoint' : 0,
+
+			'lastPayMeans' : this._getOption("lastPayMeans"),
+
+			'defaultCashReceiptInfo' : this._getOption('defaultCashReceiptInfo'),
+			'isRegisteredCashReceiptIssue' : this._getOption('isRegisteredCashReceiptIssue'),
+			'isSupportGeneralPayMeans' : this._getOption('isSupportGeneralPayMeans'),
+			'isCashReceiptPublish' : this._getOption('isCashReceiptPublish'),
+			'payMeansInfos' : this._getOption('payMeansInfos'),
+			'easyPayBankRegistrationDate' : this._getOption('easyPayBankRegistrationDate'),
+			'easyPayBankRegisteredCode' : this._getOption('easyPayBankRegisteredCode'),
+			'easyPayBankRegisteredText' : this._getOption('easyPayBankRegisteredText'),
+
+			'isAvailableCard' : this._getOption('isAvailableCard'),
+			'isAvailableBank' : this._getOption('isAvailableBank')
+
+		});
+	},
+
+	_initParams : function() {
+		this._htInstance["reserveId"] = this._getOption("reserveId");
+		this._htInstance["easyCardCode"] = this._getOption("easyCardCode");
+		this._htInstance["easyBankCode"] = this._getOption("easyBankCode");
+		this._htInstance["payMeansInfos"] = this._getOption("payMeansInfos");
+
+	},
+
+	_attachEventDelegator : function() {
+		// event attach
+		pug.event.delegator.attach(this._getElement("root"), "click", this);
+		pug.event.delegator.attach(this._getElement("root"), "blur", this);
+		pug.event.delegator.attach(this._getElement("root"), "change", this);
+
+		$A(this._getElementList("naverMileage", true)).forEach(function(v, i, a) {
+			pug.event.delegator.attach(a[i], "blur", this);
+			pug.event.delegator.attach(a[i], "focus", this);
+		}, this);
+
+	},
+
+	hideRecentPayMethodArea : function(htEvent) {
+		var welRecentPayMethodArea = this._getElement("recentPayMethodArea");
+		if (welRecentPayMethodArea != undefined) {
+			welRecentPayMethodArea.hide();
+		}
+		if (welRecentPayMethodArea.query("._npayBenefit") != null) {
+			welRecentPayMethodArea.query("._npayBenefit").leave();
+		}
+
+		this._getElement("payMethodTab").show();
+
+		var sPaymentMethodCode = this.getModel().getPayMethod();
+
+		if (this._validateSelectCard(sPaymentMethodCode)) {
+			this.switchEasyPaymentMethodTab(undefined, "CREDIT_CARD");
+		} else if (this._validateSelectBank(sPaymentMethodCode)) {
+			this.switchEasyPaymentMethodTab(undefined, "BANK");
+		} else if (this.getModel().isAvailableCard()) {
+			this.switchEasyPaymentMethodTab(undefined, "CREDIT_CARD");
+		} else if (this.getModel().isAvailableBank()) {
+			this.switchEasyPaymentMethodTab(undefined, "BANK");
+		} else if (this.getModel().isSupportGeneralPayMeans()){
+			this.switchEasyPaymentMethodTab(undefined, "GENERAL");
+		} else {
+			this.switchEasyPaymentMethodTab(undefined, "CREDIT_CARD");
+		}
+	},
+
+	/**포인트 시작**/
+	checkSelectBoxAmountValue : function(we){
+		var currentValue = parseInt(we.element.value.replace(/[,]/g, ""), 10);
+		this._changeUsedNaverPoint(currentValue);
+
+		this._calculateTotalPrice();
+	},
+
+	checkInputTextAmountValue : function(we) {
+		if (we.element.value != "" && isNaN(we.element.value.replace(/[,]/g, "")) == false) {
+			var currentValue = parseInt(we.element.value.replace(/[,]/g, ""), 10);
+			if (currentValue == 0) {
+				we.element.value = "";
+			} else {
+				we.element.value = currentValue;
+			}
+		} else {
+			we.element.value = "";
+		}
+
+		var weInputElement = we.element;
+		if (weInputElement.value == "") {
+			weInputElement.value = 0;
+		}
+
+		if (!(new RegExp("^[0-9]+$")).test(weInputElement.value.replace(/[,]/g, ""))) {
+			return;
+		}
+
+		this._changeUsedNaverPoint(we.element.value);
+
+		this._calculateTotalPrice();
+	},
+
+	useAllMileage : function(we) {
+		var naverPoint = this.getModel().getNaverPoint();
+		this._changeUsedNaverPoint(naverPoint);
+
+		this._calculateTotalPrice();
+	},
+
+	clearUsedPoint : function() {
+		this._changeUsedNaverPoint(0);
+
+		this._calculateTotalPrice();
+	},
+
+	_changeUsedNaverPoint : function(usedNaverPoint){
+		var naverPoint = this.getModel().getNaverPoint() < 0 ? 0 : this.getModel().getNaverPoint();
+		var amount = this.getModel().getAmount() < 0 ? 0 : this.getModel().getAmount();
+
+		// 보유포인트보다 많은 포인트를 쓸 경우
+		if (naverPoint >= 0 && naverPoint < usedNaverPoint) {
+			alert("보유 금액 이상 사용은 불가능합니다.");
+			usedNaverPoint = Math.min(naverPoint, usedNaverPoint);
+		}
+
+		// 결제 금액하고 포인트가 같거나 클 때
+		if (amount <= usedNaverPoint) {
+			usedNaverPoint = amount;
+			this.changePayMethod(undefined, "NAVER_CASH", undefined, true);
+			this._getElementList("payMethodForm").hide();
+		}
+
+		this.getModel().setUsedNaverPoint(usedNaverPoint);
+		this._setViewUsedNaverPoint();
+	},
+
+	_setViewUsedNaverPoint : function(){
+		var elNaverMileage = this._getElement("naverMileage", true);
+		elNaverMileage.value = checkout.mobile.order.ui.setThousandComma(this.getModel().getUsedNaverPoint());
+	},
+	/**포인트 끝**/
+
+	_calculateTotalPrice : function() {
+		var totalPayAmount = this.getModel().getAmount();
+		var totalDiscountPrice = this.getModel().getUsedNaverPoint();
+
+		if (totalPayAmount > totalDiscountPrice) {
+			var currentPayMethod = this.getModel().getPayMethod();
+
+			if (currentPayMethod == "NAVER_CASH") {
+				this.hideRecentPayMethodArea();
+			}
+		}
+
+		var welMileageUsedAmount = this._getElement("mileageUsedAmount");
+
+		if (welMileageUsedAmount) {
+
+			welMileageUsedAmount.html(checkout.mobile.order.ui.setThousandComma(totalDiscountPrice)); // 마일리지
+		}
+
+		var elPointTitle = $$.getSingle('._pointTitle'), welPointTitle = $Element(elPointTitle);
+
+		if (welPointTitle) {
+			if (totalDiscountPrice > 0) {
+				welPointTitle.html(checkout.mobile.order.ui.setThousandComma(totalDiscountPrice));
+			} else {
+				welPointTitle.html(0);
+			}
+		}
+		this.redrawCashReceipt();
+
+		this.checkPossibleInstallment();
+		// 총 결제 금액 업데이트
+		$ElementList($$('._totalPayAmt')).html(checkout.mobile.order.ui.setThousandComma(this.getGeneralPayAmount()));
+	},
+
+	isDisabledChangePayMethod : function() {
+		var totalDiscountPrice = this.getModel().getUsedNaverPoint();
+
+		if (this.getModel().getAmount() <= totalDiscountPrice && "NAVER_CASH" == this.getModel().getPayMethod()) {
+			return true;
+		}
+
+		return false;
+	},
+
+	/**
+	 * 결제수단을 변경한다.
+	 *
+	 * @param we
+	 * @param payMethod
+	 */
+	changePayMethod : function(we, payMethod, htJoinCreditCardInfo, bRecentPaymentAreaYn) {
+
+		if (this.isDisabledChangePayMethod() && payMethod != "NAVER_CASH") {
+			return;
+		}
+
+		if (payMethod == undefined || !payMethod) {
+			this.getModel().setPayMethod(undefined);
+			this._getElementList("payMethodForm").hide();
+			return;
+		}
+
+		if (!bRecentPaymentAreaYn) {
+			var welFragmentTarget = $Element($$.getSingle("._recentPaymentMethodFragmentTarget"));
+			var welFragment = $Element($$.getSingle("._recentPaymentMethodFragment"));
+			if (welFragmentTarget != undefined && welFragment != undefined) {
+				var sFragmentHtml = welFragment.outerHTML();
+
+				welFragment.leave();
+				welFragmentTarget.afterHTML(sFragmentHtml);
+				welFragmentTarget.leave();
+
+				this._resetElement();
+			}
+
+			var welRecentPayMethodArea = this._getElement("recentPayMethodArea");
+			if (welRecentPayMethodArea != null) {
+				welRecentPayMethodArea.hide();
+			}
+
+			this._getElement("payMethodTab").show();
+		}
+
+		if (this._validateSelectPayMethod(payMethod) == false){
+			return;
+		}
+
+		var joinCreditCardCode = this._htInstance["joinCreditCardCompanyCode"];
+		var onlyEasyCard = this._htInstance["onlyEasyCard"];
+		if (htJoinCreditCardInfo != undefined) {
+			joinCreditCardCode = htJoinCreditCardInfo["joinCreditCardCompanyCode"];
+			onlyEasyCard = htJoinCreditCardInfo["onlyEasyCard"];
+		}
+		if (joinCreditCardCode != undefined && ((payMethod != "CREDIT_CARD" && !this._getOption("easyCardCode").has(payMethod)) || // 신용카드도
+		// 아니고
+		// 간편결제도
+		// 아닌
+		// 경우
+		(payMethod == "CREDIT_CARD" && onlyEasyCard) || // 신용카드면서
+		// 간편결제
+		// 전용 쿠폰인 경우
+		(onlyEasyCard && joinCreditCardCode != payMethod)// 간편결제
+		// 전용
+		// 쿠폰이면서,
+		// 카드코드가 불일치한 경우
+		)) {
+			var confirmMessage = this.trimCardName(this._htInstance["joinCreditCardCompanyName"]) + "카드 할인 쿠폰을 적용하셨습니다.  결제방식/카드종류 변경 시, 쿠폰적용이 초기화 됩니다.";
+			if (confirm(confirmMessage) == true) {
+				this.removeCoupons(true, true);
+				this.removeJoinCreditCardInfo();
+
+				this._getElement("credit_card_form").query(".cardCompanyTypeCode").attr("value", "");
+			} else {
+				this._getElement("credit_card_form").query(".cardCompanyTypeCode").attr("value", joinCreditCardCode);
+
+				this.changeBeforePayMethod();
+				return;
+			}
+		}
+
+		this.getModel().setPayMethod(payMethod);
+
+		this._getElementList("payMethodForm").hide();
+
+		$ElementList(this._getElementList("payMethodAbout", true)).hide();
+
+		// this._showAboutPayMethod(payMethod);
+
+		if (payMethod != "NAVER_CASH") {
+			// this._getElement("paymentInfoTitle").show();
+			// this._getElement("paymentMeansArea").show();
+
+			if (!bRecentPaymentAreaYn) {
+				this._changePayMethodView(payMethod);
+			}
+
+			if (payMethod == "MOBILE" && this._getOption("isPinPayMember") != undefined && this._getOption("isPinPayMember")) {
+				// this.changeMobilePayMethod(undefined, "MOBILEPIN");
+			} else if (payMethod == "MOBILE") {
+				this._drawSelectedPayTab('GENERAL');
+
+				oUtil.showArea([ '._normal_pay_area', '._mobile_pay_area' ]);
+				oUtil.hideArea([ '._card_simple_pay_area', '._bank_simple_pay_area', '._card_pay_area' ]);
+
+			} else if (this._htInstance["currentPayMethod"] == "MOBILE" || this._htInstance["currentPayMethod"] == "MOBILEPIN") {
+				// this.changeMobilePayMethod();
+			}
+
+			if (payMethod == "CREDIT_CARD") {
+				this._drawSelectedPayTab('GENERAL');
+
+				oUtil.showArea([ '._normal_pay_area', '._card_pay_area' ]);
+				oUtil.hideArea([ '._card_simple_pay_area', '._bank_simple_pay_area', '._mobile_pay_area' ]);
+
+			} else if (this._getOption("easyCardCode").has(payMethod)) {
+
+				this.checkPossibleInstallment();
+
+				$$.getSingle("input[name=defaultEasyCardCode]").value = payMethod;
+
+			} else if (this._getOption("easyBankCode").has(payMethod)) {
+
+				$$.getSingle("input[name=defaultEasyBankCode]").value = payMethod;
+
+			}
+		} else {
+			// 포인트인 경우 간편 결제 flicking 영역의 선택 마크 해제
+			var elMarks = $$('._check_mark');
+
+			if (elMarks) {
+				$A(elMarks).forEach(function(el) {
+					$Element(el).hide();
+				});
+			}
+
+			$ElementList(this._getElement("easyCardCodeList").queryAll('a')).removeClass('on');
+			if(this._getElement("easyBankCodeList")) {
+				$ElementList(this._getElement("easyBankCodeList").queryAll('a')).removeClass('on');
+			}
+
+			this._addOrRemoveClassFromChild("remove", $Element($$.getSingle('._normal_pay_area')), "a", "on");
+
+			if (this._htInstance["currentPayMethod"] == "MOBILE" || this._htInstance["currentPayMethod"] == "MOBILEPIN") {
+				// this.changeMobilePayMethod();
+			}
+		}
+
+		this._htInstance["currentPayMethod"] = this.getModel().getPayMethod();
+
+		var elPayMethodinstallment = $$.getSingle('._screditcardTemplate'), welPayMethodinstallment = $Element(elPayMethodinstallment);
+
+	},
+
+	_changePayMethodView : function(payMethod) {
+		var prefixPaymethodForm;
+		if (this._getOption("easyCardCode").has(payMethod)) {
+			prefixPaymethodForm = "scredit_card";
+		} else {
+			prefixPaymethodForm = payMethod.toLowerCase();
+		}
+
+		if (this._getElement(prefixPaymethodForm + "_form") != null) {
+			this._getElement(prefixPaymethodForm + "_form").show();
+		}
+
+		this._getElementList("payMethod").removeClass("on");
+		this._addOrRemoveClassFromChild("remove", this._getElement("easyCardCodeList"), "a", "on");
+		this._addOrRemoveClassFromChild("remove", this._getElement("easyBankCodeList"), "a", "on");
+		this._addOrRemoveClassFromChild("remove", $Element($$.getSingle('._normal_pay_area')), "a", "on");
+
+		if (this._getOption("easyCardCode").has(payMethod)) {
+			//초록색 테두리
+			if(this.getModel().isAvailableCard()){
+				$ElementList(this._getElement("easyCardCodeList").queryAll('a.credit_' + payMethod)).addClass('on');
+			}
+
+		} else if (this._getOption("easyBankCode").has(payMethod)) {
+			//초록색 테두리
+			if (this.getModel().isAvailableBank()) {
+				if(this._getElement("easyBankCodeList")) {
+					$ElementList(this._getElement("easyBankCodeList").queryAll('a.bank_' + payMethod)).addClass('on');
+				}
+			}
+		} else {
+			this._addOrRemoveClassFromChild("add", this._getElement("root"), "._" + payMethod, "on");
+		}
+	},
+
+	_addOrRemoveClassFromChild : function(sActionType, welTarget, sChildClass, sClass) {
+		if (welTarget != null) {
+			if (sActionType.toLocaleLowerCase() == "add") {
+				$ElementList(welTarget.queryAll(sChildClass)).addClass(sClass);
+			} else if (sActionType.toLocaleLowerCase() == "remove") {
+				$ElementList(welTarget.queryAll(sChildClass)).removeClass(sClass);
+			}
+		}
+	},
+
+
+	beforeInputPrice : function(we) {
+		we.element.value = pug.utility.getOnlyNumber(we.element.value);
+	},
+
+	switchEasyPaymentMethodTab : function(htEvent, sType) {
+		if (htEvent != undefined) {
+			var welTab = $Element(htEvent.element).parent(function(v) {
+				return v.hasClass('pay_tab_menu');
+			}, 2)[0];
+
+			if (welTab.hasClass("on")) {
+				return;
+			} else {
+				$A($$('._payMethodTab ul li')).forEach(function(el) {
+					$Element(el).removeClass('on');
+				});
+
+				welTab.addClass("on")
+			}
+		}
+
+		this._getElement("paymentInfoTitle").show();
+		this._getElement("paymentMeansArea").show();
+		this._drawSelectedPayTab(sType);
+		this._changePaymentMethodInNpayTab(sType);
+		this._webAccessibiltyInSelectedPayTab(sType);
+	},
+
+	_drawSelectedPayTab : function(sType) {
+
+		var welPaymentMeansArea = this._getElement("paymentMeansArea");
+		oUtil.hideArea(['._displayLimitPayment']);
+		switch (sType) {
+			case "CREDIT_CARD":{
+				this._addOrRemoveClassFromChild("add", welPaymentMeansArea, '._credit_card_tab', 'on');
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._bank_tab', 'on');
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._general_tab', 'on');
+
+				oUtil.showArea(['._card_simple_pay_area']);
+				oUtil.hideArea(['._bank_simple_pay_area', '._normal_pay_area', '._card_pay_area', '._mobile_pay_area']);
+
+				if (this.getModel().isAvailableCard() == false || this.getModel().isAvailableBank() == false) {
+					oUtil.showArea(['._displayLimitPayment_card']);
+				}
+
+				break;
+			}
+			case "BANK":{
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._credit_card_tab', 'on');
+				this._addOrRemoveClassFromChild("add", welPaymentMeansArea, '._bank_tab', 'on');
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._general_tab', 'on');
+
+				oUtil.showArea(['._bank_simple_pay_area']);
+				oUtil.hideArea(['._card_simple_pay_area', '._normal_pay_area', '._card_pay_area', '._mobile_pay_area']);
+
+				if (this.getModel().isAvailableCard() == false || this.getModel().isAvailableBank() == false) {
+					oUtil.showArea(['._displayLimitPayment_bank']);
+				}
+
+				break;
+			}
+			case "GENERAL":{
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._credit_card_tab', 'on');
+				this._addOrRemoveClassFromChild("remove", welPaymentMeansArea, '._bank_tab', 'on');
+				this._addOrRemoveClassFromChild("add", welPaymentMeansArea, '._general_tab', 'on');
+
+				oUtil.showArea(['._normal_pay_area', '._card_pay_area']);
+				oUtil.hideArea(['._card_simple_pay_area', '._bank_simple_pay_area', '._mobile_pay_area']);
+
+				break;
+			}
+		}
+	},
+
+	_changePaymentMethodInNpayTab : function(sType) {
+		this.getModel().setPayMethodTab(sType);
+		switch (sType) {
+		case "CREDIT_CARD":
+			this.changePayMethod(undefined, $$.getSingle("input[name=defaultEasyCardCode]").value);
+			break;
+		case "BANK":
+			this.changePayMethod(undefined, $$.getSingle("input[name=defaultEasyBankCode]").value);
+			break;
+		case "GENERAL":
+			this.changePayMethod(undefined, 'CREDIT_CARD');
+			break;
+		}
+
+		this.redrawCashReceipt();
+	},
+
+	_webAccessibiltyInSelectedPayTab : function(sType){
+		var payTabArea = jindo.$Element(jindo.$$.getSingle(".pay_tab_area"));
+		var payTabAreaBlind = jindo.$Element(jindo.$$.getSingle(".pay_tab_area .blind"));
+		if(payTabArea && payTabAreaBlind) {
+			payTabArea.remove(payTabAreaBlind);
+		}
+		switch (sType) {
+			case "CREDIT_CARD":{
+				jindo.$Element(jindo.$$.getSingle("._credit_card_tab")).prependHTML("<span class=blind>선택됨</span>");
+				break;
+			}
+			case "BANK":{
+				jindo.$Element(jindo.$$.getSingle("._bank_tab")).prependHTML("<span class=blind>선택됨</span>");
+				break;
+			}
+			case "GENERAL":{
+				jindo.$Element(jindo.$$.getSingle("._general_tab")).prependHTML("<span class=blind>선택됨</span>");
+				break;
+			}
+		}
+	},
+
+	checkPossibleInstallment : function() {
+		var generalPayAmt = this.getGeneralPayAmount();
+		var waelInstallmentCode = $A($$("select._cardInstallmentPeriodClassCode"));
+
+		if (generalPayAmt < 50000 || (this.getModel().isAvailableCard() == false)) {
+			waelInstallmentCode.forEach(function(elInstallmentCode) {
+				var welInstallmentCode = $Element(elInstallmentCode);
+				welInstallmentCode.attr('value', '01');
+				welInstallmentCode.attr('disabled', true);
+			});
+		} else {
+			waelInstallmentCode.forEach(function(elInstallmentCode) {
+				var welInstallmentCode = $Element(elInstallmentCode);
+				welInstallmentCode.attr('value', '01');
+				welInstallmentCode.attr('disabled', false);
+			});
+		}
+
+	},
+
+	developerProcessEnd : function () {
+
+		setTimeout(function () {
+			if (parent) {
+				// window.close();
+                if(!parent.docsApiContent) {
+                    // parent.docsApiContent.nextProcess('pay_apply', 2, -1);
+					window.location.href = "list.html?isPayed=true";
+                }
+			} else {
+				alert("에러가 발생했습니다. 다시 시도 해주세요.");
+			}
+		}, 2000);
+	},
+	/**
+	 * 유효성 검증 후 가주문 데이터 생성
+	 */
+	create : function(we) {
+		this.developerProcessEnd();
+	},
+
+	/**
+	 *  paymethod validate (예약된 결제수단과 선택된 결제수단 체크)
+     */
+	_validateSelectPayMethod : function(payMethod){
+
+		if(!payMethod){
+			return false;
+		}
+
+		if(this._validateSelectNpoint(payMethod)){
+			return true;
+		}
+
+		if(this._validateSelectCard(payMethod)){
+			return true;
+		}
+
+		if(this._validateSelectBank(payMethod)) {
+			return true;
+		}
+
+		if(this._validateSelectGeneral(payMethod)){
+			return true;
+		}
+
+		return false;
+	},
+
+	_validateSelectNpoint : function(payMethod){
+		if(this.getModel().isAvailableNaverPoint()
+			&& payMethod === "NAVER_CASH"){
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	_validateSelectCard : function(payMethod){
+		if(this.getModel().isAvailableCard()
+			&& (this.getOption("easyCardCode").has(payMethod))){
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	_validateSelectBank :function(payMethod){
+		if(this.getModel().isAvailableBank()
+			&& this.getOption("easyBankCode").has(payMethod)) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	_validateSelectGeneral : function(payMethod){
+		if(this.getModel().isSupportGeneralPayMeans()
+			&& (payMethod === "CREDIT_CARD") || (payMethod === "MOBILE")){
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	makeAutoPaymentServiceList : function(htMessage) {
+		var resultString = "";
+		if (htMessage.autoPaymentServiceList != undefined && htMessage.autoPaymentServiceList != "") {
+			resultString += "정기/반복결제(" + htMessage.autoPaymentServiceList + ")";
+		}
+		if (htMessage.autoCharge != undefined && htMessage.autoCharge != "") {
+			resultString += ((resultString == "") ? "" : "\n") + htMessage.autoCharge;
+		}
+		if (htMessage.nspCpName != undefined && htMessage.nspCpName != "") {
+			resultString += ((resultString == "") ? "" : "\n") + htMessage.nspCpName;
+		}
+		return resultString;
+	},
+
+	/**
+	 * 가주문생성 실패시 메시지 노출 처리
+	 *
+	 * @param htResult
+	 */
+	viewFailResult : function(htResult) {
+		this.enableCreateButton();
+		pug.mobile.hideIframe();
+		if (htResult == undefined || htResult.htReturnValue == undefined) {
+			alert("알수없는 오류가 발생하였습니다.");
+		}
+		if (htResult && !htResult.bSuccess && htResult.sErrorCode == "ACCESS_DENIED") {
+			if (htResult.sErrorDetailCode == "MEMBER_STOP") {
+				alert(htResult.sErrorAlertMessage);
+			} else {
+				eval(htResult.htReturnValue.script);
+			}
+		} else if (htResult.sErrorMessage != undefined) {
+			alert(htResult.sErrorMessage);
+		} else if (htResult.htReturnValue.firstResultMessage.messageCode == "under14.checkoutAgreement" || htResult.htReturnValue.firstResultMessage.messageCode == "groupId.checkoutAgreement") {
+			alert(htResult.htReturnValue.firstResultMessage.message);
+			var htUrls = this._getOption("urls");
+			location.href = "http://" + htUrls["mobile.user.front.host"];
+		} else {
+			alert(htResult.htReturnValue.firstResultMessage.message);
+			if (htResult.htReturnValue.firstResultMessage.messageCode == "field.required.donAgree") {
+				this.openNaverDonAgree();
+			} else if (htResult.htReturnValue.firstResultMessage.messageCode == "field.unusable.reliefPhoneNumberUseYn") {
+				this._getElement("deliveryInfoType").query("._reliefPhoneNumberUseYn").attr("checked", false);
+				this._getElement("deliveryInfoType").query("._reliefPhoneNumberUseYn").removeClass("ckbox_on");
+			}
+		}
+
+		if (htResult.htReturnValue.firstResultMessage.messageCode != undefined && this._htValidationFocusing[htResult.htReturnValue.firstResultMessage.messageCode] != undefined) {
+			var elNeedFocus = $$.getSingle(this._htValidationFocusing[htResult.htReturnValue.firstResultMessage.messageCode]);
+			if (elNeedFocus != undefined) {
+				elNeedFocus.focus();
+			}
+		}
+	},
+	/**
+	 * 결제수단 제한 정보
+	 *
+	 * @param payMeansClass
+	 * @param generalPaymentPrice
+	 * @param formHelper
+	 */
+	checkPayMeansLimitAndSettingPgId : function(payMeansClass, generalPaymentPrice, formHelper) {
+
+		payMeansClass = this._getBillingPayMethod(payMeansClass);
+
+		var payMeansInfos = this._getOption("payMeansInfos");
+		var minamt = payMeansInfos[payMeansClass + "_minamt"];
+		var maxamt = payMeansInfos[payMeansClass + "_maxamt"];
+		if (payMeansClass != "" && payMeansClass != "NAVER_CASH") {
+			if (minamt == undefined || maxamt == undefined) {
+				alert('해당 결제수단으로는 결제가 불가능합니다.');
+				return false;
+			}
+			if (parseInt(minamt) != 0 && parseInt(minamt) > parseInt(generalPaymentPrice)) {
+				alert(parseInt(minamt) + '원 미만은 해당 결제수단으로 결제하실 수 없습니다.');
+				return false;
+			}
+
+			if (parseInt(maxamt) != 0 && parseInt(maxamt) < parseInt(generalPaymentPrice)) {
+				alert('2,000,000원 초과는 해당 결제수단으로 결제하실 수 없습니다.');
+				return false;
+			}
+		}
+		var pgId = this._getPgId(payMeansClass, generalPaymentPrice);
+		formHelper.setValue("billingPgId", pgId);
+		return true;
+	},
+
+	_getBillingPayMethod : function(payMethod) {
+		if (this.getOption("easyCardCode").has(payMethod)) {
+			return "OCREDIT_CARD";
+		} else if (this.getOption("easyBankCode").has(payMethod)) {
+			return "OBANK";
+		}
+		return payMethod;
+	},
+
+	_getPgId : function(payMethod, generalPaymentPrice) {
+		var payMeansInfos = this._getOption("payMeansInfos");
+		var pgId = payMeansInfos[payMethod];
+		if (payMethod == "CREDIT_CARD" || payMethod == "SCREDIT_CARD" || payMethod == "OCREDIT_CARD") {
+			var cardcd = (payMethod == "SCREDIT_CARD" || payMethod == "OCREDIT_CARD") ? this.getModel().getPayMethod() : this._getElement("credit_card_form").query("select._cardCompanyTypeCode").attr("value");
+			var instmo = this.getCurrentCreditCardForm().query("select._cardInstallmentPeriodClassCode").attr("value");
+			pgId = bill.convertPgId(pgId, cardcd, instmo, generalPaymentPrice);
+		}
+		return pgId;
+	},
+
+	getCurrentCreditCardForm : function() {
+		return this._getElement("root").query("." + this.findCurrentCardForm());
+	},
+
+	findCurrentCardForm : function() {
+		var sPayMethod = this.getModel().getPayMethod();
+
+		if (this._getOption("easyCardCode").has(sPayMethod)) {
+			if (this._getElement("recentPayMethodArea") != undefined && this._getElement("recentPayMethodArea").visible()) {
+				return "_selected";
+			}
+		}
+
+		return "_screditcardTemplate";
+	},
+
+	/**
+	 * 폼헬퍼를 초기화한다.
+	 */
+	initFormHelper : function() {
+		var sAction = "";
+		sAction = "/z/payments/" + this._getOption("reserveId") + "/";
+
+		this._htInstance["form_helper"] = new pug.component.FormHelper({
+			"elRoot" : this._getElement("paymentSheetForm", true),
+			"bAjaxRequest" : true,
+			"bValidationOnly" : false,
+			"sAction" : sAction
+		});
+
+		var numberCheckList = $A();
+		$A(this._getElementList("priceTarget", true)).forEach(function(v, i, a) {
+			numberCheckList.push({
+				"sName" : a[i].name,
+				"rxPattern" : /[0-9,]+/g
+			});
+		});
+		$A(this._getElementList("numberTarget", true)).forEach(function(v, i, a) {
+			numberCheckList.push({
+				"sName" : a[i].name,
+				"rxPattern" : /[0-9]+/g
+			});
+		});
+		this._htInstance["form_helper"].setTypeCheck(numberCheckList.$value());
+
+		var lengthIndicatorList = $A();
+
+		if (this._getOption("orderClass") == "CHECKOUT" && this._getElement("orderAdditionalInfo") != undefined) {
+			var orderAdditionalInfoTextareaes = this._getElement("orderAdditionalInfo").queryAll("textarea");
+			$A(orderAdditionalInfoTextareaes).forEach(function(v, i, a) {
+				var maxLength = 0;
+				if (a[i].hasClass("_text_20")) {
+					maxLength = 20;
+				} else if (a[i].hasClass("_text_50")) {
+					maxLength = 50;
+				}
+				lengthIndicatorList.push({
+					"sName" : a[i].$value().name,
+					"nMaxLength" : maxLength
+				});
+			});
+		}
+		if (this._getElement("deliveryInfos") != undefined) {
+			$A(this._getElement("deliveryInfos").queryAll("._deliveryMemo")).forEach(function(v, i, a) {
+				lengthIndicatorList.push({
+					"sName" : a[i].$value().name,
+					"nMaxLength" : 500,
+					"elRealLength" : "temp",
+					"elMaxLength" : "temp"
+				});
+			});
+		}
+		this._htInstance["form_helper"].setLengthIndicator(lengthIndicatorList.$value());
+	},
+
+	getNaverInitToken : function() {
+		return this._htInstance["naverInitToken"];
+	},
+
+	getAuthentificationLevel : function() {
+		return this._htInstance["authentificationLevel"];
+	},
+
+	getSellerNames : function() {
+		return this._getElement("sellerNames").attr("value");
+	},
+
+	enableCreateButton : function(we) {
+		this._htInstance["isProgress"] = false;
+	},
+
+	/**
+	 * 아래 패턴에 대해 이 메소드로 바꾸자. 네이밍도 고민
+	 */
+	getGeneralPayAmount : function() {
+		return this.getModel().getAmount() - this.getModel().getUsedNaverPoint();
+	},
+
+	findNaverPointReserveRate : function() {
+		var sRate = this.getOption("naverPointReserveRate");
+
+		if (!sRate) {
+			return "0";
+		}
+
+		return sRate;
+	},
+
+	registerNaverPayPassword : function(isAsync) {
+		var htUrls = this._getOption("urls");
+		var sPageUrl = htUrls["pay.password.init.mobile.page.url"] + "&token_popup=" + this._htInstance["naverInitToken"] + "&rurl=" + encodeURIComponent(htUrls["nsp.pay.authentification.return.url"]) + encodeURIComponent("&deviceType=mobile" + ((isAsync != undefined && isAsync) ? "&async=true" : "")) + encodeURIComponent("&authType=INIT_SET") + "&surl=" + encodeURIComponent(htUrls["nsp.pay.authentification.return.url"]) + encodeURIComponent("&deviceType=mobile") + encodeURIComponent("&cancel=true&authType=INIT_SET");
+
+		this.enableCreateButton();
+		pug.mobile.loadPageByIframe(sPageUrl);
+	},
+
+	cancel : function() {
+		if (confirm('취소하시면 입력한 모든 정보가 사라집니다.\n결제를 취소하시겠습니까?')) {
+			this.userCancel();
+		}
+	},
+
+	userCancel : function() {
+        var userCancel = this._oFrontResultCode.UserCancel;
+        var returnUrl = this.getOption('returnUrl');
+        var reserveId = this._getOption("reserveId");
+        var redirectUrl = new nmp.component.UrlUtils(returnUrl)
+            .appendParam('resultCode', userCancel.resultCode)
+            .appendParam('resultMessage', userCancel.resultMessage)
+            .appendParam('reserveId', reserveId)
+            .toString();
+
+		if (top) {
+			setTimeout($Fn(function() {
+				top.location.href = redirectUrl;
+			}, this).bind(), 100);
+		} else {
+			setTimeout($Fn(function() {
+				location.href = redirectUrl;
+			}, this).bind(), 100);
+		}
+	},
+
+	_isEasyPay : function(payMethod) {
+		return this._getOption("easyCardCode").has(payMethod) || this._getOption("easyBankCode").has(payMethod);
+	},
+
+	_isEasyCardPay : function(payMethod) {
+		if (this._getOption("easyCardCode").has(payMethod)) {
+			return true;
+		}
+
+		return false;
+	},
+
+	changeInstallment : function(we) {
+		$ElementList(this._getElementList("creditCardInstallment")).attr("disabled", "disabled");
+
+		if (!(this._isEasyCardPay(this.getModel().getPayMethod()) || this.getModel().getPayMethod() === 'CREDIT_CARD')) {
+			return;
+		}
+
+		var month = "";
+		if (we != null) {
+			month = we.element.value;
+			we.element.disabled = false;
+		} else {
+			var currentCreditCardForm = this.getCurrentCreditCardForm().query("select._cardInstallmentPeriodClassCode");
+			if(!currentCreditCardForm){
+				return;
+			}
+			month = currentCreditCardForm.attr("value");
+			this.getCurrentCreditCardForm().query("._creditCardInstallment").$value().disabled = false;
+		}
+
+		month = parseInt(month, 10);
+		var cardcode = this.getModel().getPayMethod() === 'CREDIT_CARD' ? $$.getSingle('._cardCompanyTypeCode').value : this.getModel().getPayMethod();/* this._getElement("credit_card_form").query("select.cardCompanyTypeCode").attr("value") */
+
+		var interestStr = "";
+		var freeInterestInstallmentType = this._getElement('root').query("._freeInterestInstallmentType");
+
+		if (month == "1") {
+			interestStr = "";
+			freeInterestInstallmentType.attr("value", "NON_INSTALLMENT");
+			// 무이자 최소 적용 금액
+			this._getElement("root").query("._freeInterestMiniminApplyAmount").attr("value", "");
+			// 부분무이자부담월
+			this._getElement("root").query("._partFreeInterestBurdenMonths").attr("value", "");
+			// 무이자 할부 부담 주체 구분 코드 01(PG)/02(MP)/03(MP+SELLER)
+			this._getElement("root").query("._freeInterestInstallmentBrdnCoreTypeCode").attr("value", "");
+			// 무이자 할부 수수료 율
+			this._getElement("root").query("._freeInterestInstallmentSellerCommissionRate").attr("value", "");
+
+			this._getElement("root").query("._freeInterestInstallmentApplyYn").attr("value", false);
+		} else {
+			// 최소 결제 금액 이상인지의 여부를 검사를 위해
+			var lastTotalPaymentPrice = this.getGeneralPayAmount();
+
+			var cardFreeInterests = this._getOption("freeInterests")[cardcode];
+			var applyFreeInterest = undefined;
+			if (cardFreeInterests != undefined && cardFreeInterests.length > 0) {
+				for (var i = 0; i < cardFreeInterests.length; i++) {
+					if (cardFreeInterests[i].month == month && parseInt(cardFreeInterests[i].minamt) <= parseInt(lastTotalPaymentPrice)) {
+						if (applyFreeInterest == undefined) {
+							applyFreeInterest = cardFreeInterests[i];
+						} else {
+							if (applyFreeInterest["frinttype"] == cardFreeInterests[i]["frinttype"]) { // 할부구분이
+								// 같은
+								// 경우
+								if (applyFreeInterest["chrgtype"] > cardFreeInterests[i]["chrgtype"]) { // 부담자값이
+									// 작은
+									// 경우
+									applyFreeInterest = cardFreeInterests[i];
+								}
+							} else {
+								if (applyFreeInterest["frinttype"] == "02" && cardFreeInterests[i]["frinttype"] == "01") { // 할부
+									// 구분이
+									// 다른
+									// 경우
+									applyFreeInterest = cardFreeInterests[i];
+								}
+							}
+						}
+					}
+				}
+			}
+			if (applyFreeInterest != undefined && parseInt(applyFreeInterest.minamt) <= parseInt(lastTotalPaymentPrice)) {
+				if (applyFreeInterest["frinttype"] == "02") {
+					interestStr = "부분 무이자 할부 적용  (" + applyFreeInterest["partmos"] + "회차 수수료 고객 부담)";
+				} else {
+					interestStr = "무이자 할부 적용";
+				}
+
+				// 무이자 최소 적용 금액
+				this._getElement("root").query("._freeInterestMiniminApplyAmount").attr("value", applyFreeInterest.minamt);
+				// 부분무이자부담월
+				this._getElement("root").query("._partFreeInterestBurdenMonths").attr("value", applyFreeInterest.partmos);
+				// 무이자 할부 부담 주체 구분 코드
+				// 01(PG)/02(MP)/03(MP+SELLER)
+				this._getElement("root").query("._freeInterestInstallmentApplyYn").attr("value", true);
+				this._getElement("root").query("._freeInterestInstallmentBrdnCoreTypeCode").attr("value", applyFreeInterest.chrgtype);
+				// 무이자 할부 수수료 율
+				this._getElement("root").query("._freeInterestInstallmentSellerCommissionRate").attr("value", applyFreeInterest.chrgpct != 0 ? 0 + applyFreeInterest.chrgpct : 0);
+
+				if (applyFreeInterest.chrgtype == "03") {
+					freeInterestInstallmentType.attr("value", "PRODUCT_FREE_INSTALLMENT");
+				} else {
+					freeInterestInstallmentType.attr("value", "GENERAL_FREE_INSTALLMENT");
+				}
+			} else {
+				interestStr = "";
+				freeInterestInstallmentType.attr("value", "INSTALLMENT");
+				// 무이자 최소 적용 금액
+				this._getElement("root").query("._freeInterestMiniminApplyAmount").attr("value", "");
+				// 부분무이자부담월
+				this._getElement("root").query("._partFreeInterestBurdenMonths").attr("value", "");
+				// 무이자 할부 부담 주체 구분 코드
+				// 01(PG)/02(MP)/03(MP+SELLER)
+				this._getElement("root").query("._freeInterestInstallmentBrdnCoreTypeCode").attr("value", "");
+				this._getElement("root").query("._freeInterestInstallmentApplyYn").attr("value", false);
+				// 무이자 할부 수수료 율
+				this._getElement("root").query("._freeInterestInstallmentSellerCommissionRate").attr("value", "");
+			}
+		}
+		// 무이자 할부 적용 시 안내 문구 노출
+		// this.getCurrentCreditCardForm().query("li._noInstallmentMonthStr").html(interestStr);
+	},
+
+	notificationFraud : function() {
+		alert("위험거래가 감지되어 네이버페이 사용이 제한됩니다.\n본인확인을 위해 네이버페이 고객센터(1588-3819)로 문의주시기 바랍니다.");
+		window.history.back();
+	},
+
+	setOption : function(sKey, oValue) {
+		this._setOption(sKey, oValue);
+	},
+
+	getOption : function(sKey) {
+		return this._getOption(sKey);
+	},
+
+	getModel : function() {
+		return this._model;
+	},
+
+	//탭을 눌렀을때 현금영수증 쪽 view on/off
+	redrawCashReceipt : function() {
+		if (this.getModel().getUsedNaverPoint() > 0 || this._getOption("easyBankCode").has(this.getModel().getPayMethod())) {
+			oUtil.showArea([ '._cash_receipt_area' ]);
+		} else {
+			oUtil.hideArea([ '._cash_receipt_area' ]);
+		}
+
+		if ($('cashReceiptApply')) {
+			this.getModel().setCashReceiptApply($('cashReceiptApply').checked);
+		}
+
+		this.changeCashReceiptApply();
+	},
+
+	//현금영수증 신청,안함 눌렀을때 view on/off
+	switchCashReceipt : function(we){
+
+		if ($('cashReceiptApply')) {
+			this.getModel().setCashReceiptApply($('cashReceiptApply').checked);
+		}
+
+		this.changeCashReceiptApply();
+	},
+
+	changeCashReceiptApply : function() {
+
+		if (!this.getModel().isCashReceiptPublish()) {
+			return;
+		}
+
+		if (this.getModel().isCashReceiptApply()) {
+			if (this.getModel().isRegisteredCashReceiptIssue()) {
+				if (this.getModel().isChangedCashReceiptIssue()) {
+					$Element('cashReceiptInputForm').show();
+				} else {
+					$Element('cashReceiptInputForm').hide();
+					//아예 없어진 경우는 다시 켜준다.
+					// this.getModel.setCashReceiptSwitchOn(true);
+				}
+			} else {
+				$Element('cashReceiptInputForm').show();
+			}
+		} else {
+			$Element('cashReceiptInputForm').hide();
+			// this.getModel.setCashReceiptSwitchOn(true);
+		}
+	},
+
+	asyncApproval : function() {
+		var commonForm = this._getElement("commonForm").$value();
+		bill.approval(commonForm, undefined);
+	},
+
+	changeCardType : function(we, sType) {
+		this.getModel().setCardType(sType);
+	},
+
+	changeCashReceiptIssueType : function(we, sType) {
+
+		// 이전 선택 값이 사업자 증빙 이었으면, 개인 소득 공제용으로 재 선택 시 디폴트 값 처리 /*
+		if (sType && sType != 'BUSINESS_REGISTRATION_NUMBER') {
+			if (this.getModel().getCashReceiptIssueType() == nsp.CashReceiptIssueType['BUSINESS_REGISTRATION_NUMBER']) {
+				this.getModel().setCashReceiptIssueType(sType); // default
+				$Element('sel-cashReceiptIssueClassType').attr('value', sType);
+			}
+		}
+
+		if (sType) {
+			this.getModel().setCashReceiptIssueType(sType);
+		} else {
+			this.getModel().setCashReceiptIssueType(we.element.value);
+		}
+
+		this._oBox.setType(this.getModel().getCashReceiptIssueType()['boxType']);
+
+		this.drawCashReceiptCase();
+	},
+
+	drawCashReceiptCase : function() {
+
+		if (this.getModel().getCashReceiptIssueType() === nsp.CashReceiptIssueType['BUSINESS_REGISTRATION_NUMBER']) {
+			$Element('sel-cashReceiptIssueClassType').hide();
+		} else {
+			$Element('sel-cashReceiptIssueClassType').show();
+		}
+
+		$Element('sel-cashReceiptIssueClassType').attr('value', this.getModel().getCashReceiptIssueType()['classCode']);
+
+		$('cashReceiptIssueNum').value = '';
+		$Element($('cashReceiptIssueNum')).attr('placeholder', this.getModel().getCashReceiptIssueTypeDesc());
+		$Element($('cashReceiptIssueNum')).attr('title', this.getModel().getCashReceiptIssueTypeDesc());
+	},
+
+	changeUpdateReceiptInfo : function(we) {
+		if ($('updateReceiptAgree')) {
+			this.getModel().setUpdateReceiptInfo($('updateReceiptAgree').checked);
+		}
+	},
+
+	changeCashReceiptInfo : function(we) {
+		$Element('cashReceiptInputForm').show();
+		$Element('defaultCashReceiptInfo').hide();
+
+		this.changeCashReceiptIssueType(we, 'PR_CELL_PHONE_NUMBER');
+		this.getModel().setChangedCashReceiptIssue(true);
+
+	},
+
+	getEventModel : function() {
+		var htCreditCardInfos = $Json(this.getOption("creditCardInfos")).$value();
+		var aEventInfos = $A();
+		$H(htCreditCardInfos).forEach(function(v) {
+			if (v["eventinfo"].length > 0) {
+				$A(v["eventinfo"]).forEach(function(o) {
+					aEventInfos.push(o);
+				});
+			}
+		});
+
+		var sUrl = "/z/payments/cardBenefits";
+		var htParams = {
+			"cardEvents" : $Json(aEventInfos.$value()).toString(),
+			"cardFreeInstallments" : $Json(this.getOption("freeInterests")).toString()
+		};
+
+		return htParams;
+	},
+
+	/**
+	 * 카드사별 무이자 정보를 노출한다.
+	 *
+	 * @param we
+	 */
+	changeCompanyTypeCode : function(we, cardCorpCode, bSkipAlert, joinCreditCardCode) {
+		this._calculateTotalPrice();
+	},
+
+	showHideBodyDisplay : function(isVisible) {
+		var welFooter = this._getElement("root").query("div.u_ft");
+		if (welFooter == undefined) {
+			welFooter = this._getElement("root").query("div.u_ftln");
+		}
+		checkout.mobile.order.ui.toggleVisibility(this._getElement("paymentSheetForm"), isVisible);
+		checkout.mobile.order.ui.toggleVisibility(welFooter, isVisible);
+	},
+
+	confirmCheckPayLimit : function() {
+		if (confirm('설정하신 결제 한도를 초과하여 결제가 불가능하며,\n보안설정 메뉴에서 한도 해제/변경 후 결제 가능합니다.\n보안설정 메뉴로 이동하시겠습니까?')) {
+			this.loadPayLimitConfig();
+		}
+	},
+
+	loadPayLimitConfig : function() {
+        var htUrls = this._getOption("urls"), sReserveId = this._getOption("reserveId"),
+            returnUrl = encodeURIComponent(htUrls["nsp.mobile.paymentsheet.url"] + sReserveId),
+            sPageUrl = new nmp.component.UrlUtils(htUrls["pay.limit.conf.mobile.url"]).appendParam('returnUrl', returnUrl).toString();
+
+        location.href = sPageUrl;
+	},
+
+	"" : ""
+});
