@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //2.촬영화면 js
 
-const ipUrl = '10.50.8.200:9000';
+const ipUrl = '10.50.8.244:9000';
 
 //필터 설정------------------------------------------------------
 var filterVariable = 0;//필터 변수 선언
@@ -89,18 +89,37 @@ function filterSepia() {
 
 //포즈 설정--------------------------------------------------------
 //포즈 이미지 선택
-const pose = [, "<img src='image/pose1.png'>", "<img src='image/pose2.png'>", "<img src='image/pose3.png'>", "<img src='image/pose4.png'>"]//예시 이미지, 추후 수정 필요
+const pose1 ="<button onclick='person1pose(1)'><img class='classpose' src='image/person1pose1.png'></button><button onclick='person1pose(2)'><img class='classpose' src='image/person1pose2.png'></button><button onclick='person1pose(3)'><img class='classpose' src='image/person1pose3.png'></button><button onclick='person1pose(4)'><img class='classpose' src='image/person1pose4.png'></button>"//예시 이미지, 추후 수정 필요
+const person1img = [,"<img  src='image/person1pose1.png'></img>","<img  src='image/person1pose2.png'></img>","<img  src='image/person1pose3.png'></img>","<img  src='image/person1pose4.png'></img>"]
+const pose2 ="<button onclick='person2pose(1)'><img class='classpose' src='image/person2pose1.png'></button><button onclick='person2pose(2)'><img class='classpose' src='image/person2pose2.png'></button><button onclick='person2pose(3)'><img class='classpose' src='image/person2pose3.png'></button><button onclick='person2pose(4)'><img class='classpose' src='image/person2pose4.png'></button>"//예시 이미지, 추후 수정 필요
+const person2img = [,"<img  src='image/person2pose1.png'></img>","<img  src='image/person2pose2.png'></img>","<img  src='image/person2pose3.png'></img>","<img  src='image/person2pose4.png'></img>"]
+const pose3 ="<button onclick='person3pose(1)'><img class='classpose' src='image/person3pose1.png'></button><button onclick='person3pose(2)'><img class='classpose' src='image/person3pose2.png'></button><button onclick='person3pose(3)'><img class='classpose' src='image/person3pose3.png'></button><button onclick='person3pose(4)'><img class='classpose' src='image/person3pose4.png'></button>"//예시 이미지, 추후 수정 필요
+const person3img = [,"<img  src='image/person3pose1.png'></img>","<img  src='image/person3pose2.png'></img>","<img  src='image/person3pose3.png'></img>","<img  src='image/person3pose4.png'></img>"]
+const pose4 ="<button onclick='person4pose(1)'><img class='classpose' src='image/person4pose1.png'></button><button onclick='person4pose(2)'><img class='classpose' src='image/person4pose2.png'></button><button onclick='person4pose(3)'><img class='classpose' src='image/person4pose3.png'></button><button onclick='person4pose(4)'><img class='classpose' src='image/person4pose4.png'></button>"//예시 이미지, 추후 수정 필요
+const person4img = [,"<img  src='image/person4pose1.png'></img>","<img  src='image/person4pose2.png'></img>","<img  src='image/person4pose3.png'></img>","<img  src='image/person4pose4.png'></img>"]
 function person1(){
-  document.getElementById("poselist").innerHTML = pose[1]; //1명
+  document.getElementById("poselist").innerHTML = pose1; //1명
+}
+function person1pose(i){
+  document.getElementById("poselist").innerHTML = person1img[i];
 }
 function person2(){
-  document.getElementById("poselist").innerHTML = pose[2]; //2명
+  document.getElementById("poselist").innerHTML = pose2; //2명
+}
+function person2pose(i){
+  document.getElementById("poselist").innerHTML = person2img[i];
 }
 function person3(){
-  document.getElementById("poselist").innerHTML = pose[3]; //3명
+  document.getElementById("poselist").innerHTML = pose3; //3명
+}
+function person3pose(i){
+  document.getElementById("poselist").innerHTML = person3img[i];
 }
 function person4(){
-  document.getElementById("poselist").innerHTML = pose[4]; //4명
+  document.getElementById("poselist").innerHTML = pose4; //4명
+}
+function person4pose(i){
+  document.getElementById("poselist").innerHTML = person4img[i];
 }
 
 //---------------------------------------------------------------------------------------------------------------------------

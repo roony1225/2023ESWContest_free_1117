@@ -15,7 +15,7 @@ JS: main > watch > list > printphoto -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
     <script>
-        const ipUrl = '10.50.8.200:9000';
+        const ipUrl = '10.50.8.244:9000';
 
         //촬영된 이미지 불러오기
         window.onload = () => {
@@ -71,12 +71,10 @@ JS: main > watch > list > printphoto -->
         <!--이미지 선택시 출력되는 팝업창-->
         <div class="modal" id="modal">
             <div class="modal-header">
-            <div class="title">Example Modal</div>
+            <div class="title">Img Selected</div>
             <button data-close-button class="close-button">&times;</button>
             </div>
             <div class="checkbtn">
-                <button class="decorate" onclick="decorate()">Decorate</button> <!-- 꾸미기버튼: 미구현 -->
-                <br>
                 <button class="printcheck" data-modal-target="#modal2" onclick="printcheck()">Print</button> <!-- 이미지 프린트버튼 -->
             </div>
         </div>

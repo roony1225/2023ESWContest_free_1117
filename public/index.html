@@ -38,10 +38,10 @@ JS: main > watch > list > printphoto -->
           <div class="modal2" id="modal2">
             <div class="modal-header2">
               <button data-close-button class="close-button2">&times;</button><!-- 팝업창 종료버튼 -->
-              <button onclick="person1()">1</button><!-- 1명 -->
-              <button onclick="person2()">2</button><!-- 2명 -->
-              <button onclick="person3()">3</button><!-- 3명 -->
-              <button onclick="person4()">4</button><!-- 4명 -->
+              <button class="posefont" onclick="person1()">1명</button><!-- 1명 -->
+              <button class="posefont" onclick="person2()">2명</button><!-- 2명 -->
+              <button class="posefont" onclick="person3()">3명</button><!-- 3명 -->
+              <button class="posefont" onclick="person4()">단체</button><!-- 4명 -->
             </div>
             <div class="modal-body2">
               <p id="poselist"></p><!-- 포즈 이미지 출력 -->
@@ -61,10 +61,10 @@ JS: main > watch > list > printphoto -->
           <!-- 필터 팝업창 내용 -->
           <div class="modal" id="modal">
             <div class="modal-header">
-              <button data-close-button class="close-button">&times;</button><!-- 팝업창 종료버튼 -->
-              <button class="filter-normal" onclick="filterNormal()">Normal</button><!-- 필터: 일반 -->
-              <button class="filter-invert" onclick="filterInvert()">Invert</button><!-- 필터: 반전 -->
-              <button class="filter-grey" onclick="filterGrey()">Grey</button><!-- 필터: 흑백 -->
+              <button data-close-button class="close-button">&times;</button><br><!-- 팝업창 종료버튼 -->
+              <button class="filter-normal" onclick="filterNormal()">Normal</button><br><!-- 필터: 일반 -->
+              <button class="filter-invert" onclick="filterInvert()">Invert</button><br><!-- 필터: 반전 -->
+              <button class="filter-grey" onclick="filterGrey()">Grey</button><br><!-- 필터: 흑백 -->
               <button class="filter-sepia" onclick="filterSepia()">Sepia</button><!-- 필터: 세피아 -->
             </div>
           </div>

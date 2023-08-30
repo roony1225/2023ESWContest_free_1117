@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //1.QR코드 입력시 시작 js
 
-const ipUrl = '10.50.8.200:9000'; //ip 주소
+const ipUrl = '10.50.8.244:9000'; //ip 주소
 
 function goToNextPage() {
     window.open("https://"+ipUrl,"_self");
@@ -56,32 +56,27 @@ function closeModal(modal) {
 }
 
 //팝업창 텍스트 : 변수 pg에 따라 텍스트 내용 변경
-const text =["text1","text2","text3","text4"]
+const text =["사용법<br><br>1. 삶의 한평은 총 4장의 사진을 찍을 수 있습니다.<br><br>2. 한 장을 찍을 때 3초가 지난 후 사진이 찍히게 됩니다.<br><br>3. 사진을 프린트 하는것은 유료 입니다.<br><br>4. 4장의 사진을 다 찍었다면 내가 원하는 사진을 터치해 print를 터치하면 사진을 프린트 할 수 있습니다.<br><br>(단 사진을 프린트 하실때 팝업창을 허용해주셔야 작동됩니다!)","추가기능<br><br>1.좌측 하단에 있는 버튼을 터치해 여러 사진 포즈를 추천 받을 수 있습니다.<br><br>2.우측 하단에 있는 버튼을 터치해 여러 필터를 적용해 볼 수 있습니다."]
 function page(i) {
-    document.getElementById("page").innerHTML = text[i]
+    document.getElementById("modal-body").innerHTML = text[i]
 }
 
 //팝업창 이전 페이지 함수
 function pagedown() {
     if(pg>0) {
         pg--
-        document.getElementById("page").innerHTML = text[pg]
-        document.getElementById("current-page").innerHTML = (pg+1)+"/4"
+        document.getElementById("modal-body").innerHTML = text[pg]
+        document.getElementById("current-page").innerHTML = (pg+1)+"/2"
         console.log(pg)
     }
 }
 
 //팝업창 다음 페이지 함수
 function pageup() {
-    if(pg<3) {
+    if(pg<1) {
         pg++
-        document.getElementById("page").innerHTML = text[pg]
-        document.getElementById("current-page").innerHTML = (pg+1)+"/4"
+        document.getElementById("modal-body").innerHTML = text[pg]
+        document.getElementById("current-page").innerHTML = (pg+1)+"/2"
         console.log(pg)
-    }
-    else { 
-        //팝업창 4번째 페이지에서 다음 입력시 index.html로 이동
-        closeModal(modal)
-        window.open("https://"+ipUrl,"_self")
     }
 }

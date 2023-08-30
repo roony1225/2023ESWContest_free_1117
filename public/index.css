@@ -184,9 +184,41 @@ html {
 
 .modal-header {
   padding: 10px 15px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid black;
+}
+.filter-normal {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 5rem;
+  font-weight: bold;
+}
+.filter-invert {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 5rem;
+  font-weight: bold;
+}
+.filter-grey {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 5rem;
+  font-weight: bold;
+}
+.filter-sepia {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 5rem;
+  font-weight: bold;
 }
 
 .modal-header .title {
@@ -199,7 +231,7 @@ html {
   border: none;
   outline: none;
   background: none;
-  font-size: 1.25rem;
+  font-size: 5rem;
   font-weight: bold;
 }
 
@@ -231,11 +263,26 @@ html {
   border-bottom: 1px solid black;
 }
 
+.modal-header2 .posefont {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
 .modal-header2 .close-button2 {
   cursor: pointer;
   border: none;
   outline: none;
   background: none;
-  font-size: 1.25rem;
+  font-size: 5rem;
   font-weight: bold;
 }
+
+.classpose {
+  width: 300px;
+  height: 300px;
+}
+
