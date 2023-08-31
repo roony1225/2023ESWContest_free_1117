@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //1.QR코드 입력시 시작 js
 
-const ipUrl = '10.50.8.244:9000'; //ip 주소
+const ipUrl = '10.50.1.229:9000'; //ip 주소
 
 function goToNextPage() {
     window.open("https://"+ipUrl,"_self");

@@ -5,7 +5,7 @@ JS: main > watch > list > printphoto */
 //
 //2.촬영화면 js
 
-const ipUrl = '10.50.8.244:9000';
+const ipUrl = '10.50.1.229:9000';
 
 //필터 설정------------------------------------------------------
 var filterVariable = 0;//필터 변수 선언
